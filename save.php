@@ -3,9 +3,9 @@
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $cause_date = $_POST["cause_date"] ?? '';
-        if(empty($cause_date)){
-            die("Error:cause date is required");
-        }
+    if (empty($cause_date)) {
+        die("Error:cause date is required");
+    }
     $case_no = $_POST["case_no"];
     $parties = $_POST["parties"];
     $counsel = $_POST["counsel"];
@@ -15,6 +15,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $count = count($case_no);
 
     for ($i = 0; $i < $count; $i++) {
+
+        if (empty($case_no[$i])) {
+            continue;
+        }
 
         $case = htmlspecialchars($case_no[$i]);
         $party = htmlspecialchars($parties[$i]);

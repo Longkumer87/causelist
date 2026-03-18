@@ -5,9 +5,9 @@ ini_set('display_errors', 1);
 
 
 $db_host = "localhost";
-$db_username = "www_causelist";
-$db_password="causelist2026";
-$db_name="causelist_db";
+$db_username = "ghckb";
+$db_password="ghckb";
+$db_name="causelist";
 
 $conn = mysqli_connect("$db_host", "$db_username", "$db_password", "$db_name");
 

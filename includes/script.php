@@ -14,9 +14,9 @@
             row.innerHTML = `
 <td>${rowCount + 1}</td>
 
-<td><input type="text" class="form-control" name="case_no[]"></td>
+<td><input type="text" class="form-control" name="case_no[]" required></td>
 
-<td><input type="text" class="form-control" name="parties[]"></td>
+<td><textarea="text" class="form-control" name="parties[]" required></textarea></td>
 
 <td><input type="text" class="form-control" name="counsel[]"></td>
 

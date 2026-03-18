@@ -26,7 +26,7 @@
               <tr>
                   <td>1</td>
                   <td><input type="text" class="form-control" name="case_no[]" required></td>
-                  <td><textarea class="form-control" name="parties[]"></textarea required></td>
+                  <td><textarea class="form-control" name="parties[]" required></textarea></td>
                   <td><input type="text" class="form-control" name="counsel[]"></td>
                   <td> <input type="text" class="form-control" name="remark[]"></td>
                   <td><input type="date" class="form-control" name="next_date[]"></td>
