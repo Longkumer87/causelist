@@ -26,8 +26,29 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $rem = htmlspecialchars($remark[$i]);
         $next = $next_date[$i];
 
-        $sql = "INSERT INTO causelist (cause_date, case_no, parties, counsel, remark, next_date)
+        //empty next date
+        if (empty($next_date[$i])) {
+            $next = "NULL";
+        } else {
+            $next = "'" . $next_date[$i] . "'";
+        }
+
+        //edit or update cases
+        if (isset($_POST['id'][$i]) && !empty($_POST['id'][$i])) {
+            $id = $_POST['id'][$i];
+
+            $sql = "UPDATE causelist SET 
+                    case_no='$case',
+                    parties='$party',
+                    counsel='$coun',
+                    remark='$rem',
+                    next_date=$next
+                WHERE id=$id";
+        } else {
+            //handling Insert New Cases
+            $sql = "INSERT INTO causelist (cause_date, case_no, parties, counsel, remark, next_date)
                 VALUES ('$cause_date','$case','$party','$coun','$rem','$next')";
+        }
 
         $result = mysqli_query($conn, $sql);
 
