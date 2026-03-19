@@ -16,7 +16,7 @@
 
 <td><input type="text" class="form-control" name="case_no[]" required></td>
 
-<td><textarea="text" class="form-control" name="parties[]" required></textarea></td>
+<td><textarea class="form-control" name="parties[]" required></textarea></td>
 
 <td><input type="text" class="form-control" name="counsel[]"></td>
 

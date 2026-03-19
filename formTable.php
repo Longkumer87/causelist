@@ -1,13 +1,21 @@
   <form action="save.php" method="post">
       <div class="container mb-2">
-          <label for="causeListDate"><h3 class="text-center"> CAUSE LIST DATE :</h3></label>
+          <label for="causeListDate">
+              <h3 class="text-center"> CAUSE LIST DATE :</h3>
+          </label>
           <input type="date" class="form-control" name="cause_date" id="cause_date" required>
       </div>
 
-      <div class="mb-2">
-          <button type="button" class="btn btn-primary" onclick="addRow()">Add Row</button>
-          <button type="submit" class="btn btn-success">Save Cause List</button>
-          <a href="history.php" class="btn btn-info">View Available Cause Lists</a>
+      <div class="row align-items-center mb-2">
+          <div class="col-auto">
+              <button type="button" class="btn btn-primary" onclick="addRow()">Add Row</button>
+          </div>
+          <div class="col text-center">
+            <a href="history.php" class="btn btn-info">View Available Cause Lists</a>
+          </div>
+          <div class="col text-end">
+               <button type="submit" class="btn btn-success">Save Cause List</button>
+          </div>
       </div>
 
       <table class="table table-bordered" id="causeTable">

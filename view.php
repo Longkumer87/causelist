@@ -1,7 +1,6 @@
 <?php require 'config/db.php'; ?>
 <?php
 
-
 $date = $_GET['cause_date'] ?? '';
 if (empty($date)) {
     header("Location: history.php");
@@ -29,6 +28,19 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
         <h5 class="text-center">CAUSE LIST FOR : <?= !empty($date) ? date("d F Y", strtotime($date)) : 'No Date Selected'; ?></h5>
 
+        <div class="row align-items-center">
+            <div class="col-auto no-print">
+                <a href="edit.php?cause_date=<?= $date; ?>" class="btn btn-outline-success">Edit</a>
+            </div>
+
+            <div class="col no-print text-end mb-3">
+                <button onclick="window.print()" class="btn btn-outline-dark">
+                    🖨️ Print
+                </button>
+            </div>
+        </div>
+
+
         <table class="table table-bordered">
             <thead class="table-secondary">
                 <tr>
@@ -46,7 +58,6 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 <?php foreach ($rows as $row): ?>
                     <tr>
                         <td><?= $i++; ?></td>
-                        <?= htmlspecialchars($row['case_no']); ?>
                         <td><?= htmlspecialchars($row['case_no']); ?></td>
                         <td><?= htmlspecialchars($row['parties']); ?></td>
                         <td><?= htmlspecialchars($row['counsel']); ?></td>
@@ -56,11 +67,9 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                 ? ''
                                 : date("d-m-Y", strtotime($row['next_date'])); ?>
                         </td>
-
                     </tr>
                 <?php endforeach; ?>
             </tbody>
-
         </table>
     </div>
 <?php endif; ?>
