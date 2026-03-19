@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
 
     <form action="save.php" method="post">
 

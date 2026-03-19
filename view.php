@@ -22,7 +22,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 <?php else: ?>
 
-    <div class="container mt-3">
+    <div class="container-fluid mt-3">
 
         <!-- Header -->
         <div class="text-center mb-3">

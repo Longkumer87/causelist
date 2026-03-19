@@ -14,7 +14,7 @@ $result = mysqli_query($conn, $sql);
 $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 
-<div class="container mt-3">
+<div class="container-fluid mt-3">
 
     <h4 class="text-center">Edit Cause List</h4>
     <h5 class="text-center">
