@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 18, 2026 at 03:29 AM
+-- Generation Time: Mar 19, 2026 at 03:01 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `causelist_db`
+-- Database: `causelist`
 --
 
 -- --------------------------------------------------------
@@ -48,7 +48,9 @@ INSERT INTO `causelist` (`id`, `cause_date`, `case_no`, `parties`, `counsel`, `r
 (4, '2026-03-18', 'sca 7/2025', 'gfgrreop', 'tytytyhg', 'htrhyttrt', '0000-00-00'),
 (5, '2026-03-18', 'sca 20/2026', 'rtretrtyuyuy', 'nght', '5ytytryty', '0000-00-00'),
 (6, '0000-00-00', '', '', '', '', '0000-00-00'),
-(7, '2026-03-19', '', '', '', '', '0000-00-00');
+(7, '2026-03-19', '', '', '', '', '0000-00-00'),
+(8, '2026-03-19', 'dgrgrg', 'cfdgfgfdg\r\ndcbdfbfbh', 'fegfegertg', 'fdgfegrewdw', '0000-00-00'),
+(9, '2026-03-19', 'etggfsdg', 'fbfgergggsf\r\nklfbofbik', 'tgjterwdefd', 'rrgrgerfrererfwer', '0000-00-00');
 
 --
 -- Indexes for dumped tables
@@ -68,7 +70,7 @@ ALTER TABLE `causelist`
 -- AUTO_INCREMENT for table `causelist`
 --
 ALTER TABLE `causelist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
