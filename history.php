@@ -1,14 +1,14 @@
 <?php require 'config/db.php'; ?>
 <?php require "includes/header.php"; ?>
 
-<h4 class="text-center mt-4">IN THE COURT OF THE</h4>
-<h4 class="text-center">PRINCIPAL DISTRICT & SESSIONS JUDGE</h4>
+
+<h4 class="text-center mt-4">PRINCIPAL DISTRICT & SESSIONS JUDGE</h4>
 <h4 class="text-center">KOHIMA : NAGALAND</h4>
 <hr>
 
 
 <div class="container mt-4">
-    <h4 class="text-center">View Cause List</h4>
+    <h4 class="text-center mb-4">View Cause List</h4>
 
     <form action="view.php" method="GET">
 
@@ -24,9 +24,9 @@
 
         </div>
 
-        <div class="row justify-content-center">
+        <div class="row justify-content-center mt-4">
             <div class="col-12 col-md-4">
-                <button type="submit" class="btn btn-primary w-100">
+                <button type="submit" class="btn btn-info w-100">
                     View Cause List
                 </button>
             </div>
