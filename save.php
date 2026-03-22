@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (isset($_POST['id'][$i]) && !empty($_POST['id'][$i])) {
             $id = $_POST['id'][$i];
 
-            $sql = "UPDATE causelist SET 
+            $sql = "UPDATE causelist_db SET 
                     case_no='$case',
                     parties='$party',
                     counsel='$coun',
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 WHERE id=$id";
         } else {
             //handling Insert New Cases
-            $sql = "INSERT INTO causelist (cause_date, case_no, parties, counsel, remark, next_date)
+            $sql = "INSERT INTO causelist_db (cause_date, case_no, parties, counsel, remark, next_date)
                 VALUES ('$cause_date','$case','$party','$coun','$rem','$next')";
         }
 

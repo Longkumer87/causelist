@@ -9,7 +9,7 @@ if (empty($date)) {
     exit;
 }
 
-$sql = "SELECT * FROM causelist WHERE cause_date='$date'";
+$sql = "SELECT * FROM causelist_db WHERE cause_date='$date'";
 $result = mysqli_query($conn, $sql);
 $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
@@ -23,8 +23,9 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     <form action="save.php" method="post">
         <input type="hidden" name="cause_date" value="<?= $date; ?>">
-
-        <table class="table table-bordered">
+        
+        <div class="table-responsive">
+        <table class="table table-bordered" id="causeTable">
             <thead class="table-dark">
                 <tr>
                     <th>S.No</th>
@@ -33,6 +34,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     <th>Counsel</th>
                     <th>Remark</th>
                     <th>Next Date</th>
+                    <th class="text-center">Action</th>
                 </tr>
             </thead>
 
@@ -51,7 +53,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         </td>
 
                         <td>
-                            <textarea name="parties[]" class="form-control"><?= $row['parties']; ?></textarea>
+                            <textarea name="parties[]" class="form-control" style="min-width: 180px;"><?= $row['parties']; ?></textarea>
                         </td>
 
                         <td>
@@ -66,17 +68,33 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                             <input type="date" name="next_date[]" class="form-control" value="<?= $row['next_date']; ?>">
                         </td>
 
+                        <td class="text-center">
+                            <button type="button" class="btn btn-danger btn-sm" onclick="deleteRow(this)">Delete</button>
+                        </td>
+
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
+                </div>
 
-        <div class="text-end">
-            <button type="submit" class="btn btn-success">Save</button>
+        <div class="row mb-3 g-2 text-center">
+            <div class="col-12 col-md-6">
+                <button type="button" class="btn btn-primary w-100" onclick="addRow()">
+                    <i class="bi bi-file-plus"></i> Add Row
+                </button>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <button type="submit" class="btn btn-success w-100">
+                    <i class="bi bi-bookmark-check"></i> Save
+                </button>
+            </div>
         </div>
 
     </form>
 
 </div>
 
+<?php require 'includes/script.php'; ?>
 <?php require "includes/footer.php"; ?>

@@ -26,3 +26,8 @@ if(!$conn){
 // }
 
 ?>
+
+
+
+<!-- 
+INSERT INTO `users` (`id`, `username`, `password`, `court`, `published_on`) VALUES ('3', 'jmfck', 'jmfck@123', 'jmfc', current_timestamp()), ('4', 'fmck', 'fmck@123', 'fmck', current_timestamp()); -->

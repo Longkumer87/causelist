@@ -1,6 +1,6 @@
 <div class="container-fluid">
 
-    <form action="save.php" method="post">
+    <form action="save.php" method="post"  onsubmit="return confirm('Are you sure you want to save?')">
 
         <!-- Cause Date -->
         <div class="row mb-3 justify-content-center align-items-center">
@@ -16,15 +16,15 @@
         <!-- Buttons -->
         <div class="row mb-3 g-2 text-center">
             <div class="col-12 col-md-4">
-                <button type="button" class="btn btn-primary w-100" onclick="addRow()">Add Row</button>
+                <button type="button" class="btn btn-primary w-100" onclick="addRow()"><i class="bi bi-file-plus"></i> Add Row</button>
             </div>
 
             <div class="col-12 col-md-4">
-                <a href="history.php" class="btn btn-info w-100">View Cause Lists</a>
+                <a href="history.php" class="btn btn-info w-100"><i class="bi bi-binoculars"></i> View Cause Lists</a>
             </div>
 
             <div class="col-12 col-md-4">
-                <button type="submit" class="btn btn-success w-100">Save Cause List</button>
+                <button type="submit" class="btn btn-success w-100"><i class="bi bi-bookmark-check"></i> Save Cause List</button>
             </div>
         </div>
 
@@ -39,17 +39,21 @@
                         <th class="text-center">Counsel</th>
                         <th class="text-center">Remark</th>
                         <th class="text-center">Next Date</th>
+                        <th class="text-center">Action</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr>
-                        <td>1</td>
+                        <td class="text-center fw-bold">1</td>
                         <td><input type="text" class="form-control" name="case_no[]" required></td>
-                        <td><textarea class="form-control" name="parties[]" required></textarea></td>
+                        <td><textarea class="form-control" name="parties[]" style="min-width: 180px;" required></textarea></td>
                         <td><input type="text" class="form-control" name="counsel[]"></td>
                         <td><input type="text" class="form-control" name="remark[]"></td>
                         <td><input type="date" class="form-control" name="next_date[]"></td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-danger btn-sm" onclick="deleteRow(this)">Delete</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>

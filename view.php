@@ -7,7 +7,7 @@ if (empty($date)) {
     exit;
 }
 
-$sql = "SELECT * FROM `causelist` WHERE cause_date='$date'";
+$sql = "SELECT * FROM `causelist_db` WHERE cause_date='$date'";
 $result = mysqli_query($conn, $sql);
 $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
@@ -24,6 +24,10 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     <div class="container-fluid mt-3">
 
+    <div class="text-center mt-3">
+        <img src="image/gov.jpg" alt="Govt Logo" style="max-height: 90px;">
+    </div>
+
         <!-- Header -->
         <div class="text-center mb-3">
             <h6>IN THE COURT OF THE</h6>
@@ -38,28 +42,31 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
         </h6>
 
         <!-- Buttons -->
-        <div class="row mb-3 g-2 no-print">
-            <div class="col-12 col-md-6">
-                <a href="edit.php?cause_date=<?= $date; ?>" class="btn btn-outline-success w-50">
-                    Edit
+         <!-- edit -->
+        <div class="row mb-3 g-3 no-print text-center text-md-start">
+            <div class="col-12 col-md-4">
+                <a href="edit.php?cause_date=<?= $date; ?>" class="btn btn-outline-info w-50">
+                    <i class="bi bi-pencil"></i> Edit
                 </a>
             </div>
-
-            <div class="col-12 col-md-6 text-md-end">
+        <!-- WhatsApp -->
+                <?php require './whatsapp.php';?>
+        <!-- Print -->
+            <div class="col-12 col-md-4 text-md-end">
                 <button onclick="window.print()" class="btn btn-outline-dark w-50">
-                    🖨️ Print
+                    <i class="bi bi-printer"></i> Print
                 </button>
             </div>
         </div>
 
         <!-- Table -->
         <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-sm">
                 <thead class="table-secondary">
                     <tr>
                         <th class="text-center">S.No</th>
                         <th class="text-center">Case No</th>
-                        <th class="text-center">Parties</th>
+                        <th class="text-center col-4">Parties</th>
                         <th class="text-center">Counsel</th>
                         <th class="text-center">Remark</th>
                         <th class="text-center">Next Date</th>
@@ -70,9 +77,9 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     <?php $i = 1; ?>
                     <?php foreach ($rows as $row): ?>
                         <tr>
-                            <td><?= $i++; ?></td>
+                            <td class="text-center"><?= $i++; ?></td>
                             <td><?= htmlspecialchars($row['case_no']); ?></td>
-                            <td><?= htmlspecialchars($row['parties']); ?></td>
+                            <td class="text-break"><?= htmlspecialchars($row['parties']); ?></td>
                             <td><?= htmlspecialchars($row['counsel']); ?></td>
                             <td><?= htmlspecialchars($row['remark']); ?></td>
                             <td>
