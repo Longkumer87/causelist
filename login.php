@@ -1,36 +1,64 @@
-<?php require 'config/db.php'; ?>
+<?php
+
+session_start();
+require 'config/db.php';
+
+if($_SERVER["REQUEST_METHOD"]==='POST'){
+    if(isset($_POST['login'])){
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
+        $sql ="SELECT * FROM `users` WHERE username= '$username' AND password='$password' ";
+        $result = mysqli_query($conn, $sql);
+        $rows = mysqli_num_rows($result);
+
+        if($rows===1){
+            $user = mysqli_fetch_assoc($result);
+            $_SESSION['user_id']= $user['id'];
+            $_SESSION['court_name'] = $user['court_name'];
+            header("Location:welcome.php");
+            exit();
+        }else{
+            echo"<script>alert('Invalid Login');</script>";
+        }
+
+    }
+
+}
+
+
+?>
 <?php require "includes/header.php"; ?>
 
+<div class="login-page">
+    <div class="card shadow text-center" id="loginCard">
+        <div class="card-header">
+            <h3 class="text-light">District Court Kohima</h3>
+            <p class="fw-bold text-light">Login</p>
+        </div>
 
-<div class="card login-card shadow text-center" style="background-color: antiquewhite; max-width:400px; margin:80px auto;">
-    
-    <div class="card-header">
-        <h3>District Court Kohima</h3>
-        <p class="fw-bold">Login</p>
+        <div class="card-body p-5">
+            <form method="post">
+
+                <!-- Username -->
+                <div class="mb-3 text-start">
+                    <label class="username text-light" required>USER NAME</label>
+                    <input type="text" class="form-control" name="username" id="username">
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3 text-start">
+                    <label class="password text-light" required>PASSWORD</label>
+                    <input type="password" class="form-control" name="password" id="password">
+                </div>
+
+                <!-- Button -->
+                <button type="submit" class="btn btn-box w-100" name="login">Log In</button>
+            </form>
+        </div>
     </div>
-
-    <div class="card-body p-5">
-        <form>
-
-            <!-- Username -->
-            <div class="mb-3 text-start">
-                <label class="uname">Username</label>
-                <input type="text" class="form-control" name="uname" id="uname">
-            </div>
-
-            <!-- Password -->
-            <div class="mb-3 text-start">
-                <label class="password">Password</label>
-                <input type="password" class="form-control" name="password" id="password">
-            </div>
-
-            <!-- Button -->
-            <button type="submit" class="btn btn-secondary w-100">Log In</button>
-
-        </form>
-    </div>
-
 </div>
+
 
 
 <?php require "includes/script.php"; ?>

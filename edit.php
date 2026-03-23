@@ -1,3 +1,15 @@
+<?php 
+session_start();
+
+if(!isset($_SESSION['user_id'])){
+    header("Location: index.php");
+    exit();
+}
+
+$court = $_SESSION['court_name'];
+
+?>
+
 <?php require 'config/db.php'; ?>
 <?php require "includes/header.php"; ?>
 

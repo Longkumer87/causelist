@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+if(!isset($_SESSION['user_id'])){
+    header("Location: index.php");
+    exit();
+}
+
+$court = $_SESSION['court_name'];
+
+?>
+
 <?php require 'config/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -43,11 +55,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     counsel='$coun',
                     remark='$rem',
                     next_date=$next
-                WHERE id=$id";
+                WHERE id=$id 
+                AND court_name=$court_name";
         } else {
             //handling Insert New Cases
-            $sql = "INSERT INTO causelist_db (cause_date, case_no, parties, counsel, remark, next_date)
-                VALUES ('$cause_date','$case','$party','$coun','$rem','$next')";
+            $sql = "INSERT INTO causelist_db (cause_date, case_no, parties, counsel, remark, next_date, court_name)
+                VALUES ('$cause_date','$case','$party','$coun','$rem','$next','$court_name')";
         }
 
         $result = mysqli_query($conn, $sql);

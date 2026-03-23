@@ -25,3 +25,29 @@
     }
 }
 
+.login-page {
+   background: url('../image/background.png')no-repeat center center;
+   background-size: cover;
+   min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#loginCard {
+    background: rgba(255, 255, 255, 0.1); /* transparent */
+    backdrop-filter: blur(10px); /* glass effect */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2); /* shadow */
+    max-width: 400px;
+    margin: 80px auto;
+    border-radius: 15px;
+}
+
+.btn-box{
+     background-color: #ff6a00;
+            color: white;
+}
+.btn-box:hover{
+    background-color: #e65c00;
+}

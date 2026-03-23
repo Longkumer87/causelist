@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+if(!isset($_SESSION['user_id'])){
+    header("Location: index.php");
+    exit();
+}
+$court = $_SESSION['court_name'];
+
+?>
+
 <?php require 'config/db.php'; ?>
 <?php
 
@@ -7,7 +18,7 @@ if (empty($date)) {
     exit;
 }
 
-$sql = "SELECT * FROM `causelist_db` WHERE cause_date='$date'";
+$sql = "SELECT * FROM `causelist_db` WHERE cause_date='$date' AND court_name='$court_name'";
 $result = mysqli_query($conn, $sql);
 $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
@@ -24,9 +35,9 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     <div class="container-fluid mt-3">
 
-    <div class="text-center mt-3">
-        <img src="image/gov.jpg" alt="Govt Logo" style="max-height: 90px;">
-    </div>
+        <div class="text-center mt-3">
+            <img src="image/gov.jpg" alt="Govt Logo" style="max-height: 90px;">
+        </div>
 
         <!-- Header -->
         <div class="text-center mb-3">
@@ -37,21 +48,21 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
         <!-- Date -->
         <h6 class="text-center mb-3">
-            CAUSE LIST FOR : 
+            CAUSE LIST FOR :
             <?= date("d F Y", strtotime($date)); ?>
         </h6>
 
         <!-- Buttons -->
-         <!-- edit -->
+        <!-- edit -->
         <div class="row mb-3 g-3 no-print text-center text-md-start">
             <div class="col-12 col-md-4">
                 <a href="edit.php?cause_date=<?= $date; ?>" class="btn btn-outline-info w-50">
                     <i class="bi bi-pencil"></i> Edit
                 </a>
             </div>
-        <!-- WhatsApp -->
-                <?php require './whatsapp.php';?>
-        <!-- Print -->
+            <!-- WhatsApp -->
+            <?php require './whatsapp.php'; ?>
+            <!-- Print -->
             <div class="col-12 col-md-4 text-md-end">
                 <button onclick="window.print()" class="btn btn-outline-dark w-50">
                     <i class="bi bi-printer"></i> Print

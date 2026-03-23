@@ -12,7 +12,7 @@ $message .= "➡️ http://192.168.0.127/causelist/view.php?cause_date=" . $date
     <a target="_blank"
         href="https://wa.me/?text=<?= urlencode($message); ?>"
         class="btn btn-outline-success w-50">
-       <i class="bi bi-whatsapp"></i> Share on WhatsApp
+        <i class="bi bi-whatsapp"></i> Share on WhatsApp
     </a>
 
 </div>
