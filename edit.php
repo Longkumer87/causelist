@@ -6,23 +6,23 @@ if(!isset($_SESSION['user_id'])){
     exit();
 }
 
-$court = $_SESSION['court_name'];
+$court_name = $_SESSION['court_name'];
 
-?>
+require 'config/db.php';
+require "includes/header.php";
 
-<?php require 'config/db.php'; ?>
-<?php require "includes/header.php"; ?>
-
-<?php
 $date = $_GET['cause_date'] ?? '';
 
-if (empty($date)) {
+if(empty($date)){
     header("Location: history.php");
-    exit;
+    exit();
 }
 
-$sql = "SELECT * FROM causelist_db WHERE cause_date='$date'";
-$result = mysqli_query($conn, $sql);
+$sql = "SELECT * FROM causelist_db WHERE cause_date = ? AND court_name = ?";
+$stmt = mysqli_prepare($conn, $sql);
+mysqli_stmt_bind_param($stmt, "ss", $date, $court_name);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 
@@ -34,61 +34,51 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
     </h5>
 
     <form action="save.php" method="post">
-        <input type="hidden" name="cause_date" value="<?= $date; ?>">
+        <input type="hidden" name="cause_date" value="<?= htmlspecialchars($date); ?>">
         
         <div class="table-responsive">
-        <table class="table table-bordered" id="causeTable">
-            <thead class="table-dark">
-                <tr>
-                    <th>S.No</th>
-                    <th>Case No</th>
-                    <th>Parties</th>
-                    <th>Counsel</th>
-                    <th>Remark</th>
-                    <th>Next Date</th>
-                    <th class="text-center">Action</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <?php $i = 1; ?>
-                <?php foreach ($rows as $row): ?>
+            <table class="table table-bordered" id="causeTable">
+                <thead class="table-dark">
                     <tr>
-
-                        <!-- hidden id -->
-                        <input type="hidden" name="id[]" value="<?= $row['id']; ?>">
-
-                        <td><?= $i++; ?></td>
-
-                        <td>
-                            <input type="text" name="case_no[]" class="form-control" value="<?= $row['case_no']; ?>">
-                        </td>
-
-                        <td>
-                            <textarea name="parties[]" class="form-control" style="min-width: 180px;"><?= $row['parties']; ?></textarea>
-                        </td>
-
-                        <td>
-                            <input type="text" name="counsel[]" class="form-control" value="<?= $row['counsel']; ?>">
-                        </td>
-
-                        <td>
-                            <input type="text" name="remark[]" class="form-control" value="<?= $row['remark']; ?>">
-                        </td>
-
-                        <td>
-                            <input type="date" name="next_date[]" class="form-control" value="<?= $row['next_date']; ?>">
-                        </td>
-
-                        <td class="text-center">
-                            <button type="button" class="btn btn-danger btn-sm" onclick="deleteRow(this)">Delete</button>
-                        </td>
-
+                        <th>S.No</th>
+                        <th>Case No</th>
+                        <th>Parties</th>
+                        <th>Counsel</th>
+                        <th>Remark</th>
+                        <th>Next Date</th>
+                        <th class="text-center">Action</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-                </div>
+                </thead>
+
+                <tbody>
+                    <?php $i = 1; ?>
+                    <?php foreach($rows as $row): ?>
+                        <tr>
+                            <input type="hidden" name="id[]" value="<?= htmlspecialchars($row['id']); ?>">
+                            <td><?= $i++; ?></td>
+                            <td>
+                                <input type="text" name="case_no[]" class="form-control" value="<?= htmlspecialchars($row['case_no']); ?>">
+                            </td>
+                            <td>
+                                <textarea name="parties[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['parties']); ?></textarea>
+                            </td>
+                            <td>
+                                <input type="text" name="counsel[]" class="form-control" value="<?= htmlspecialchars($row['counsel']); ?>">
+                            </td>
+                            <td>
+                                <input type="text" name="remark[]" class="form-control" value="<?= htmlspecialchars($row['remark']); ?>">
+                            </td>
+                            <td>
+                                <input type="date" name="next_date[]" class="form-control" value="<?= htmlspecialchars($row['next_date']); ?>">
+                            </td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteRow(this)">Delete</button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
 
         <div class="row mb-3 g-2 text-center">
             <div class="col-12 col-md-6">
@@ -96,7 +86,6 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     <i class="bi bi-file-plus"></i> Add Row
                 </button>
             </div>
-
             <div class="col-12 col-md-6">
                 <button type="submit" class="btn btn-success w-100">
                     <i class="bi bi-bookmark-check"></i> Save

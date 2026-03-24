@@ -13,7 +13,7 @@ if(!isset($_SESSION['user_id'])){
 <?php require "includes/header.php"; ?>
 
 <div class="d-flex justify-content-between align-items-center p-2 bg-secondary">    
-    <p class="text-light m-0">Court: <?php echo $_SESSION['court_name']; ?></p>
+    <p class="text-light m-0">Court: <?= htmlspecialchars($_SESSION['court_name']);?></p>
 
     <a href="logout.php" class="btn btn-danger btn-sm"><i class="bi bi-power"></i> Logout</a>
 </div>

@@ -1,9 +1,10 @@
 <?php
 
 $date = $_GET['cause_date'] ?? '';
+$date = htmlspecialchars($date);
 
 $message = "District Court Kohima \n";
-$message = "🟡 PRINCIPAL DISTRICT AND SESSIONS JUDGE \n";
+$message .= "🟡 PRINCIPAL DISTRICT AND SESSIONS JUDGE \n";
 $message .= "✅ CAUSE LIST LINK FOR " . date("d F Y", strtotime($date)) . "\n";
 $message .= "➡️ http://192.168.0.127/causelist/view.php?cause_date=" . $date;
 ?>

@@ -73,10 +73,3 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
-    <!-- <script>
-        document.querySelector("form").addEventListener("keydown", function(e) {
-            if (e.key === "Enter") {
-                e.preventDefault();
-            }
-        });
-    </script> -->

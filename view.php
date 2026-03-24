@@ -1,13 +1,14 @@
 <?php
 session_start();
 
-if(!isset($_SESSION['user_id'])){
+if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
     exit();
 }
-$court = $_SESSION['court_name'];
 
+$court_name = $_SESSION['court_name'];
 ?>
+
 
 <?php require 'config/db.php'; ?>
 <?php
@@ -18,12 +19,32 @@ if (empty($date)) {
     exit;
 }
 
-$sql = "SELECT * FROM `causelist_db` WHERE cause_date='$date' AND court_name='$court_name'";
-$result = mysqli_query($conn, $sql);
+$sql = "SELECT * FROM `causelist_db` WHERE cause_date = ? AND court_name = ?";
+$stmt = mysqli_prepare($conn, $sql);
+mysqli_stmt_bind_param($stmt, "ss", $date, $court_name);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+
+
 ?>
 
 <?php require "includes/header.php"; ?>
+
+<!-- Navbar - hidden when printing -->
+<nav class="navbar navbar-dark bg-black no-print px-3 mb-3">
+    <span class="navbar-brand fw-bold">Court: <?= htmlspecialchars($court_name); ?></span>
+    
+    <div class="d-flex flex-wrap gap-4 justify-content-center">
+        <a href="welcome.php" class="btn btn-light btn-sm"><i class="bi bi-house"></i> Home</a>
+        <a href="edit.php?cause_date=<?= htmlspecialchars($date); ?>" class="btn btn-outline-info btn-sm"><i class="bi bi-pencil"></i> Edit</a>
+        <a target="_blank" href="https://wa.me/?text=<?= urlencode($message); ?>" class="btn btn-outline-success btn-sm"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+        <button onclick="window.print()" class="btn btn-outline-dark btn-sm"><i class="bi bi-printer"></i> Print</button>
+    </div>
+
+    <a href="logout.php" class="btn btn-danger btn-sm"><i class="bi bi-power"></i> Logout</a>
+</nav>
 
 <?php if (empty($rows)): ?>
 
@@ -51,24 +72,6 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
             CAUSE LIST FOR :
             <?= date("d F Y", strtotime($date)); ?>
         </h6>
-
-        <!-- Buttons -->
-        <!-- edit -->
-        <div class="row mb-3 g-3 no-print text-center text-md-start">
-            <div class="col-12 col-md-4">
-                <a href="edit.php?cause_date=<?= $date; ?>" class="btn btn-outline-info w-50">
-                    <i class="bi bi-pencil"></i> Edit
-                </a>
-            </div>
-            <!-- WhatsApp -->
-            <?php require './whatsapp.php'; ?>
-            <!-- Print -->
-            <div class="col-12 col-md-4 text-md-end">
-                <button onclick="window.print()" class="btn btn-outline-dark w-50">
-                    <i class="bi bi-printer"></i> Print
-                </button>
-            </div>
-        </div>
 
         <!-- Table -->
         <div class="table-responsive">
