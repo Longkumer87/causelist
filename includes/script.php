@@ -73,3 +73,15 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
+<script>
+    function markDelete(btn) {
+    let row = btn.closest("tr");
+
+    // mark delete = 1
+    row.querySelector('input[name="delete[]"]').value = "1";
+
+    // hide row
+    row.style.display = "none";
+}
+</script>
+

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 22, 2026 at 12:40 PM
+-- Generation Time: Mar 24, 2026 at 05:35 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -34,8 +34,17 @@ CREATE TABLE `causelist_db` (
   `parties` text NOT NULL,
   `counsel` varchar(128) NOT NULL,
   `remark` varchar(128) NOT NULL,
-  `next_date` date DEFAULT NULL
+  `next_date` date DEFAULT NULL,
+  `court_name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `causelist_db`
+--
+
+INSERT INTO `causelist_db` (`id`, `cause_date`, `case_no`, `parties`, `counsel`, `remark`, `next_date`, `court_name`) VALUES
+(1, '2026-03-25', 'prc 1/2025', 'Maong\r\nvs Awe', 'Nina', 'Hearing', NULL, 'PRINCIPAL DISTRICT & SESSIONS JUDGE'),
+(2, '2026-03-25', 'sca 70/2026', 'Kevin \r\nvs Chuba', 'Awele', 'Notice', NULL, 'PRINCIPAL DISTRICT & SESSIONS JUDGE');
 
 -- --------------------------------------------------------
 
@@ -47,7 +56,7 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `court` varchar(50) NOT NULL,
+  `court_name` varchar(50) NOT NULL,
   `published_on` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -55,11 +64,11 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `court`, `published_on`) VALUES
-(1, 'pdsjk', 'pdsjk@123', 'pdsj', '2026-03-22'),
-(2, 'cjmk', 'cjmk@123', 'cjm', '2026-03-22'),
-(3, 'jmfck', 'jmfck@123', 'jmfc', '2026-03-22'),
-(4, 'fmck', 'fmck@123', 'fmck', '2026-03-22');
+INSERT INTO `users` (`id`, `username`, `password`, `court_name`, `published_on`) VALUES
+(1, 'pdsjk', 'pdsjk@123', 'PRINCIPAL DISTRICT & SESSIONS JUDGE', '2026-03-24'),
+(2, 'cjmk', 'cjmk@123', 'CHIEF JUDICIAL MAGISTRATE', '2026-03-24'),
+(3, 'jmfck', 'jmfck@123', 'JUDICIAL MAGISTRATE FIRST CLASS', '2026-03-24'),
+(4, 'fmck', 'fmck@123', 'PRINCIPAL JUDGE FAMILY COURT', '2026-03-24');
 
 --
 -- Indexes for dumped tables
@@ -85,7 +94,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `causelist_db`
 --
 ALTER TABLE `causelist_db`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`

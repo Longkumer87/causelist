@@ -1,25 +1,28 @@
-<?php 
+<?php
 session_start();
 
-if(!isset($_SESSION['user_id'])){
+if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
     exit();
 }
 
-$court_name = $_SESSION['court_name'];
+$court_name = $_SESSION['court_name'] ?? '';
 
 require 'config/db.php';
 require "includes/header.php";
 
 $date = $_GET['cause_date'] ?? '';
 
-if(empty($date)){
+if (empty($date)) {
     header("Location: history.php");
     exit();
 }
 
 $sql = "SELECT * FROM causelist_db WHERE cause_date = ? AND court_name = ?";
 $stmt = mysqli_prepare($conn, $sql);
+if (!$stmt) {
+    die("Query failed: " . mysqli_error($conn));
+}
 mysqli_stmt_bind_param($stmt, "ss", $date, $court_name);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
@@ -35,7 +38,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     <form action="save.php" method="post">
         <input type="hidden" name="cause_date" value="<?= htmlspecialchars($date); ?>">
-        
+
         <div class="table-responsive">
             <table class="table table-bordered" id="causeTable">
                 <thead class="table-dark">
@@ -52,9 +55,10 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
                 <tbody>
                     <?php $i = 1; ?>
-                    <?php foreach($rows as $row): ?>
+                    <?php foreach ($rows as $row): ?>
                         <tr>
                             <input type="hidden" name="id[]" value="<?= htmlspecialchars($row['id']); ?>">
+                            <input type="hidden" name="delete[]" value="0">
                             <td><?= $i++; ?></td>
                             <td>
                                 <input type="text" name="case_no[]" class="form-control" value="<?= htmlspecialchars($row['case_no']); ?>">
@@ -72,7 +76,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                 <input type="date" name="next_date[]" class="form-control" value="<?= htmlspecialchars($row['next_date']); ?>">
                             </td>
                             <td class="text-center">
-                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteRow(this)">Delete</button>
+                                <button type="button" class="btn btn-danger btn-sm" onclick="markDelete(this)">Delete</button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
