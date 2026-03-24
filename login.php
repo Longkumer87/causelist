@@ -3,27 +3,29 @@
 session_start();
 require 'config/db.php';
 
-if($_SERVER["REQUEST_METHOD"]==='POST'){
-    if(isset($_POST['login'])){
+if ($_SERVER["REQUEST_METHOD"] === 'POST') {
+    if (isset($_POST['login'])) {
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-        $sql ="SELECT * FROM `users` WHERE username= '$username' AND password='$password' ";
-        $result = mysqli_query($conn, $sql);
+        $sql = "SELECT * FROM `users` WHERE username= ? AND password = ? ";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "ss", $username, $password);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
         $rows = mysqli_num_rows($result);
 
-        if($rows===1){
+        if ($rows === 1) {
             $user = mysqli_fetch_assoc($result);
-            $_SESSION['user_id']= $user['id'];
+            session_regenerate_id(true);
+            $_SESSION['user_id'] = $user['id'];
             $_SESSION['court_name'] = $user['court_name'];
             header("Location:welcome.php");
             exit();
-        }else{
-            echo"<script>alert('Invalid Login');</script>";
+        } else {
+            echo "<script>alert('Invalid Login');</script>";
         }
-
     }
-
 }
 
 
@@ -43,13 +45,13 @@ if($_SERVER["REQUEST_METHOD"]==='POST'){
                 <!-- Username -->
                 <div class="mb-3 text-start">
                     <label class="username text-light" required>USER NAME</label>
-                    <input type="text" class="form-control" name="username" id="username">
+                    <input type="text" class="form-control" name="username" id="username" maxlength="50" required>
                 </div>
 
                 <!-- Password -->
                 <div class="mb-3 text-start">
                     <label class="password text-light" required>PASSWORD</label>
-                    <input type="password" class="form-control" name="password" id="password">
+                    <input type="password" class="form-control" name="password" id="password" maxlength="50" required>
                 </div>
 
                 <!-- Button -->
