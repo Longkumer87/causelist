@@ -101,9 +101,9 @@
                     let pdfLink = baseUrl + "/" + filePath;
 
                     let message = encodeURIComponent(
-                        "District Court Kohima\n" +
+                        "District Court Kohima\n\n" +
                         "🟡 " + courtName + "\n" +
-                        "✅ CAUSE LIST FOR " + date + "\n\n" +
+                        "✅ CAUSE LIST FOR : " + date + "\n\n" +
                         pdfLink
                     );
 

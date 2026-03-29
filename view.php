@@ -133,7 +133,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
             $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
             ?>
 
-            <img src="<?php echo $base64; ?>" style="max-height: 90px;">
+            <img src="<?php echo $base64; ?>" style="max-height: 60px;">
 
         </div>
 
@@ -182,6 +182,11 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     <?php endforeach; ?>
                 </tbody>
             </table>
+        </div>
+
+        <div style="margin-top: 30px; text-align: right;">
+            <strong>Sd/-</strong><br>
+            By Order
         </div>
 
     </div>
