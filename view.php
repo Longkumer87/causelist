@@ -1,12 +1,14 @@
 <?php
-session_start();
 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: index.php");
-    exit();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
 }
 
-$court_name = $_SESSION['court_name'] ?? '';
+if (isset($_GET['pdf'])) {
+    $court_name = $_GET['court_name'] ?? '';
+} else {
+    $court_name = $_SESSION['court_name'] ?? '';
+}
 ?>
 
 
@@ -33,34 +35,28 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 ?>
 
-<?php require "includes/header.php"; ?>
-
-<?php
-$date = $_GET['cause_date'] ?? '';
-$date = htmlspecialchars($date);
-
-$court_name = $court_name ?? 'COURT';
-
-$message = "District Court Kohima \n";
-$message .= "🟡 " . strtoupper($court_name) . " \n";
-$message .= "✅ CAUSE LIST LINK FOR " . date("d F Y", strtotime($date)) . "\n\n";
-$message .= "http://192.168.0.127/causelist/view.php?cause_date=" . $date;
-// $message .= "➡️ " . $base_url . "/view.php?cause_date=" . $date;
-?>
+<?php if (!isset($_GET['pdf'])): ?>
+    <?php require "includes/header.php"; ?>
+<?php endif; ?>
 
 <!-- Navbar - hidden when printing -->
-<nav class="navbar no-print px-3 mb-3" style="background: #ccff89e0; border-bottom: 2px solid #6bedc4;">
-    <span class="navbar-brand fw-bold">Court: <?= htmlspecialchars($court_name); ?></span>
+<?php if (!isset($_GET['pdf'])): ?>
+    <nav class="navbar no-print px-3 mb-3" style="background: #ccff89e0; border-bottom: 2px solid #6bedc4;">
+        <span class="navbar-brand fw-bold">Court: <?= htmlspecialchars($court_name); ?></span>
 
-    <div class="d-flex flex-wrap gap-4 justify-content-center">
-        <a href="welcome.php" class="btn btn-outline-secondary btn-sm"><i class="bi bi-house"></i> Home</a>
-        <a href="edit.php?cause_date=<?= htmlspecialchars($date); ?>" class="btn btn-outline-info btn-sm"><i class="bi bi-pencil"></i> Edit</a>
-        <a target="_blank" href="https://api.whatsapp.com/send?text=<?= urlencode($message); ?>" class="btn btn-outline-success btn-sm"><i class="bi bi-whatsapp"></i> WhatsApp</a>
-        <button onclick="window.print()" class="btn btn-outline-dark btn-sm"><i class="bi bi-printer"></i> Print</button>
-    </div>
+        <div class="d-flex flex-wrap gap-4 justify-content-center">
+            <a href="welcome.php" class="btn btn-outline-secondary btn-sm"><i class="bi bi-house"></i> Home</a>
+            <a href="edit.php?cause_date=<?= htmlspecialchars($date); ?>" class="btn btn-outline-info btn-sm"><i class="bi bi-pencil"></i> Edit</a>
+            <button onclick="shareWhatsApp('<?= $date ?>', '<?= htmlspecialchars($court_name) ?>')"
+                class="btn btn-outline-success btn-sm">
+                <i class="bi bi-whatsapp"></i> WhatsApp
+            </button>
+            <button onclick="window.print()" class="btn btn-outline-dark btn-sm"><i class="bi bi-printer"></i> Print</button>
+        </div>
 
-    <a href="logout.php" class="btn btn-danger btn-sm"><i class="bi bi-power"></i> Logout</a>
-</nav>
+        <a href="logout.php" class="btn btn-danger btn-sm"><i class="bi bi-power"></i> Logout</a>
+    </nav>
+<?php endif; ?>
 
 <?php if (empty($rows)): ?>
 
@@ -70,10 +66,75 @@ $message .= "http://192.168.0.127/causelist/view.php?cause_date=" . $date;
 
 <?php else: ?>
 
+    <?php if (isset($_GET['pdf'])): ?>
+        <style>
+            body {
+                font-size: 12px;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            th,
+            td {
+                border: 1px solid #000;
+                padding: 5px;
+            }
+        </style>
+    <?php endif; ?>
+
+    <?php if (isset($_GET['pdf'])): ?>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                font-size: 12px;
+                text-align: center;
+            }
+
+            img {
+                display: block;
+                margin: 0 auto;
+            }
+
+            h5,
+            h6 {
+                margin: 2px;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 10px;
+            }
+
+            th,
+            td {
+                border: 1px solid #000;
+                padding: 6px;
+                text-align: center;
+            }
+
+            td:nth-child(3) {
+                text-align: left;
+                /* Parties column */
+            }
+        </style>
+    <?php endif; ?>
+
     <div class="container-fluid mt-3">
 
         <div class="text-center mt-3">
-            <img src="image/gov.jpg" alt="Govt Logo" style="max-height: 90px;">
+            <?php
+            $path = 'image/gov.jpg';
+            $type = pathinfo($path, PATHINFO_EXTENSION);
+            $data = file_get_contents($path);
+            $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+            ?>
+
+            <img src="<?php echo $base64; ?>" style="max-height: 90px;">
+
         </div>
 
         <!-- Header -->
@@ -127,5 +188,7 @@ $message .= "http://192.168.0.127/causelist/view.php?cause_date=" . $date;
 
 <?php endif; ?>
 
-<?php require "includes/script.php"; ?>
-<?php require "includes/footer.php"; ?>
+<?php if (!isset($_GET['pdf'])): ?>
+    <?php require "includes/script.php"; ?>
+    <?php require "includes/footer.php"; ?>
+<?php endif; ?>

@@ -15,9 +15,6 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
         $result = mysqli_stmt_get_result($stmt);
         $rows = mysqli_num_rows($result);
 
-        echo "Rows: " . $rows . "<br>";
-        echo "Username: " . $username . "<br>";
-
         if ($rows === 1) {
             $user = mysqli_fetch_assoc($result);
             session_regenerate_id(true);
