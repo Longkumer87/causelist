@@ -108,9 +108,9 @@
 
 
                     let message = encodeURIComponent(
-                        "District Court Kohima\n\n" +
-                        "🟡 " + courtName + "\n" +
-                        "✅ CAUSE LIST FOR : " + formattedDate + "\n\n" +
+                        "🏛️ District Court Kohima\n\n" +
+                        "⚖️ " + courtName + "\n" +
+                        "📄 CAUSE LIST FOR : " + formattedDate + "\n\n" +
                         pdfLink
                     );
 

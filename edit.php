@@ -57,7 +57,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     <form action="save.php" method="post">
         <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
-        <input type="hidden" name="cause_date" value="<?= htmlspecialchars($date); ?>"
+        <input type="hidden" name="cause_date" value="<?= htmlspecialchars($date); ?>">
 
             <div class="table-responsive">
         <table class="table table-bordered" id="causeTable">

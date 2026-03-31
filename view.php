@@ -10,10 +10,10 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 if (isset($_GET['pdf'])) {
-    // $court_name = $_SESSION['court_name'] ?? '';
+    $court_name = $_SESSION['court_name'] ?? '';
     $court_id = $_SESSION['court_id'] ?? '';
 } else {
-    // $court_name = $_SESSION['court_name'] ?? '';
+    $court_name = $_SESSION['court_name'] ?? '';
     $court_id = $_SESSION['court_id'] ?? '';
 }
 ?>
@@ -53,8 +53,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
             <a href="edit.php?cause_date=<?= htmlspecialchars($date); ?>" class="btn btn-outline-info btn-sm"><i class="bi bi-pencil"></i> Edit</a>
             <button onclick="shareWhatsApp('<?= $date ?>', '<?= htmlspecialchars($court_name) ?>')"
                 class="btn btn-outline-success btn-sm">
-                <i class="bi bi-whatsapp"></i> WhatsApp
-            </button>
+                <i class="bi bi-whatsapp"></i> WhatsApp</button>
             <button onclick="window.print()" class="btn btn-outline-dark btn-sm"><i class="bi bi-printer"></i> Print</button>
         </div>
 
