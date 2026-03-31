@@ -1,18 +1,22 @@
-<?php
+<?php require_once 'config/db.php';
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+if (!isset($_SESSION['user_id'])) {
+    header("Location: index.php");
+    exit();
+}
+
 if (isset($_GET['pdf'])) {
-    $court_name = $_GET['court_name'] ?? '';
+    // $court_name = $_GET['court_name'] ?? '';
+    $court_name = $_SESSION['court_name'] ?? '';
 } else {
     $court_name = $_SESSION['court_name'] ?? '';
 }
 ?>
 
-
-<?php require 'config/db.php'; ?>
 <?php
 
 $date = $_GET['cause_date'] ?? '';
@@ -24,14 +28,13 @@ if (empty($date)) {
 $sql = "SELECT * FROM `causelist_db` WHERE cause_date = ? AND court_name = ?";
 $stmt = mysqli_prepare($conn, $sql);
 if (!$stmt) {
-    die("Query failed: " . mysqli_error($conn));
+    error_log("Query failed: " . mysqli_error($conn));
+    die("Something went wrong. Please try again later.");
 }
 mysqli_stmt_bind_param($stmt, "ss", $date, $court_name);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-
 
 ?>
 
@@ -82,11 +85,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 border: 1px solid #000;
                 padding: 5px;
             }
-        </style>
-    <?php endif; ?>
 
-    <?php if (isset($_GET['pdf'])): ?>
-        <style>
             body {
                 font-family: Arial, sans-serif;
                 font-size: 12px;

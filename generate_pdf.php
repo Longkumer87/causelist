@@ -1,37 +1,41 @@
 <?php
 session_start();
 
+if (!isset($_SESSION['user_id'])) {
+    header("Location: index.php");
+    exit();
+}
+
 require 'dompdf/autoload.inc.php';
 use Dompdf\Dompdf;
 
-$date = $_GET['cause_date'] ?? '';
+// Sanitize date input
+$date = preg_replace('/[^0-9\-]/', '', $_GET['cause_date'] ?? '');
 $court_name = $_SESSION['court_name'] ?? '';
+
+if (empty($date)) {
+    header("Location: history.php");
+    exit();
+}
 
 $dompdf = new Dompdf();
 
-// ✅ START buffer
 ob_start();
-
-// Tell view it's PDF mode
 $_GET['pdf'] = 1;
-$_GET['court_name'] = $court_name;
 
-// Load HTML
 include 'view.php';
-
-// ✅ GET clean HTML
 $html = ob_get_clean();
 
-// Load into Dompdf
 $dompdf->loadHtml($html);
 $dompdf->setPaper('A4', 'portrait');
 $dompdf->render();
 
-// Save PDF
-$file = "pdf/causelist_" . $date . ".pdf";
+// Save PDF safely
+$filename = "causelist_" . $date . ".pdf";
+$file = "pdf/" . $filename;
 file_put_contents($file, $dompdf->output());
 
-// ✅ RETURN ONLY file path
+// Return only the filename
 echo $file;
 exit;
 ?>

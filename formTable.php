@@ -4,7 +4,7 @@
 
         <!-- Court Name -->
         <span class="navbar-brand fw-bold mb-0">
-            <i class="bi bi-building me-1"></i><?= htmlspecialchars($_SESSION['court_name'] ?? ''); ?>
+            <i class="bi bi-building me-1"></i><?= htmlspecialchars($court_name); ?>
         </span>
 
         <!-- Hamburger toggle (mobile only) -->
@@ -49,6 +49,7 @@
 <div class="container-fluid">
 
     <form action="save.php" method="post" onsubmit="return confirm('Are you sure you want to save?')">
+        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
 
         <!-- Cause Date -->
         <div class="row mb-3 justify-content-center align-items-center">

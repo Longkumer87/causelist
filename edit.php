@@ -1,4 +1,5 @@
 <?php
+require_once 'config/db.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -8,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $court_name = $_SESSION['court_name'] ?? '';
 
-require 'config/db.php';
+
 require "includes/header.php";
 
 $date = $_GET['cause_date'] ?? '';
@@ -21,7 +22,8 @@ if (empty($date)) {
 $sql = "SELECT * FROM causelist_db WHERE cause_date = ? AND court_name = ?";
 $stmt = mysqli_prepare($conn, $sql);
 if (!$stmt) {
-    die("Query failed: " . mysqli_error($conn));
+    error_log("Query failed: " . mysqli_error($conn));
+    die("Something went wrong. Please try again later.");
 }
 mysqli_stmt_bind_param($stmt, "ss", $date, $court_name);
 mysqli_stmt_execute($stmt);
@@ -37,7 +39,9 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
     </h5>
 
     <form action="save.php" method="post">
-        <input type="hidden" name="cause_date" value="<?= htmlspecialchars($date); ?>">
+        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+        <input type="hidden" name="cause_date" value="<?= htmlspecialchars($date); ?>"
+            <input type="hidden" name="cause_date" value="<?= htmlspecialchars($date); ?>">
 
         <div class="table-responsive">
             <table class="table table-bordered" id="causeTable">
