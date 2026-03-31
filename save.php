@@ -9,7 +9,8 @@ if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_tok
     die("Invalid request.");
 }
 
-$court_name = $_SESSION['court_name'] ?? '';
+$court_id = $_SESSION['court_id'] ?? '';
+
 
 require 'config/db.php';
 
@@ -35,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $id = $_POST['id'][$i];
 
-            $sql = "DELETE FROM causelist_db WHERE id=? AND court_name=?";
+            $sql = "DELETE FROM causelist_db WHERE id=? AND court_id=?";
             $stmt = mysqli_prepare($conn, $sql);
 
             if (!$stmt) {
@@ -43,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 die("Something went wrong. Please try again later.");
             }
 
-            mysqli_stmt_bind_param($stmt, "is", $id, $court_name);
+            mysqli_stmt_bind_param($stmt, "ii", $id, $court_id);
             mysqli_stmt_execute($stmt);
 
             continue;
@@ -68,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         counsel=?,
                         remark=?,
                         next_date=?
-                    WHERE id=? AND court_name=?";
+                    WHERE id=? AND court_id=?";
 
             $stmt = mysqli_prepare($conn, $sql);
             if (!$stmt) {
@@ -76,11 +77,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 die("Something went wrong. Please try again later.");
             }
 
-            mysqli_stmt_bind_param($stmt, "sssssds", $case, $party, $coun, $rem, $next, $id, $court_name);
+            mysqli_stmt_bind_param($stmt, "sssssii", $case, $party, $coun, $rem, $next, $id, $court_id);
             mysqli_stmt_execute($stmt);
         } else {
 
-            $sql = "INSERT INTO causelist_db (cause_date, case_no, parties, counsel, remark, next_date, court_name)
+            $sql = "INSERT INTO causelist_db (cause_date, case_no, parties, counsel, remark, next_date, court_id)
                     VALUES (?, ?, ?, ?, ?, ?, ?)";
 
             $stmt = mysqli_prepare($conn, $sql);
@@ -88,14 +89,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 error_log("Query failed: " . mysqli_error($conn));
                 die("Something went wrong. Please try again later.");
             }
-            mysqli_stmt_bind_param($stmt, "sssssss", $cause_date, $case, $party, $coun, $rem, $next, $court_name);
+            mysqli_stmt_bind_param($stmt, "ssssssi", $cause_date, $case, $party, $coun, $rem, $next, $court_id);
             mysqli_stmt_execute($stmt);
         }
     }
 
     header("Location: view.php?cause_date=" . urlencode($cause_date));
     exit();
-
-    // header("Location: view.php?cause_date=$cause_date");
-    // exit();
 }

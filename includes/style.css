@@ -26,7 +26,7 @@
 }
 
 .login-page {
-   background: url('../image/background.png')no-repeat center center;
+   background: url('../image/court.png')no-repeat center center;
    background-size: cover;
    min-height: 100vh;
 
@@ -40,7 +40,7 @@
     backdrop-filter: blur(10px); /* glass effect */
     box-shadow: 0 8px 20px rgba(0,0,0,0.2); /* shadow */
     max-width: 400px;
-    margin: 80px auto;
+    margin: 80px 50px 0 auto;
     border-radius: 15px;
 }
 

@@ -10,10 +10,11 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 if (isset($_GET['pdf'])) {
-    // $court_name = $_GET['court_name'] ?? '';
-    $court_name = $_SESSION['court_name'] ?? '';
+    // $court_name = $_SESSION['court_name'] ?? '';
+    $court_id = $_SESSION['court_id'] ?? '';
 } else {
-    $court_name = $_SESSION['court_name'] ?? '';
+    // $court_name = $_SESSION['court_name'] ?? '';
+    $court_id = $_SESSION['court_id'] ?? '';
 }
 ?>
 
@@ -25,13 +26,13 @@ if (empty($date)) {
     exit;
 }
 
-$sql = "SELECT * FROM `causelist_db` WHERE cause_date = ? AND court_name = ?";
+$sql = "SELECT * FROM `causelist_db` WHERE cause_date = ? AND court_id = ?";
 $stmt = mysqli_prepare($conn, $sql);
 if (!$stmt) {
     error_log("Query failed: " . mysqli_error($conn));
     die("Something went wrong. Please try again later.");
 }
-mysqli_stmt_bind_param($stmt, "ss", $date, $court_name);
+mysqli_stmt_bind_param($stmt, "si", $date, $court_id);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);

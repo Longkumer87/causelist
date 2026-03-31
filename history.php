@@ -5,6 +5,7 @@ if(!isset($_SESSION['user_id'])){
     header("Location: index.php");
     exit();
 }
+$court_id = $_SESSION['court_id'] ?? '';
 ?>
 
 <!-- <?php require 'config/db.php'; ?> --> 

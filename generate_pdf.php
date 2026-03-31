@@ -12,6 +12,7 @@ use Dompdf\Dompdf;
 // Sanitize date input
 $date = preg_replace('/[^0-9\-]/', '', $_GET['cause_date'] ?? '');
 $court_name = $_SESSION['court_name'] ?? '';
+$court_id = $_SESSION['court_id'] ?? '';
 
 if (empty($date)) {
     header("Location: history.php");
@@ -31,6 +32,7 @@ $dompdf->setPaper('A4', 'portrait');
 $dompdf->render();
 
 // Save PDF safely
+$court_id = $_SESSION['court_id'] ?? '';
 $filename = "causelist_" . $date . ".pdf";
 $file = "pdf/" . $filename;
 file_put_contents($file, $dompdf->output());

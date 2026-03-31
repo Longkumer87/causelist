@@ -1,44 +1,15 @@
-
 <nav class="navbar navbar-dark bg-secondary px-3">
-    <div class="container-fluid p-0">
+    <div class="container-fluid p-0 d-flex justify-content-between align-items-center">
 
         <!-- Court Name -->
-        <span class="navbar-brand fw-bold mb-0">
+        <span class="navbar-brand fw-bold mb-0 text-truncate" style="max-width: 70%;">
             <i class="bi bi-building me-1"></i><?= htmlspecialchars($court_name); ?>
         </span>
 
-        <!-- Hamburger toggle (mobile only) -->
-        <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Desktop buttons (always visible on large screens) -->
-        <div class="d-none d-lg-flex align-items-center gap-3">
-            <a href="history.php" class="btn btn-info">
-                <i class="bi bi-binoculars"></i> View Cause Lists
-            </a>
-            <button type="submit" class="btn btn-success">
-                <i class="bi bi-bookmark-check"></i> Save Cause List
-            </button>
-            <a href="logout.php" class="btn btn-danger">
-                <i class="bi bi-power"></i> Logout
-            </a>
-        </div>
-
-        <!-- Mobile collapse menu -->
-        <div class="collapse navbar-collapse d-lg-none" id="navbarContent">
-            <div class="d-flex flex-column gap-2 py-2">
-                <a href="history.php" class="btn btn-info btn-sm">
-                    <i class="bi bi-binoculars"></i> View Cause Lists
-                </a>
-                <button type="submit" class="btn btn-success btn-sm">
-                    <i class="bi bi-bookmark-check"></i> Save Cause List
-                </button>
-                <a href="logout.php" class="btn btn-danger btn-sm">
-                    <i class="bi bi-power"></i> Logout
-                </a>
-            </div>
-        </div>
+        <!-- Logout -->
+        <a href="logout.php" class="btn btn-danger btn-sm px-3">
+            <i class="bi bi-power"></i> Logout
+        </a>
 
     </div>
 </nav>
@@ -50,6 +21,7 @@
 
     <form action="save.php" method="post" onsubmit="return confirm('Are you sure you want to save?')">
         <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+        <input type="hidden" name="cause_date" value="<?= htmlspecialchars($date); ?>">
 
         <!-- Cause Date -->
         <div class="row mb-3 justify-content-center align-items-center">
@@ -60,6 +32,24 @@
             <div class="col-12 col-md-4">
                 <input type="date" class="form-control" name="cause_date" id="cause_date" required>
             </div>
+        </div>
+
+        <div class="row mb-3 g-2">
+
+            <!-- View Button -->
+            <div class="col-12 col-md-6">
+                <a href="history.php" class="btn btn-info w-100">
+                    <i class="bi bi-binoculars"></i> View Cause Lists
+                </a>
+            </div>
+
+            <!-- Save Button -->
+            <div class="col-12 col-md-6">
+                <button type="submit" class="btn btn-success w-100">
+                    <i class="bi bi-bookmark-check"></i> Save Cause List
+                </button>
+            </div>
+
         </div>
 
 
@@ -86,16 +76,16 @@
                         <td><input type="text" class="form-control" name="counsel[]"></td>
                         <td><input type="text" class="form-control" name="remark[]"></td>
                         <td><input type="date" class="form-control" name="next_date[]"></td>
-                       <td class="text-center">
-    <div class="d-flex gap-2 justify-content-center">
-        <button type="button" class="btn btn-primary btn-sm" onclick="addRow()">
-            <i class="bi bi-file-plus"></i> Add
-        </button>
-        <button type="button" class="btn btn-danger btn-sm" onclick="deleteRow(this)">
-            <i class="bi bi-trash3"></i> Delete
-        </button>
-    </div>
-</td>
+                        <td class="text-center">
+                            <div class="d-flex gap-2 justify-content-center">
+                                <button type="button" class="btn btn-primary btn-sm" onclick="addRow()">
+                                    <i class="bi bi-file-plus"></i> Add
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteRow(this)">
+                                    <i class="bi bi-trash3"></i> Delete
+                                </button>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>

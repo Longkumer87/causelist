@@ -1,5 +1,6 @@
 <?php
 require_once 'config/db.php';
+require_once 'includes/header.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -7,10 +8,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-$court_name = $_SESSION['court_name'] ?? '';
-
-
-require "includes/header.php";
+$court_id = $_SESSION['court_id'] ?? '';
 
 $date = $_GET['cause_date'] ?? '';
 
@@ -19,89 +17,106 @@ if (empty($date)) {
     exit();
 }
 
-$sql = "SELECT * FROM causelist_db WHERE cause_date = ? AND court_name = ?";
+$sql = "SELECT * FROM causelist_db WHERE cause_date = ? AND court_id = ?";
 $stmt = mysqli_prepare($conn, $sql);
 if (!$stmt) {
     error_log("Query failed: " . mysqli_error($conn));
     die("Something went wrong. Please try again later.");
 }
-mysqli_stmt_bind_param($stmt, "ss", $date, $court_name);
+mysqli_stmt_bind_param($stmt, "si", $date, $court_id);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 
+<nav class="navbar navbar-dark bg-secondary px-3">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+
+        <!-- Right: Buttons -->
+        <div class="d-flex gap-4">
+
+            <a href="welcome.php" class="btn btn-outline-light btn-sm">
+                <i class="bi bi-house"></i> Home
+            </a>
+
+            <a href="history.php" class="btn btn-info btn-sm">
+                <i class="bi bi-binoculars"></i> View
+            </a>
+
+        </div>
+
+    </div>
+</nav>
+
 <div class="container-fluid mt-3">
 
-    <h4 class="text-center">Edit Cause List</h4>
-    <h5 class="text-center">
+    <p class="text-center">Edit Cause List : <?= htmlspecialchars($_SESSION['court_name'] ?? '') ?></p>
+    <p class="text-center">
         <?= date("d F Y", strtotime($date)); ?>
-    </h5>
+    </p>
 
     <form action="save.php" method="post">
         <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
         <input type="hidden" name="cause_date" value="<?= htmlspecialchars($date); ?>"
-            <input type="hidden" name="cause_date" value="<?= htmlspecialchars($date); ?>">
 
-        <div class="table-responsive">
-            <table class="table table-bordered" id="causeTable">
-                <thead class="table-dark">
+            <div class="table-responsive">
+        <table class="table table-bordered" id="causeTable">
+            <thead class="table-dark">
+                <tr>
+                    <th>S.No</th>
+                    <th>Case No</th>
+                    <th>Parties</th>
+                    <th>Counsel</th>
+                    <th>Remark</th>
+                    <th>Next Date</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <?php $i = 1; ?>
+                <?php foreach ($rows as $row): ?>
                     <tr>
-                        <th>S.No</th>
-                        <th>Case No</th>
-                        <th>Parties</th>
-                        <th>Counsel</th>
-                        <th>Remark</th>
-                        <th>Next Date</th>
-                        <th class="text-center">Action</th>
+                        <input type="hidden" name="id[]" value="<?= htmlspecialchars($row['id']); ?>">
+                        <input type="hidden" name="delete[]" value="0">
+                        <td><?= $i++; ?></td>
+                        <td>
+                            <input type="text" name="case_no[]" class="form-control" value="<?= htmlspecialchars($row['case_no']); ?>">
+                        </td>
+                        <td>
+                            <textarea name="parties[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['parties']); ?></textarea>
+                        </td>
+                        <td>
+                            <input type="text" name="counsel[]" class="form-control" value="<?= htmlspecialchars($row['counsel']); ?>">
+                        </td>
+                        <td>
+                            <input type="text" name="remark[]" class="form-control" value="<?= htmlspecialchars($row['remark']); ?>">
+                        </td>
+                        <td>
+                            <input type="date" name="next_date[]" class="form-control" value="<?= htmlspecialchars($row['next_date']); ?>">
+                        </td>
+                        <td class="text-center">
+                            <div class="d-flex gap-2 justify-content-center">
+                                <button type="button" class="btn btn-primary btn-sm" onclick="addRow()">
+                                    <i class="bi bi-file-plus"></i> Add
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteRow(this)">
+                                    <i class="bi bi-trash3"></i> Delete
+                                </button>
+                            </div>
+                        </td>
                     </tr>
-                </thead>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+</div>
 
-                <tbody>
-                    <?php $i = 1; ?>
-                    <?php foreach ($rows as $row): ?>
-                        <tr>
-                            <input type="hidden" name="id[]" value="<?= htmlspecialchars($row['id']); ?>">
-                            <input type="hidden" name="delete[]" value="0">
-                            <td><?= $i++; ?></td>
-                            <td>
-                                <input type="text" name="case_no[]" class="form-control" value="<?= htmlspecialchars($row['case_no']); ?>">
-                            </td>
-                            <td>
-                                <textarea name="parties[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['parties']); ?></textarea>
-                            </td>
-                            <td>
-                                <input type="text" name="counsel[]" class="form-control" value="<?= htmlspecialchars($row['counsel']); ?>">
-                            </td>
-                            <td>
-                                <input type="text" name="remark[]" class="form-control" value="<?= htmlspecialchars($row['remark']); ?>">
-                            </td>
-                            <td>
-                                <input type="date" name="next_date[]" class="form-control" value="<?= htmlspecialchars($row['next_date']); ?>">
-                            </td>
-                            <td class="text-center">
-                                <button type="button" class="btn btn-danger btn-sm" onclick="markDelete(this)">Delete</button>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="row mb-3 g-2 text-center">
-            <div class="col-12 col-md-6">
-                <button type="button" class="btn btn-primary w-100" onclick="addRow()">
-                    <i class="bi bi-file-plus"></i> Add Row
-                </button>
-            </div>
-            <div class="col-12 col-md-6">
-                <button type="submit" class="btn btn-success w-100">
-                    <i class="bi bi-bookmark-check"></i> Save
-                </button>
-            </div>
-        </div>
-
-    </form>
+<div class="text-end mt-3">
+    <button type="submit" class="btn btn-success px-4">
+        <i class="bi bi-bookmark-check"></i> Submit
+    </button>
+</div>
+</form>
 
 </div>
 

@@ -20,6 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
             session_regenerate_id(true);
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['court_name'] = $user['court_name'];
+            $_SESSION['court_id'] = $user['court_id'];
             header("Location:welcome.php");
             exit();
         } else {
