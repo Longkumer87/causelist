@@ -30,7 +30,7 @@
             </div>
 
             <div class="col-12 col-md-4">
-                <input type="date" class="form-control" name="cause_date" id="cause_date" required>
+                <input type="date" class="form-control" name="cause_date" id="cause_date" min="<?php echo date('Y-m-d'); ?>" required>
             </div>
         </div>
 
