@@ -5,7 +5,7 @@ if(!isset($_SESSION['user_id'])){
     header("Location: index.php");
     exit();
 }
-$court_id = $_SESSION['court_id'] ?? '';
+$court_name = $_SESSION['court_name'] ?? '';
 ?>
 
 <!-- <?php require 'config/db.php'; ?> --> 
@@ -15,6 +15,7 @@ $court_id = $_SESSION['court_id'] ?? '';
 <div class="d-flex flex-wrap justify-content-between align-items-center px-3 py-2 bg-secondary gap-2">
     <p class="text-light m-0 fw-semibold">
         <i class="bi bi-building me-1"></i> <?= htmlspecialchars($court_name); ?>
+         <a href="welcome.php" class="btn btn-outline-light btn-sm"><i class="bi bi-house"></i> Home</a>
     </p>
     <a href="logout.php" class="btn btn-danger btn-sm">
         <i class="bi bi-power"></i> Logout

@@ -15,6 +15,7 @@ if (empty($_SESSION['csrf_token'])) {
 ?>
 
 <?php require_once "includes/header.php"; ?>
+<?php require_once "includes/case.php"; ?>
 <?php require_once './formTable.php'; ?>
 <?php require_once "includes/script.php"; ?>
 <?php require_once "includes/footer.php"; ?>

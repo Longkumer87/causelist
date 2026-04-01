@@ -71,7 +71,14 @@
                 <tbody>
                     <tr>
                         <td class="text-center fw-bold">1</td>
-                        <td><input type="text" class="form-control" name="case_no[]" required></td>
+                        <td>
+                            <input type="text" class="form-control" name="case_no[]" list="caseTypeList" required>
+                            <datalist id="caseTypeList">
+                                <?php foreach ($case_types as $type): ?>
+                                    <option value="<?php echo $type['type_name']; ?>">
+                                <?php endforeach; ?>
+                            </datalist>
+                        </td>
                         <td><textarea class="form-control" name="parties[]" style="min-width: 180px;" required></textarea></td>
                         <td><input type="text" class="form-control" name="counsel[]"></td>
                         <td><input type="text" class="form-control" name="remark[]"></td>
