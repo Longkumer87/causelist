@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 31, 2026 at 04:59 PM
+-- Generation Time: Apr 01, 2026 at 04:29 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -35,7 +35,6 @@ CREATE TABLE `causelist_db` (
   `counsel` varchar(128) NOT NULL,
   `remark` varchar(128) NOT NULL,
   `next_date` date DEFAULT NULL,
-  `court_name` varchar(50) NOT NULL,
   `court_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -43,9 +42,9 @@ CREATE TABLE `causelist_db` (
 -- Dumping data for table `causelist_db`
 --
 
-INSERT INTO `causelist_db` (`id`, `cause_date`, `case_no`, `parties`, `counsel`, `remark`, `next_date`, `court_name`, `court_id`) VALUES
-(1, '2026-04-01', 'prc 1/2025', 'Maong\r\nvs Awe', 'Nina', 'Notice', NULL, '', 1),
-(2, '2026-04-01', 'prc 1/2020', 'Molo\r\nvs Huide', 'Awele', 'Hearing', NULL, '', 1);
+INSERT INTO `causelist_db` (`id`, `cause_date`, `case_no`, `parties`, `counsel`, `remark`, `next_date`, `court_id`) VALUES
+(1, '2026-04-01', 'prc 1/2025', 'Maong\r\nvs Awe', 'Nina', 'Notice', NULL, 1),
+(2, '2026-04-01', 'prc 1/2020', 'Molo\r\nvs Huide', 'Awele', 'Hearing', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -81,7 +80,7 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `court_name` varchar(50) NOT NULL,
   `published_on` datetime NOT NULL DEFAULT current_timestamp(),
-  `court_id` int(11) DEFAULT NULL
+  `court_id` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -103,7 +102,8 @@ INSERT INTO `users` (`id`, `username`, `password`, `court_name`, `published_on`,
 -- Indexes for table `causelist_db`
 --
 ALTER TABLE `causelist_db`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_cause_court` (`court_id`);
 
 --
 -- Indexes for table `court`
@@ -115,7 +115,8 @@ ALTER TABLE `court`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_users_court` (`court_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -138,6 +139,22 @@ ALTER TABLE `court`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `causelist_db`
+--
+ALTER TABLE `causelist_db`
+  ADD CONSTRAINT `fk_cause_court` FOREIGN KEY (`court_id`) REFERENCES `court` (`court_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `fk_users_court` FOREIGN KEY (`court_id`) REFERENCES `court` (`court_id`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
