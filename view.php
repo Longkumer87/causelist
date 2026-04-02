@@ -88,7 +88,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
             body {
                 font-family: Arial, sans-serif;
-                font-size: 12px;
+                font-size: 10px;
                 text-align: center;
             }
 

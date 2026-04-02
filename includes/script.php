@@ -12,8 +12,8 @@
         <td class="text-center fw-bold">${rowCount + 1}</td>
         <td><input type="text" class="form-control form-control-sm" name="case_no[]" required></td>
         <td><textarea class="form-control form-control-sm" name="parties[]" rows="2" required></textarea></td>
-        <td><input type="text" class="form-control form-control-sm" name="counsel[]"></td>
-        <td><input type="text" class="form-control form-control-sm" name="remark[]"></td>
+        <td><textarea class="form-control form-control-sm" name="counsel[]" rows="2" required></textarea></td>
+        <td><textarea class="form-control form-control-sm" name="remark[]" rows="2" required></textarea></td>
         <td><input type="date" class="form-control form-control-sm" name="next_date[]"></td>
        <td class="text-center">
     <div class="d-flex gap-2 justify-content-center">

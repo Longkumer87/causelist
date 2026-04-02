@@ -80,8 +80,9 @@
                             </datalist>
                         </td>
                         <td><textarea class="form-control" name="parties[]" style="min-width: 180px;" required></textarea></td>
-                        <td><input type="text" class="form-control" name="counsel[]"></td>
-                        <td><input type="text" class="form-control" name="remark[]"></td>
+                        <td><textarea class="form-control" name="counsel[]" style="min-width: 180px;" required></textarea></td>
+                        <td><textarea class="form-control" name="remarks[]" style="max-width: 180px;" required></textarea></td>
+                        
                         <td><input type="date" class="form-control" name="next_date[]"></td>
                         <td class="text-center">
                             <div class="d-flex gap-2 justify-content-center">
