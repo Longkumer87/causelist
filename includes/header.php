@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Cause List System</title>
+    <title><?= $title; ?></title>
 
     <!-- Mobile Responsive -->
     <meta name="viewport" content="width=device-width, initial-scale=1">

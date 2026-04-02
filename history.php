@@ -8,8 +8,9 @@ if(!isset($_SESSION['user_id'])){
 $court_name = $_SESSION['court_name'] ?? '';
 ?>
 
-<!-- <?php require 'config/db.php'; ?> --> 
-<?php require "includes/header.php"; ?>
+
+<?php $title = "view";
+require "includes/header.php"; ?>
 
 <!-- Navbar -->
 <div class="d-flex flex-wrap justify-content-between align-items-center px-3 py-2 bg-secondary gap-2">

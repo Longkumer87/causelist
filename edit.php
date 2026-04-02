@@ -1,4 +1,4 @@
-<?php
+<?php $title="edit";
 require_once 'config/db.php';
 require_once 'includes/header.php';
 session_start();
@@ -87,10 +87,10 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                             <textarea name="parties[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['parties']); ?></textarea>
                         </td>
                         <td>
-                            <input type="text" name="counsel[]" class="form-control" value="<?= htmlspecialchars($row['counsel']); ?>">
+                            <textarea name="parties[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['counsel']); ?></textarea>
                         </td>
                         <td>
-                            <input type="text" name="remark[]" class="form-control" value="<?= htmlspecialchars($row['remark']); ?>">
+                            <textarea name="parties[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['remark']); ?></textarea>
                         </td>
                         <td>
                             <input type="date" name="next_date[]" class="form-control" value="<?= htmlspecialchars($row['next_date']); ?>">

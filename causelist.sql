@@ -31,7 +31,7 @@ CREATE TABLE `case_type` (
   `case_id` int(10) UNSIGNED NOT NULL,
   `type_name` varchar(512) NOT NULL,
   `type_name_short` varchar(64) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `case_type`

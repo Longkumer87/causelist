@@ -34,25 +34,6 @@
             </div>
         </div>
 
-        <div class="row mb-3 g-2">
-
-            <!-- View Button -->
-            <div class="col-12 col-md-6">
-                <a href="history.php" class="btn btn-info w-100">
-                    <i class="bi bi-binoculars"></i> View Cause Lists
-                </a>
-            </div>
-
-            <!-- Save Button -->
-            <div class="col-12 col-md-6">
-                <button type="submit" class="btn btn-success w-100">
-                    <i class="bi bi-bookmark-check"></i> Save Cause List
-                </button>
-            </div>
-
-        </div>
-
-
         <!-- Table -->
         <div class="table-responsive">
             <table class="table table-bordered table-striped" id="causeTable">
@@ -76,13 +57,13 @@
                             <datalist id="caseTypeList">
                                 <?php foreach ($case_types as $type): ?>
                                     <option value="<?php echo $type['type_name']; ?>">
-                                <?php endforeach; ?>
+                                    <?php endforeach; ?>
                             </datalist>
                         </td>
                         <td><textarea class="form-control" name="parties[]" style="min-width: 180px;" required></textarea></td>
                         <td><textarea class="form-control" name="counsel[]" style="min-width: 180px;" required></textarea></td>
-                        <td><textarea class="form-control" name="remarks[]" style="max-width: 180px;" required></textarea></td>
-                        
+                        <td><textarea class="form-control" name="remarks[]" style="min-width: 180px;" required></textarea></td>
+
                         <td><input type="date" class="form-control" name="next_date[]"></td>
                         <td class="text-center">
                             <div class="d-flex gap-2 justify-content-center">
@@ -97,6 +78,24 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+
+        <div class="row mb-3 mt-3">
+
+            <!-- View Button -->
+            <div class="col-12 col-md-6 text-md-start mb-2 mb-md-0">
+                <a href="history.php" class="btn btn-info">
+                    <i class="bi bi-binoculars"></i> View Cause Lists
+                </a>
+            </div>
+
+            <!-- Save Button -->
+            <div class="col-12 col-md-6 text-md-end">
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-bookmark-check"></i> Save Cause List
+                </button>
+            </div>
+
         </div>
 
     </form>
