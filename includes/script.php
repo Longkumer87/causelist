@@ -93,35 +93,36 @@
     <script>
         function shareWhatsApp(date, courtName) {
 
-    fetch("generate_pdf.php?cause_date=" + date)
-        .then(res => res.text())
-        .then(filePath => {
+            fetch("generate_pdf.php?cause_date=" + date)
+                .then(res => res.text())
+                .then(filePath => {
 
-            let baseUrl = "https://unexplorable-ashlee-ineffable.ngrok-free.dev/causelist";
-            let pdfLink = baseUrl + "/" + filePath;
+                    // let baseUrl = "https://maonglkr.free.nf/causelist";
+                    let baseUrl = "https://maonglkr.free.nf";
+                    let pdfLink = baseUrl + "/" + filePath;
 
-            let d = new Date(date);
-            let formattedDate = d.getDate().toString().padStart(2, '0') + '-' +
-                (d.getMonth() + 1).toString().padStart(2, '0') + '-' +
-                d.getFullYear();
+                    let d = new Date(date);
+                    let formattedDate = d.getDate().toString().padStart(2, '0') + '-' +
+                        (d.getMonth() + 1).toString().padStart(2, '0') + '-' +
+                        d.getFullYear();
 
-            let message = encodeURIComponent(
-                "🏛️ District Court Kohima\n\n" +
-                "⚖️ " + courtName + "\n" +
-                "📄 CAUSE LIST FOR : " + formattedDate + "\n\n" +
-                pdfLink
-            );
+                    let message = encodeURIComponent(
+                        "🏛️ District Court Kohima\n\n" +
+                        "⚖️ " + courtName + "\n" +
+                        "📄 CAUSE LIST FOR : " + formattedDate + "\n\n" +
+                        pdfLink
+                    );
 
-            // ✅ Detect device
-            let isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+                    // ✅ Detect device
+                    let isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-            if (isMobile) {
-                window.open("https://wa.me/?text=" + message, "_blank");
-            } else {
-                window.open("https://web.whatsapp.com/send?text=" + message, "_blank");
-            }
+                    if (isMobile) {
+                        window.open("https://wa.me/?text=" + message, "_blank");
+                    } else {
+                        window.open("https://web.whatsapp.com/send?text=" + message, "_blank");
+                    }
 
-        });
+                });
 
-}
+        }
     </script>

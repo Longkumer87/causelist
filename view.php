@@ -1,4 +1,4 @@
-<?php $title="causelist";
+<?php $title = "causelist";
 require_once 'config/db.php';
 
 if (session_status() == PHP_SESSION_NONE) {
@@ -17,6 +17,9 @@ if (isset($_GET['pdf'])) {
     $court_name = $_SESSION['court_name'] ?? '';
     $court_id = $_SESSION['court_id'] ?? '';
 }
+
+//title bar code 
+$title = "causelist - " . $court_name;
 ?>
 
 <?php
@@ -136,6 +139,15 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
             <img src="<?php echo $base64; ?>" style="max-height: 60px;">
 
         </div>
+
+        <?php
+        $sealPath = 'image/seal.png';
+        $sealType = pathinfo($sealPath, PATHINFO_EXTENSION);
+        $sealData = file_get_contents($sealPath);
+        $sealBase64 = 'data:image/' . $sealType . ';base64,' . base64_encode($sealData);
+        ?>
+
+        <img src="<?php echo $sealBase64; ?>" class="seal" style="max-height: 1100px;">
 
         <!-- Header -->
         <div class="text-center mb-3">

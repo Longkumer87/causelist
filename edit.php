@@ -87,10 +87,10 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                             <textarea name="parties[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['parties']); ?></textarea>
                         </td>
                         <td>
-                            <textarea name="parties[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['counsel']); ?></textarea>
+                            <textarea name="consel[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['counsel']); ?></textarea>
                         </td>
                         <td>
-                            <textarea name="parties[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['remark']); ?></textarea>
+                            <textarea name="remark[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['remark']); ?></textarea>
                         </td>
                         <td>
                             <input type="date" name="next_date[]" class="form-control" value="<?= htmlspecialchars($row['next_date']); ?>">
@@ -100,7 +100,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                 <button type="button" class="btn btn-primary btn-sm" onclick="addRow()">
                                     <i class="bi bi-file-plus"></i> Add
                                 </button>
-                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteRow(this)">
+                                <button type="button" class="btn btn-danger btn-sm" onclick="markDelete(this)">
                                     <i class="bi bi-trash3"></i> Delete
                                 </button>
                             </div>

@@ -33,7 +33,7 @@ $dompdf->render();
 
 // Save PDF safely
 $court_id = $_SESSION['court_id'] ?? '';
-$filename = "causelist_" . $date . ".pdf";
+$filename = "causelist_" . $court_id . "_" . $date . ".pdf";
 $file = "pdf/" . $filename;
 file_put_contents($file, $dompdf->output());
 

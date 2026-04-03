@@ -21,7 +21,7 @@
 
     <form action="save.php" method="post" onsubmit="return confirm('Are you sure you want to save?')">
         <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
-        <input type="hidden" name="cause_date" value="<?= htmlspecialchars($date); ?>">
+        <!-- <input type="hidden" name="cause_date" value="<?= htmlspecialchars($date); ?>"> -->
 
         <!-- Cause Date -->
         <div class="row mb-3 justify-content-center align-items-center">

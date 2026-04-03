@@ -1,7 +1,23 @@
 <?php
+require 'config/db.php';
 
 session_start();
-require 'config/db.php';
+
+if (!isset($_SESSION['attempts'])) {
+    $_SESSION['attempts'] = 0;
+    $_SESSION['last_attempt_time'] = time();
+}
+
+if ($_SESSION['attempts'] >= 4) {
+    $wait = 300; // 300 seconds = 5 minutes
+    if (time() - $_SESSION['last_attempt_time'] < $wait) {
+        die("Too many login attempts. Please wait 5 minutes.");
+    } else {
+        // reset after wait time
+        $_SESSION['attempts'] = 0;
+    }
+}
+
 
 if ($_SERVER["REQUEST_METHOD"] === 'POST') {
     if (isset($_POST['login'])) {
@@ -16,6 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
         $rows = mysqli_num_rows($result);
 
         if ($rows === 1) {
+            $_SESSION['attempts'] = 0;
             $user = mysqli_fetch_assoc($result);
             session_regenerate_id(true);
             $_SESSION['user_id'] = $user['id'];
@@ -32,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
 
 
 ?>
-<?php require "includes/header.php"; ?>
+<?php require_once "includes/header.php"; ?>
 
 <div class="login-page">
     <div class="card shadow text-center" id="loginCard">
