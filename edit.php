@@ -90,7 +90,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         <input type="hidden" name="delete[]" value="0">
                         <td><?= $i++; ?></td>
                         <td>
-                            <input type="text" name="case_no[]" class="form-control" value="<?= htmlspecialchars($row['case_no']); ?>">
+                             <textarea name="parties[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['case_no']); ?></textarea>
                         </td>
                         <td>
                             <textarea name="parties[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['parties']); ?></textarea>

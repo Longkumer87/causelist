@@ -53,12 +53,6 @@
     th:nth-child(5), td:nth-child(5) { width: 15%; }  /* Remark */
     th:nth-child(6), td:nth-child(6) { width: 15%; }  /* Date */
 
-    .footer {
-    padding: 10px 0;
-    font-size: 12px;
-    background: #f8f9fa;
-}
-
 }
 
 td {
@@ -151,3 +145,4 @@ h5 {
 .container-fluid {
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
+

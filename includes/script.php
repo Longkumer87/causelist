@@ -10,7 +10,7 @@
             let row = table.insertRow();
             row.innerHTML = `
         <td class="text-center fw-bold">${rowCount + 1}</td>
-        <td><input type="text" class="form-control form-control-sm" name="case_no[]" required></td>
+        <td><textarea class="form-control form-control-sm" name="case_no[]" rows="2" required></textarea></td>
         <td><textarea class="form-control form-control-sm" name="parties[]" rows="2" required></textarea></td>
         <td><textarea class="form-control form-control-sm" name="counsel[]" rows="2" required></textarea></td>
         <td><textarea class="form-control form-control-sm" name="remark[]" rows="2" required></textarea></td>
