@@ -21,12 +21,54 @@
 
     th, td {
         border: 1px solid black !important;
-        padding: 8px;
+        padding: 4px;
+        font-size: 12px;
+        vertical-align: top;
+    }
+
+    td {
+        text-align: left;
+        
+    }
+    
+    td:nth-child(1),
+    td:nth-child(6) {
+        text-align: center;
     }
 
     .seal {
         display: none;
     }
+
+     /* might change later  */
+
+     table {
+        table-layout: fixed;
+    }
+
+    th:nth-child(1), td:nth-child(1) { width: 5%; }   /* S.No */
+    th:nth-child(2), td:nth-child(2) { width: 15%; }  /* Case No */
+    th:nth-child(3), td:nth-child(3) { width: 30%; }  /* Parties */
+    th:nth-child(4), td:nth-child(4) { width: 20%; }  /* Counsel */
+    th:nth-child(5), td:nth-child(5) { width: 15%; }  /* Remark */
+    th:nth-child(6), td:nth-child(6) { width: 15%; }  /* Date */
+
+    .footer {
+    padding: 10px 0;
+    font-size: 12px;
+    background: #f8f9fa;
+}
+
+}
+
+td {
+    text-align: left;
+    vertical-align: top;
+}
+
+td:nth-child(1),
+td:nth-child(6) {
+    text-align: center;
 }
 
 /* .seal {
@@ -68,10 +110,10 @@
 /* new style */
 
 /* Background */
-body {
+/* body {
     background-color: #f5f6f8;
     font-family: Arial, Helvetica, sans-serif;
-}
+} */
 
 
 /* Card feel (main content) */

@@ -49,7 +49,6 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
 
 
 ?>
-<?php require_once "includes/header.php"; ?>
 
 <div class="login-page">
     <div class="card shadow text-center" id="loginCard">
@@ -80,7 +79,3 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
     </div>
 </div>
 
-
-
-<?php require "includes/script.php"; ?>
-<?php require "includes/footer.php"; ?>

@@ -185,8 +185,6 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
         </div>
 
-
-        <div class="text-center mt-3">
             <!-- Header -->
             <div class="text-center mb-3">
                 <h6>IN THE COURT OF THE</h6>
@@ -219,10 +217,10 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         <?php foreach ($rows as $row): ?>
                             <tr>
                                 <td class="text-center"><?= $i++; ?></td>
-                                <td><?= htmlspecialchars($row['case_no']); ?></td>
-                                <td class="text-break"><?= htmlspecialchars($row['parties']); ?></td>
-                                <td><?= htmlspecialchars($row['counsel']); ?></td>
-                                <td><?= htmlspecialchars($row['remark']); ?></td>
+                                <td><?= nl2br(htmlspecialchars($row['case_no'])); ?></td>
+                                <td class="text-break"><?= nl2br(htmlspecialchars($row['parties'])); ?></td>
+                                <td><?= nl2br(htmlspecialchars($row['counsel'])); ?></td>
+                                <td><?= nl2br(htmlspecialchars($row['remark'])); ?></td>
                                 <td>
                                     <?= !empty($row['next_date']) && $row['next_date'] !== '0000-00-00'
                                         ? date("d-m-Y", strtotime($row['next_date']))
@@ -238,8 +236,6 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 <strong>Sd/-</strong><br>
                 By Order
             </div>
-
-        </div>
 
     <?php endif; ?>
 
