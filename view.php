@@ -49,19 +49,46 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 <!-- Navbar - hidden when printing -->
 <?php if (!isset($_GET['pdf'])): ?>
-    <nav class="navbar no-print px-3 mb-3" style="background: #ccff89e0; border-bottom: 2px solid #6bedc4;">
-        <span class="navbar-brand fw-bold">Court: <?= htmlspecialchars($court_name); ?></span>
 
-        <div class="d-flex flex-wrap gap-4 justify-content-center">
-            <a href="welcome.php" class="btn btn-outline-secondary btn-sm"><i class="bi bi-house"></i> Home</a>
-            <a href="edit.php?cause_date=<?= htmlspecialchars($date); ?>" class="btn btn-outline-info btn-sm"><i class="bi bi-pencil"></i> Edit</a>
+    <nav class="navbar d-flex justify-content-between px-3 shadow-sm no-print" style="background-color:#2f3e46;">
+
+        <!-- Court Name -->
+        <span class="navbar-brand fw-bold text-white mb-0">
+            <i class="bi bi-building me-1"></i>
+            <?= htmlspecialchars($court_name); ?>
+        </span>
+
+        <!-- Middle Buttons -->
+        <div class="d-flex gap-2">
+
+            <a href="welcome.php" class="btn btn-outline-light btn-sm">
+                <i class="bi bi-house"></i> Home
+            </a>
+
+            <a href="edit.php?cause_date=<?= htmlspecialchars($date); ?>"
+                class="btn btn-outline-warning btn-sm">
+                <i class="bi bi-pencil"></i> Edit
+            </a>
+
+            <!-- WhatsApp (Green) -->
             <button onclick="shareWhatsApp('<?= $date ?>', '<?= htmlspecialchars($court_name) ?>')"
                 class="btn btn-outline-success btn-sm">
-                <i class="bi bi-whatsapp"></i> WhatsApp</button>
-            <button onclick="window.print()" class="btn btn-outline-dark btn-sm"><i class="bi bi-printer"></i> Print</button>
+                <i class="bi bi-whatsapp"></i> WhatsApp
+            </button>
+
+            <!-- Print (Dark) -->
+            <button onclick="window.print()"
+                class="btn btn-dark btn-sm">
+                <i class="bi bi-printer"></i> Print
+            </button>
+
         </div>
 
-        <a href="logout.php" class="btn btn-danger btn-sm"><i class="bi bi-power"></i> Logout</a>
+        <!-- Logout -->
+        <a href="logout.php" class="btn btn-danger btn-sm px-3">
+            <i class="bi bi-power"></i> Logout
+        </a>
+
     </nav>
 <?php endif; ?>
 
@@ -128,84 +155,95 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     <div class="container-fluid mt-3">
 
-        <div class="text-center mt-3">
+        <!-- Emblem -->
             <?php
             $path = 'image/gov.jpg';
             $type = pathinfo($path, PATHINFO_EXTENSION);
             $data = file_get_contents($path);
             $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
             ?>
+            <!--  Seal -->
 
-            <img src="<?php echo $base64; ?>" style="max-height: 60px;">
+            <?php
+            $sealPath = 'image/seal.png';
+            $sealType = pathinfo($sealPath, PATHINFO_EXTENSION);
+            $sealData = file_get_contents($sealPath);
+            $sealBase64 = 'data:image/' . $sealType . ';base64,' . base64_encode($sealData);
+            ?>
+       
+
+        <div style="position: relative; height: 65px;">
+
+            <!-- Seal (LEFT TOP) -->
+            <img class="seal" src="<?php echo $sealBase64; ?>"
+                style="position: absolute; top: 0; left: 0; width: 100px;">
+
+            <!-- Emblem (CENTER TOP) -->
+            <div style="text-align: center;">
+                <img src="<?php echo $base64; ?>" style="max-height: 60px;">
+            </div>
 
         </div>
 
-        <?php
-        $sealPath = 'image/seal.png';
-        $sealType = pathinfo($sealPath, PATHINFO_EXTENSION);
-        $sealData = file_get_contents($sealPath);
-        $sealBase64 = 'data:image/' . $sealType . ';base64,' . base64_encode($sealData);
-        ?>
 
-        <img src="<?php echo $sealBase64; ?>" class="seal" style="max-height: 1100px;">
+        <div class="text-center mt-3">
+            <!-- Header -->
+            <div class="text-center mb-3">
+                <h6>IN THE COURT OF THE</h6>
+                <h5 class="fw-bold"><?= strtoupper(htmlspecialchars($court_name)); ?></h5>
+                <h6>KOHIMA : NAGALAND</h6>
+            </div>
 
-        <!-- Header -->
-        <div class="text-center mb-3">
-            <h6>IN THE COURT OF THE</h6>
-            <h5 class="fw-bold"><?= strtoupper(htmlspecialchars($court_name)); ?></h5>
-            <h6>KOHIMA : NAGALAND</h6>
-        </div>
+            <!-- Date -->
+            <h6 class="text-center mb-3">
+                CAUSE LIST FOR :
+                <?= date("d F Y", strtotime($date)); ?>
+            </h6>
 
-        <!-- Date -->
-        <h6 class="text-center mb-3">
-            CAUSE LIST FOR :
-            <?= date("d F Y", strtotime($date)); ?>
-        </h6>
-
-        <!-- Table -->
-        <div class="table-responsive">
-            <table class="table table-bordered table-sm">
-                <thead class="table-secondary">
-                    <tr>
-                        <th class="text-center">S.No</th>
-                        <th class="text-center">Case No</th>
-                        <th class="text-center col-4">Parties</th>
-                        <th class="text-center">Counsel</th>
-                        <th class="text-center">Remark</th>
-                        <th class="text-center">Next Date</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <?php $i = 1; ?>
-                    <?php foreach ($rows as $row): ?>
+            <!-- Table -->
+            <div class="table-responsive">
+                <table class="table table-bordered table-sm">
+                    <thead class="table-secondary">
                         <tr>
-                            <td class="text-center"><?= $i++; ?></td>
-                            <td><?= htmlspecialchars($row['case_no']); ?></td>
-                            <td class="text-break"><?= htmlspecialchars($row['parties']); ?></td>
-                            <td><?= htmlspecialchars($row['counsel']); ?></td>
-                            <td><?= htmlspecialchars($row['remark']); ?></td>
-                            <td>
-                                <?= !empty($row['next_date']) && $row['next_date'] !== '0000-00-00'
-                                    ? date("d-m-Y", strtotime($row['next_date']))
-                                    : ''; ?>
-                            </td>
+                            <th class="text-center">S.No</th>
+                            <th class="text-center">Case No</th>
+                            <th class="text-center col-4">Parties</th>
+                            <th class="text-center">Counsel</th>
+                            <th class="text-center">Remark</th>
+                            <th class="text-center">Next Date</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+
+                    <tbody>
+                        <?php $i = 1; ?>
+                        <?php foreach ($rows as $row): ?>
+                            <tr>
+                                <td class="text-center"><?= $i++; ?></td>
+                                <td><?= htmlspecialchars($row['case_no']); ?></td>
+                                <td class="text-break"><?= htmlspecialchars($row['parties']); ?></td>
+                                <td><?= htmlspecialchars($row['counsel']); ?></td>
+                                <td><?= htmlspecialchars($row['remark']); ?></td>
+                                <td>
+                                    <?= !empty($row['next_date']) && $row['next_date'] !== '0000-00-00'
+                                        ? date("d-m-Y", strtotime($row['next_date']))
+                                        : ''; ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="margin-top: 30px; text-align: right;">
+                <strong>Sd/-</strong><br>
+                By Order
+            </div>
+
         </div>
 
-        <div style="margin-top: 30px; text-align: right;">
-            <strong>Sd/-</strong><br>
-            By Order
-        </div>
+    <?php endif; ?>
 
-    </div>
-
-<?php endif; ?>
-
-<?php if (!isset($_GET['pdf'])): ?>
-    <?php require "includes/script.php"; ?>
-    <?php require "includes/footer.php"; ?>
-<?php endif; ?>
+    <?php if (!isset($_GET['pdf'])): ?>
+        <?php require "includes/script.php"; ?>
+        <?php require "includes/footer.php"; ?>
+    <?php endif; ?>

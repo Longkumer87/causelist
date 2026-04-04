@@ -97,10 +97,15 @@
                 .then(res => res.text())
                 .then(filePath => {
 
+                    //For online hosting
                     // let baseUrl = "https://maonglkr.free.nf/causelist";
-                    let baseUrl = "https://maonglkr.free.nf";
-                    let pdfLink = baseUrl + "/" + filePath;
+                    // let baseUrl = "https://maonglkr.free.nf";
+                    // let pdfLink = baseUrl + "/" + filePath;
 
+                    //For localhost using computer for generating links
+                    let baseUrl = window.location.origin;
+                    let pdfLink = baseUrl + "/causelist/" + filePath;
+                   
                     let d = new Date(date);
                     let formattedDate = d.getDate().toString().padStart(2, '0') + '-' +
                         (d.getMonth() + 1).toString().padStart(2, '0') + '-' +

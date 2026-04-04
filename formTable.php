@@ -1,17 +1,15 @@
-<nav class="navbar navbar-dark bg-secondary px-3">
-    <div class="container-fluid p-0 d-flex justify-content-between align-items-center">
+<nav class="navbar d-flex justify-content-between px-3 shadow-sm" style="background-color:#2f3e46;">    
+    <!-- Court Name -->
+    <span class="navbar-brand fw-bold text-white mb-0">
+        <i class="bi bi-building me-1"></i>
+        <?= htmlspecialchars($court_name); ?>
+    </span>
 
-        <!-- Court Name -->
-        <span class="navbar-brand fw-bold mb-0 text-truncate" style="max-width: 70%;">
-            <i class="bi bi-building me-1"></i><?= htmlspecialchars($court_name); ?>
-        </span>
+    <!-- Logout -->
+    <a href="logout.php" class="btn btn-danger btn-sm px-3">
+        <i class="bi bi-power"></i> Logout
+    </a>
 
-        <!-- Logout -->
-        <a href="logout.php" class="btn btn-danger btn-sm px-3">
-            <i class="bi bi-power"></i> Logout
-        </a>
-
-    </div>
 </nav>
 
 <h5 class="fw-bold text-center mt-2"><?= htmlspecialchars($court_name); ?></h5>

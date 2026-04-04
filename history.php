@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if(!isset($_SESSION['user_id'])){
+if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
     exit();
 }
@@ -13,15 +13,21 @@ $court_name = $_SESSION['court_name'] ?? '';
 require "includes/header.php"; ?>
 
 <!-- Navbar -->
-<div class="d-flex flex-wrap justify-content-between align-items-center px-3 py-2 bg-secondary gap-2">
-    <p class="text-light m-0 fw-semibold">
-        <i class="bi bi-building me-1"></i> <?= htmlspecialchars($court_name); ?>
-         <a href="welcome.php" class="btn btn-outline-light btn-sm"><i class="bi bi-house"></i> Home</a>
-    </p>
+<nav class="navbar d-flex justify-content-between px-3 shadow-sm" style="background-color:#2f3e46;">
+    <span class="navbar-brand text-white fw-bold">
+        <i class="bi bi-building"></i> <?= htmlspecialchars($court_name); ?>
+    </span>
+
+    <div class="d-flex gap-2">
+        <a href="welcome.php" class="btn btn-outline-light btn-sm">
+            <i class="bi bi-house"></i> Home
+        </a>
+    </div>
+
     <a href="logout.php" class="btn btn-danger btn-sm">
         <i class="bi bi-power"></i> Logout
     </a>
-</div>
+</nav>
 
 <!-- Page Header -->
 <div class="text-center px-3 mt-4 mb-3">

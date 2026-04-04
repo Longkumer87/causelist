@@ -29,23 +29,32 @@ $result = mysqli_stmt_get_result($stmt);
 $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 
-<nav class="navbar navbar-dark bg-secondary px-3">
-    <div class="container-fluid d-flex justify-content-between align-items-center">
+<nav class="navbar d-flex justify-content-between px-3 shadow-sm" style="background-color:#2f3e46;">
 
-        <!-- Right: Buttons -->
-        <div class="d-flex gap-4">
+    <!-- Court Name -->
+    <span class="navbar-brand fw-bold text-white mb-0">
+        <i class="bi bi-building me-1"></i>
+        <?= htmlspecialchars($_SESSION['court_name'] ?? ''); ?>
+    </span>
 
-            <a href="welcome.php" class="btn btn-outline-light btn-sm">
-                <i class="bi bi-house"></i> Home
-            </a>
+    <!-- Middle Buttons -->
+    <div class="d-flex gap-2">
+        
+        <a href="welcome.php" class="btn btn-outline-light btn-sm">
+            <i class="bi bi-house"></i> Home
+        </a>
 
-            <a href="history.php" class="btn btn-info btn-sm">
-                <i class="bi bi-binoculars"></i> View
-            </a>
-
-        </div>
+        <a href="history.php" class="btn btn-info btn-sm">
+            <i class="bi bi-binoculars"></i> View
+        </a>
 
     </div>
+
+    <!-- Logout -->
+    <a href="logout.php" class="btn btn-light btn-sm px-3">
+        <i class="bi bi-power"></i> Logout
+    </a>
+
 </nav>
 
 <div class="container-fluid mt-3">
