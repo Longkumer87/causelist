@@ -1,7 +1,10 @@
 <?php $title="edit";
+
+session_start();
+
 require_once 'config/db.php';
 require_once 'includes/header.php';
-session_start();
+
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
@@ -51,7 +54,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
     </div>
 
     <!-- Logout -->
-    <a href="logout.php" class="btn btn-light btn-sm px-3">
+    <a href="logout.php" class="btn btn-danger btn-sm px-3">
         <i class="bi bi-power"></i> Logout
     </a>
 
@@ -86,20 +89,21 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 <?php $i = 1; ?>
                 <?php foreach ($rows as $row): ?>
                     <tr>
+                        <input type="hidden" name="edit_mode" value="1">
                         <input type="hidden" name="id[]" value="<?= htmlspecialchars($row['id']); ?>">
                         <input type="hidden" name="delete[]" value="0">
-                        <td><?= $i++; ?></td>
+                        <td class="text-center fw-bold"><?= $i++; ?></td>
                         <td>
-                             <textarea name="parties[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['case_no']); ?></textarea>
+                             <textarea name="case_no[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['case_no']); ?></textarea>
                         </td>
                         <td>
                             <textarea name="parties[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['parties']); ?></textarea>
                         </td>
                         <td>
-                            <textarea name="consel[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['counsel']); ?></textarea>
+                            <textarea name="counsel[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['counsel']); ?></textarea>
                         </td>
                         <td>
-                            <textarea name="remark[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['remark']); ?></textarea>
+                            <textarea name="remark[]" class="form-control" style="min-width: 180px;"><?=htmlspecialchars($row['remark']); ?></textarea>
                         </td>
                         <td>
                             <input type="date" name="next_date[]" class="form-control" value="<?= htmlspecialchars($row['next_date']); ?>">

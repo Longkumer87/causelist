@@ -1,22 +1,63 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
 @media print {
-    .no-print{
+
+    @page:first {
+        margin: 0;   /* ⭐ remove browser/PDF default margin */
+    }
+    @page {
+        margin-top: 80px;  /* apply ONLY to 2nd, 3rd, etc */
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-bottom: 20px;
+    }
+
+    html, body {
+        height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    body {
+        margin: 0 !important;   /* ⭐ IMPORTANT: remove 20px */
+    }
+
+    .no-print {
         display: none !important;
     }
+
     button {
         display: none;
     }
 
-    body {
-        margin: 20px;
-    }
-
     h4, h5 {
         text-align: center;
+        margin: 0;   /* ⭐ remove top gap */
+    }
+
+    .container-fluid {
+        margin: 0;
+        padding: 0;   /* ⭐ remove card spacing */
+        box-shadow: none; /* ⭐ remove shadow in print */
+        border-radius: 0;
     }
 
     table {
         width: 100%;
         border-collapse: collapse;
+        table-layout: fixed;
     }
 
     th, td {
@@ -28,9 +69,8 @@
 
     td {
         text-align: left;
-        
     }
-    
+
     td:nth-child(1),
     td:nth-child(6) {
         text-align: center;
@@ -40,18 +80,30 @@
         display: none;
     }
 
-     /* might change later  */
+    th:nth-child(1),
+    td:nth-child(1) { width: 5%; }
 
-     table {
-        table-layout: fixed;
-    }
+    th:nth-child(2),
+    td:nth-child(2) { width: 15%; }
 
-    th:nth-child(1), td:nth-child(1) { width: 5%; }   /* S.No */
-    th:nth-child(2), td:nth-child(2) { width: 15%; }  /* Case No */
-    th:nth-child(3), td:nth-child(3) { width: 30%; }  /* Parties */
-    th:nth-child(4), td:nth-child(4) { width: 20%; }  /* Counsel */
-    th:nth-child(5), td:nth-child(5) { width: 15%; }  /* Remark */
-    th:nth-child(6), td:nth-child(6) { width: 15%; }  /* Date */
+    th:nth-child(3),
+    td:nth-child(3) { width: 30%; }
+
+    th:nth-child(4),
+    td:nth-child(4) { width: 20%; }
+
+    th:nth-child(5),
+    td:nth-child(5) { width: 15%; }
+
+    th:nth-child(6),
+    td:nth-child(6) { width: 15%; }
+
+    /* Card feel (print out) */
+.container-fluid {
+    background:none;
+    padding:none;
+    border-radius:none;
+}
 
 }
 
@@ -65,54 +117,42 @@ td:nth-child(6) {
     text-align: center;
 }
 
-/* .seal {
-    position: absolute;
-    opacity: 0.8;
-    transform: rotate(-10deg);
-    top: 90px;
-    left: 50px;
-    width: 100px;
-} */
 
 .login-page {
-   background: url('../image/court.png')no-repeat center center;
-   background-size: cover;
-   min-height: 100vh;
+    background: url('../image/court.png')no-repeat center center;
+    background-size: cover;
+    flex: 1;
 
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 15px;
 }
 
 #loginCard {
-    background: rgba(255, 255, 255, 0.1); /* transparent */
-    backdrop-filter: blur(10px); /* glass effect */
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2); /* shadow */
+    background: rgba(255, 255, 255, 0.1);
+    /* transparent */
+    backdrop-filter: blur(10px);
+    /* glass effect */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    /* shadow */
     max-width: 400px;
     margin: 80px 50px 0 auto;
     border-radius: 15px;
 }
 
-.btn-box{
-     background-color: #ff6a00;
-            color: white;
+.btn-box {
+    background-color: #ff6a00;
+    color: white;
 }
-.btn-box:hover{
+
+.btn-box:hover {
     background-color: #e65c00;
 }
 
-/* new style */
-
-/* Background */
-/* body {
-    background-color: #f5f6f8;
-    font-family: Arial, Helvetica, sans-serif;
-} */
-
-
 /* Card feel (main content) */
 .container-fluid {
-    background: #ffffff;
+    background:none;
     padding: 15px;
     border-radius: 6px;
 }
@@ -143,6 +183,28 @@ h5 {
 
 /* Slight shadow (very light, not flashy) */
 .container-fluid {
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
+/* Mobile view */
+
+@media (max-width: 768px) {
+    .login-page {
+        background-position: center;
+        background-size: cover;
+    }
+
+    #loginCard {
+        margin: 20px auto;
+        width: 100%;
+        max-width: 320px;
+    }
+}
+
+footer {
+    background: #2f3e46;
+    color: #fff;
+    text-align: center;
+    padding: 6px;
+    font-size: 13px;
+}

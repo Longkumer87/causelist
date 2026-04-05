@@ -11,9 +11,9 @@
             row.innerHTML = `
         <td class="text-center fw-bold">${rowCount + 1}</td>
         <td><textarea class="form-control form-control-sm" name="case_no[]" rows="2" required></textarea></td>
-        <td><textarea class="form-control form-control-sm" name="parties[]" rows="2" required></textarea></td>
-        <td><textarea class="form-control form-control-sm" name="counsel[]" rows="2" required></textarea></td>
-        <td><textarea class="form-control form-control-sm" name="remark[]" rows="2" required></textarea></td>
+        <td><textarea class="form-control form-control-sm" name="parties[]" rows="2"></textarea></td>
+        <td><textarea class="form-control form-control-sm" name="counsel[]" rows="2"></textarea></td>
+        <td><textarea class="form-control form-control-sm" name="remark[]" rows="2"></textarea></td>
         <td><input type="date" class="form-control form-control-sm" name="next_date[]"></td>
        <td class="text-center">
     <div class="d-flex gap-2 justify-content-center">
@@ -102,10 +102,10 @@
                     // let baseUrl = "https://maonglkr.free.nf";
                     // let pdfLink = baseUrl + "/" + filePath;
 
-                    //For localhost using computer for generating links
-                    let baseUrl = window.location.origin;
+                    //For localhost using computer(ngrok) for generating links
+                    let baseUrl = "https://unexplorable-ashlee-ineffable.ngrok-free.dev"; 
                     let pdfLink = baseUrl + "/causelist/" + filePath;
-                   
+
                     let d = new Date(date);
                     let formattedDate = d.getDate().toString().padStart(2, '0') + '-' +
                         (d.getMonth() + 1).toString().padStart(2, '0') + '-' +
