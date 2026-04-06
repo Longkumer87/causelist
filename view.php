@@ -153,93 +153,101 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
         </style>
     <?php endif; ?>
 
-    <div class="container-fluid mt-3">
+    <div>
 
-        <!-- Emblem -->
-            <?php
-            $path = 'image/gov.jpg';
-            $type = pathinfo($path, PATHINFO_EXTENSION);
-            $data = file_get_contents($path);
-            $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-            ?>
-            <!--  Seal -->
+        <?php
+        // Government Emblem (gov.jpg)
+        $govPath = 'image/gov.jpg';
+        $govType = pathinfo($govPath, PATHINFO_EXTENSION);
+        $govData = file_get_contents($govPath);
+        $govBase64 = 'data:image/' . $govType . ';base64,' . base64_encode($govData);
 
-            <?php
-            $sealPath = 'image/seal.png';
-            $sealType = pathinfo($sealPath, PATHINFO_EXTENSION);
-            $sealData = file_get_contents($sealPath);
-            $sealBase64 = 'data:image/' . $sealType . ';base64,' . base64_encode($sealData);
-            ?>
-       
+        // Seal (seal.png)
+        $sealPath = 'image/seal.png';
+        $sealType = pathinfo($sealPath, PATHINFO_EXTENSION);
+        $sealData = file_get_contents($sealPath);
+        $sealBase64 = 'data:image/' . $sealType . ';base64,' . base64_encode($sealData);
+        ?>
 
-        <div style="position: relative; height: 65px;">
+        <div class="header-container">
+            <!-- Seal Left + Emblem Center - Very Compact -->
+            <div style="display: flex; align-items: center; justify-content: space-between; margin: 0; padding: 0;">
 
-            <!-- Seal (LEFT TOP) -->
-            <img class="seal" src="<?php echo $sealBase64; ?>"
-                style="position: absolute; top: 0; left: 0; width: 100px;">
+                <!-- Seal on Left (hidden on print) -->
+                <div style="flex: 0 0 20%; text-align: left;">
+                    <img class="no-print"
+                        src="<?php echo $sealBase64; ?>"
+                        style="width: 85px; height: auto;">
+                </div>
 
-            <!-- Emblem (CENTER TOP) -->
-            <div style="text-align: center;">
-                <img src="<?php echo $base64; ?>" style="max-height: 60px;">
+                <!-- Government Emblem in Center -->
+                <div style="flex: 1; text-align: center;">
+                    <img src="<?php echo $govBase64; ?>"
+                        style="max-height: 55px; width: auto; display: block; margin: 0 auto;">
+                </div>
+
+                <!-- Right empty space for balance -->
+                <div style="flex: 0 0 20%;"></div>
+
             </div>
-
         </div>
 
-            <!-- Header -->
-            <div class="text-center mb-3">
-                <h6>IN THE COURT OF THE</h6>
-                <h5 class="fw-bold"><?= strtoupper(htmlspecialchars($court_name)); ?></h5>
-                <h6>KOHIMA : NAGALAND</h6>
-            </div>
+        <!-- Header -->
+        <div class="text-center" style="margin-top: 5px;">
+            <h6>IN THE COURT OF THE</h6>
+            <h5 class="fw-bold"><?= strtoupper(htmlspecialchars($court_name)); ?></h5>
+            <h6>KOHIMA : NAGALAND</h6>
+        </div>
 
-            <!-- Date -->
-            <h6 class="text-center mb-3">
-                CAUSE LIST FOR :
-                <?= date("d F Y", strtotime($date)); ?>
-            </h6>
+        <!-- Date -->
+        <h6 class="text-center mb-3">
+            CAUSE LIST FOR :
+            <?= date("d F Y", strtotime($date)); ?>
+        </h6>
 
-            <!-- Table -->
-            <div class="table-responsive">
-                <table class="table table-bordered table-sm">
-                    <thead class="table-secondary">
+        <!-- Table -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-sm">
+                <thead class="table-secondary">
+                    <tr>
+                        <th class="text-center">S.No</th>
+                        <th class="text-center">Case No</th>
+                        <th class="text-center col-4">Parties</th>
+                        <th class="text-center">Counsel</th>
+                        <th class="text-center">Remark</th>
+                        <th class="text-center">Next Date</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <?php $i = 1; ?>
+                    <?php foreach ($rows as $row): ?>
                         <tr>
-                            <th class="text-center">S.No</th>
-                            <th class="text-center">Case No</th>
-                            <th class="text-center col-4">Parties</th>
-                            <th class="text-center">Counsel</th>
-                            <th class="text-center">Remark</th>
-                            <th class="text-center">Next Date</th>
+                            <td class="text-center"><?= $i++; ?></td>
+                            <td><?= nl2br(htmlspecialchars($row['case_no'])); ?></td>
+                            <td class="text-break"><?= nl2br(htmlspecialchars($row['parties'])); ?></td>
+                            <td><?= nl2br(htmlspecialchars($row['counsel'])); ?></td>
+                            <td><?= nl2br(htmlspecialchars($row['remark'])); ?></td>
+                            <td>
+                                <?= !empty($row['next_date']) && $row['next_date'] !== '0000-00-00'
+                                    ? date("d-m-Y", strtotime($row['next_date']))
+                                    : ''; ?>
+                            </td>
                         </tr>
-                    </thead>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
 
-                    <tbody>
-                        <?php $i = 1; ?>
-                        <?php foreach ($rows as $row): ?>
-                            <tr>
-                                <td class="text-center"><?= $i++; ?></td>
-                                <td><?= nl2br(htmlspecialchars($row['case_no'])); ?></td>
-                                <td class="text-break"><?= nl2br(htmlspecialchars($row['parties'])); ?></td>
-                                <td><?= nl2br(htmlspecialchars($row['counsel'])); ?></td>
-                                <td><?= nl2br(htmlspecialchars($row['remark'])); ?></td>
-                                <td>
-                                    <?= !empty($row['next_date']) && $row['next_date'] !== '0000-00-00'
-                                        ? date("d-m-Y", strtotime($row['next_date']))
-                                        : ''; ?>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
+        <div style="margin-top: 30px; text-align: right;">
+            <strong>Sd/-</strong><br>
+            By Order
+        </div>
 
-            <div style="margin-top: 30px; text-align: right;">
-                <strong>Sd/-</strong><br>
-                By Order
-            </div>
+    </div>
+<?php endif; ?>
 
-    <?php endif; ?>
-
-    <?php if (!isset($_GET['pdf'])): ?>
-        <?php require "includes/script.php"; ?>
-        <?php require "includes/footer.php"; ?>
-    <?php endif; ?>
+<?php if (!isset($_GET['pdf'])): ?>
+    <?php require "includes/script.php"; ?>
+    <?php require "includes/footer.php"; ?>
+<?php endif; ?>

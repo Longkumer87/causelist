@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.2deb2
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Apr 01, 2026 at 08:06 AM
--- Server version: 11.8.3-MariaDB-1build1 from Ubuntu
--- PHP Version: 8.4.11
+-- Host: 127.0.0.1
+-- Generation Time: Apr 05, 2026 at 05:30 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -174,9 +174,9 @@ CREATE TABLE `causelist_db` (
 --
 
 INSERT INTO `causelist_db` (`id`, `cause_date`, `case_no`, `parties`, `counsel`, `remark`, `next_date`, `court_id`) VALUES
-(1, '2026-04-01', 'prc 1/2025', 'Maong\r\nvs Awe', 'Nina', 'Notice', NULL, 1),
-(2, '2026-04-01', 'prc 1/2020', 'Molo\r\nvs Huide', 'Awele', 'Hearing', NULL, 1),
-(3, '2026-04-01', 'Cases Under Section 125 Cr P C', 'One\r\nvs Two', 'Three', 'Hearing', NULL, 2);
+(1, '2026-04-06', 'PDSJ1/2025', 'Test1\r\nvs test 2 ', 'Test 3', 'Test4', NULL, 1),
+(3, '2026-04-06', 'JMFC 1/2025', 'Test A\r\nVrs Test B', 'Test C ', 'Test D', NULL, 3),
+(4, '2026-04-06', 'Jmfc 2/2025', 'Test E\r\nVrs  Test F', 'Test G\r\nTest H', 'Test I', NULL, 3);
 
 -- --------------------------------------------------------
 
@@ -270,7 +270,7 @@ ALTER TABLE `case_type`
 -- AUTO_INCREMENT for table `causelist_db`
 --
 ALTER TABLE `causelist_db`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `court`

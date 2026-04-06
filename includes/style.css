@@ -12,10 +12,15 @@ main {
     flex: 1;
 }
 
+.header-container {
+        margin-top: 8px !important;     /* Very small space above */
+        margin-bottom: 8px !important;
+    }
+
 @media print {
 
     @page:first {
-        margin: 0;   /* ⭐ remove browser/PDF default margin */
+        margin-top:0px;   /* ⭐ remove browser/PDF default margin */
     }
     @page {
         margin-top: 80px;  /* apply ONLY to 2nd, 3rd, etc */
@@ -32,11 +37,14 @@ main {
 
     body {
         margin: 0 !important;   /* ⭐ IMPORTANT: remove 20px */
+        
     }
 
     .no-print {
         display: none !important;
     }
+
+   
 
     button {
         display: none;
@@ -104,6 +112,7 @@ main {
     padding:none;
     border-radius:none;
 }
+
 
 }
 
@@ -208,3 +217,4 @@ footer {
     padding: 6px;
     font-size: 13px;
 }
+

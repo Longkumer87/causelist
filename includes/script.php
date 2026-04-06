@@ -99,8 +99,8 @@
 
                     //For online hosting
                     // let baseUrl = "https://maonglkr.free.nf/causelist";
-                    // let baseUrl = "https://maonglkr.free.nf";
-                    // let pdfLink = baseUrl + "/" + filePath;
+                //     let baseUrl = "https://maonglkr.free.nf";
+                //  let pdfLink = baseUrl + "/" + filePath;
 
                     //For localhost using computer(ngrok) for generating links
                     let baseUrl = "https://unexplorable-ashlee-ineffable.ngrok-free.dev"; 
