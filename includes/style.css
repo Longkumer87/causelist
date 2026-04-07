@@ -20,10 +20,8 @@ main {
 }
 
 @media print {
-
     @page: first {
-        margin-top: 0px;
-        /* ⭐ remove browser/PDF default margin */
+        margin-top: 0;/* ⭐ remove browser/PDF default margin */
     }
 
     @page {
@@ -34,9 +32,8 @@ main {
         margin-bottom: 20px;
     }
 
-    html,
-    body {
-        height: auto !important;
+    html,body {
+        /* height: auto !important; */
         margin: 0 !important;
         padding: 0 !important;
     }

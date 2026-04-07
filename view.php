@@ -103,7 +103,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <?php if (isset($_GET['pdf'])): ?>
         <style>
             body {
-                font-size: 12px;
+                font-size: 10px;
             }
 
             table {
@@ -128,11 +128,6 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 margin: 0 auto;
             }
 
-            h5,
-            h6 {
-                margin: 2px;
-            }
-
             table {
                 width: 100%;
                 border-collapse: collapse;
@@ -153,11 +148,11 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
         </style>
     <?php endif; ?>
 
-    <div>
+    <div class="container-fluid">
 
         <?php
-        // Government Emblem (gov.jpg)
-        $govPath = 'image/gov.jpg';
+        // Government Emblem (gov.png)
+        $govPath = 'image/gov.png';
         $govType = pathinfo($govPath, PATHINFO_EXTENSION);
         $govData = file_get_contents($govPath);
         $govBase64 = 'data:image/' . $govType . ';base64,' . base64_encode($govData);
@@ -177,13 +172,13 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 <div style="flex: 0 0 20%; text-align: left;">
                     <img class="no-print"
                         src="<?php echo $sealBase64; ?>"
-                        style="width: 85px; height: auto;">
+                        style="width: 60px; height: auto;">
                 </div>
 
                 <!-- Government Emblem in Center -->
                 <div style="flex: 1; text-align: center;">
                     <img src="<?php echo $govBase64; ?>"
-                        style="max-height: 55px; width: auto; display: block; margin: 0 auto;">
+                        style="max-height: 40px; width: auto; display: block; margin: 0 auto;">
                 </div>
 
                 <!-- Right empty space for balance -->
@@ -193,17 +188,17 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
         </div>
 
         <!-- Header -->
-        <div class="text-center" style="margin-top: 5px;">
-            <h6>IN THE COURT OF THE</h6>
-            <h5 class="fw-bold"><?= strtoupper(htmlspecialchars($court_name)); ?></h5>
-            <h6>KOHIMA : NAGALAND</h6>
+        <div class="text-center" style="margin-top: 1px; line-height: 1.2; font-size:13px;">
+            <div class="fw-bold">IN THE COURT OF THE</div>
+            <span class="fw-bold"><?= strtoupper(htmlspecialchars($court_name)); ?></span><br>
+            <div class="fw-bold">KOHIMA : NAGALAND</div>
         </div>
 
         <!-- Date -->
-        <h6 class="text-center mb-3">
+        <div class="text-center fw-bold mt-1">
             CAUSE LIST FOR :
             <?= date("d F Y", strtotime($date)); ?>
-        </h6>
+        </div>
 
         <!-- Table -->
         <div class="table-responsive">
@@ -239,7 +234,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
             </table>
         </div>
 
-        <div style="margin-top: 30px; text-align: right;">
+        <div style="margin-top: 10px; text-align: right; font-size: 9px;">
             <strong>Sd/-</strong><br>
             By Order
         </div>
