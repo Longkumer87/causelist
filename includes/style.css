@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     height: 100%;
     margin: 0;
 }
@@ -13,52 +14,60 @@ main {
 }
 
 .header-container {
-        margin-top: 8px !important;     /* Very small space above */
-        margin-bottom: 8px !important;
-    }
+    margin-top: 8px !important;
+    /* Very small space above */
+    margin-bottom: 8px !important;
+}
 
 @media print {
 
-    @page:first {
-        margin-top:0px;   /* ⭐ remove browser/PDF default margin */
+    @page: first {
+        margin-top: 0px;
+        /* ⭐ remove browser/PDF default margin */
     }
+
     @page {
-        margin-top: 80px;  /* apply ONLY to 2nd, 3rd, etc */
+        margin-top: 80px;
+        /* apply ONLY to 2nd, 3rd, etc */
         margin-left: 20px;
         margin-right: 20px;
         margin-bottom: 20px;
     }
 
-    html, body {
+    html,
+    body {
         height: auto !important;
         margin: 0 !important;
         padding: 0 !important;
     }
 
     body {
-        margin: 0 !important;   /* ⭐ IMPORTANT: remove 20px */
-        
+        margin: 0 !important;
+        /* ⭐ IMPORTANT: remove 20px */
+
     }
 
     .no-print {
         display: none !important;
     }
 
-   
-
     button {
         display: none;
     }
 
-    h4, h5 {
+    h4,
+    h5 {
         text-align: center;
-        margin: 0;   /* ⭐ remove top gap */
+        margin: 0;
+        /* ⭐ remove top gap */
     }
 
     .container-fluid {
         margin: 0;
-        padding: 0;   /* ⭐ remove card spacing */
-        box-shadow: none; /* ⭐ remove shadow in print */
+        padding: 0;
+        /* ⭐ remove card spacing */
+        box-shadow: none;
+        /* ⭐ remove shadow in print */
         border-radius: 0;
     }
 
@@ -68,7 +77,8 @@ main {
         table-layout: fixed;
     }
 
-    th, td {
+    th,
+    td {
         border: 1px solid black !important;
         padding: 4px;
         font-size: 12px;
@@ -76,48 +86,60 @@ main {
     }
 
     td {
-        text-align: left;
+        text-align: left !important;
+        vertical-align: top;
     }
+}
 
-    td:nth-child(1),
-    td:nth-child(6) {
-        text-align: center;
-    }
+td:nth-child(1),
+td:nth-child(6) {
+    text-align: center;
+}
 
-    .seal {
-        display: none;
-    }
+.seal {
+    display: none;
+}
 
-    th:nth-child(1),
-    td:nth-child(1) { width: 5%; }
+th:nth-child(1),
+td:nth-child(1) {
+    width: 5%;
+}
 
-    th:nth-child(2),
-    td:nth-child(2) { width: 15%; }
+th:nth-child(2),
+td:nth-child(2) {
+    width: 15%;
+}
 
-    th:nth-child(3),
-    td:nth-child(3) { width: 30%; }
+th:nth-child(3),
+td:nth-child(3) {
+    width: 30%;
+}
 
-    th:nth-child(4),
-    td:nth-child(4) { width: 20%; }
+th:nth-child(4),
+td:nth-child(4) {
+    width: 20%;
+}
 
-    th:nth-child(5),
-    td:nth-child(5) { width: 15%; }
+th:nth-child(5),
+td:nth-child(5) {
+    width: 15%;
+}
 
-    th:nth-child(6),
-    td:nth-child(6) { width: 15%; }
+th:nth-child(6),
+td:nth-child(6) {
+    width: 15%;
+}
 
-    /* Card feel (print out) */
+/* Card feel (print out) */
 .container-fluid {
-    background:none;
-    padding:none;
-    border-radius:none;
+    background: none;
+    padding: none;
+    border-radius: none;
 }
 
-
-}
 
 td {
-    text-align: left;
+    text-align: left !important;
     vertical-align: top;
 }
 
@@ -161,7 +183,7 @@ td:nth-child(6) {
 
 /* Card feel (main content) */
 .container-fluid {
-    background:none;
+    background: none;
     padding: 15px;
     border-radius: 6px;
 }
@@ -217,4 +239,3 @@ footer {
     padding: 6px;
     font-size: 13px;
 }
-

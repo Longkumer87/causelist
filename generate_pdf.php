@@ -25,7 +25,7 @@ $html = ob_get_clean();
 // Create mPDF
 $mpdf = new \Mpdf\Mpdf([
     'format' => 'A4',
-    'margin_top' => 10,
+    'margin_top' => 0,
     'margin_bottom' => 20,
     'margin_left' => 10,
     'margin_right' => 10

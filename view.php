@@ -50,7 +50,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 <!-- Navbar - hidden when printing -->
 <?php if (!isset($_GET['pdf'])): ?>
 
-    <nav class="navbar d-flex justify-content-between px-3 shadow-sm no-print" style="background-color:#2f3e46;">
+    <nav class="navbar flex-wrap d-flex justify-content-between px-3 shadow-sm no-print" style="background-color:#2f3e46;">
 
         <!-- Court Name -->
         <span class="navbar-brand fw-bold text-white mb-0">
@@ -139,12 +139,12 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 margin-top: 10px;
             }
 
-            th,
+            /* th,
             td {
                 border: 1px solid #000;
                 padding: 6px;
                 text-align: center;
-            }
+            } */
 
             td:nth-child(3) {
                 text-align: left;
