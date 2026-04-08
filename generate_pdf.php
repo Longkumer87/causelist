@@ -25,18 +25,28 @@ $html = ob_get_clean();
 // Create mPDF
 $mpdf = new \Mpdf\Mpdf([
     'format' => 'A4',
-    'margin_top' => 0,
+    'margin_top' => 5,
     'margin_bottom' => 5,
     'margin_left' => 5,
     'margin_right' => 5
 ]);
 
-// Improve styling (VERY IMPORTANT)
+// styling 
 $mpdf->WriteHTML('
 <style>
 
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+body > div:first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
 @page {
-    margin: 5mm;
+    margin: 0mm 5mm 5mm 5mm;
 }
 
 body {
@@ -47,20 +57,18 @@ body {
     padding: 0;
 }
 
-/* Header */
 div.text-center {
     margin: 2px 0;
     line-height: 1.2;
 }
 
-/* Table */
 table {
     width: 100%;
     border-collapse: collapse;
-    table-layout: fixed;
+    table-layout: auto;
+    margin: 0;
 }
 
-/* Header row (dark like your sample) */
 th {
     background-color: #000;
     color: #fff;
@@ -69,7 +77,6 @@ th {
     text-align: center;
 }
 
-/* Data cells */
 td {
     font-size: 8.5px;
     padding: 2px;
@@ -78,20 +85,13 @@ td {
     line-height: 1.2;
 }
 
-/* S.No + Next Date center */
 td:nth-child(1),
 td:nth-child(6) {
     text-align: center;
 }
 
-/* Prevent row break */
-tr {
-    page-break-inside: avoid;
-}
-
 </style>
 ', \Mpdf\HTMLParserMode::HEADER_CSS);
-
 
 // Write HTML
 $mpdf->WriteHTML($html);

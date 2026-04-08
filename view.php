@@ -148,7 +148,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
         </style>
     <?php endif; ?>
 
-    <div class="container-fluid">
+    <div class="container">
 
         <?php
         // Government Emblem (gov.png)

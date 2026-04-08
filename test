@@ -178,3 +178,33 @@ echo $pdfFile;
 exit;
 
 ?> -->
+
+
+
+
+    //Prevents accidental form submission on Enter key; moves focus to next field instead
+  
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.querySelector("form");
+
+            form.addEventListener("keydown", function(e) {
+                if (e.key === "Enter") {
+
+                    // Allow Enter in textarea (for new lines)
+                    if (e.target.tagName.toLowerCase() === "textarea") {
+                        return;
+                    }
+
+                    // Prevent form submit on Enter
+                    e.preventDefault();
+
+                    // Move focus to the next input/textarea field
+                    const inputs = Array.from(form.querySelectorAll("input, textarea"));
+                    const index = inputs.indexOf(e.target);
+
+                    if (index > -1 && index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
+                }
+            });
+        });

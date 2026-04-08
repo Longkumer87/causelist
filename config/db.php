@@ -5,8 +5,8 @@ ini_set('display_errors', 1);
 ini_set('log_errors', 1);
 
 $db_host = "localhost";
-$db_username = "maong";
-$db_password = "maong";
+$db_username = "ghckb";
+$db_password = "ghckb";
 $db_name = "causelist";
 
 $conn = mysqli_connect($db_host, $db_username, $db_password, $db_name);

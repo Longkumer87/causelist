@@ -2,8 +2,9 @@
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous">
     </script>
 
-    <!-- Adds a new row to the cause list table -->
     <script>
+        // Adds a new row to the cause list table
+
         function addRow() {
             let table = document.getElementById("causeTable").getElementsByTagName('tbody')[0];
             let rowCount = table.rows.length;
@@ -27,58 +28,53 @@
 </td>
     `;
         }
-    </script>
 
-    <!-- Permanently removes a row from the table and updates serial numbers -->
-    <script>
+
+        //Permanently removes a row from the table and updates serial numbers
+
         function deleteRow(btn) {
             let row = btn.closest("tr");
             row.remove();
             updateSerialNumbers();
         }
-    </script>
 
-    <!-- Renumbers the S.No column after a row is deleted -->
-    <script>
+
+        //Renumbers the S.No column after a row is deleted
+
         function updateSerialNumbers() {
             let rows = document.querySelectorAll("#causeTable tbody tr");
             rows.forEach((row, index) => {
                 row.cells[0].innerText = index + 1;
             });
         }
-    </script>
 
-    <!-- Prevents accidental form submission on Enter key; moves focus to next field instead -->
-    <script>
+
+        //Prevents accidental form submission on Enter key; moves focus to next field instead
+
         document.addEventListener("DOMContentLoaded", function() {
             const form = document.querySelector("form");
 
-            form.addEventListener("keydown", function(e) {
-                if (e.key === "Enter") {
+            if (form) {
+                form.addEventListener("keydown", function(e) {
 
-                    // Allow Enter in textarea (for new lines)
+                    // Allow Enter in textarea (multi-line)
                     if (e.target.tagName.toLowerCase() === "textarea") {
                         return;
                     }
 
-                    // Prevent form submit on Enter
-                    e.preventDefault();
-
-                    // Move focus to the next input/textarea field
-                    const inputs = Array.from(form.querySelectorAll("input, textarea"));
-                    const index = inputs.indexOf(e.target);
-
-                    if (index > -1 && index < inputs.length - 1) {
-                        inputs[index + 1].focus();
+                    // Prevent Enter ONLY in input fields (like date)
+                    if (e.key === "Enter" && e.target.tagName.toLowerCase() === "input") {
+                        e.preventDefault();
                     }
-                }
-            });
-        });
-    </script>
 
-    <!-- Soft-deletes a row: marks it for deletion on the server and hides it visually -->
-    <!-- Used when rows need to be tracked server-side (e.g. editing existing saved records) -->
-    <script>
+                });
+            }
+        });
+
+
+        // Soft-deletes a row: marks it for deletion on the server and hides it visually
+        // Used when rows need to be tracked server-side (e.g. editing existing saved records)
+
         function markDelete(btn) {
             let row = btn.closest("tr");
 
@@ -88,9 +84,9 @@
             // Hide the row visually without removing it from the DOM
             row.style.display = "none";
         }
-    </script>
 
-    <script>
+
+        //whatsapp sharing
         function shareWhatsApp(date, courtName) {
 
             fetch("generate_pdf.php?cause_date=" + date)
@@ -99,11 +95,11 @@
 
                     //For online hosting
                     // let baseUrl = "https://maonglkr.free.nf/causelist";
-                //     let baseUrl = "https://maonglkr.free.nf";
-                //  let pdfLink = baseUrl + "/" + filePath;
+                    //     let baseUrl = "https://maonglkr.free.nf";
+                    //  let pdfLink = baseUrl + "/" + filePath;
 
                     //For localhost using computer(ngrok) for generating links
-                    let baseUrl = "https://unexplorable-ashlee-ineffable.ngrok-free.dev"; 
+                    let baseUrl = "https://unexplorable-ashlee-ineffable.ngrok-free.dev";
                     let pdfLink = baseUrl + "/causelist/" + filePath;
 
                     let d = new Date(date);
@@ -128,6 +124,5 @@
                     }
 
                 });
-
         }
     </script>

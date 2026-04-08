@@ -55,7 +55,6 @@
                         <td><textarea class="form-control" name="parties[]" style="min-width: 180px;"></textarea></td>
                         <td><textarea class="form-control" name="counsel[]" style="min-width: 180px;"></textarea></td>
                         <td><textarea class="form-control" name="remark[]" style="min-width: 180px;"></textarea></td>
-
                         <td><input type="date" class="form-control" name="next_date[]"></td>
                         <td class="text-center">
                             <div class="d-flex gap-2 justify-content-center">

@@ -30,6 +30,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // ✅ Detect EDIT mode
     $is_edit = isset($_POST['edit_mode']);
 
+    $today = date('Y-m-d');
+
+    if ($is_edit && $cause_date < $today) {
+        die("Editing past cause list is not allowed.");
+    }
+
     // ✅ Check duplicate ONLY for NEW
     if (!$is_edit) {
         $sql = "SELECT id FROM causelist_db WHERE cause_date=? AND court_id=?";
@@ -96,7 +102,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $id,
                 $court_id
             );
-
         } else {
 
             // 🔵 INSERT

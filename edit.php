@@ -15,6 +15,13 @@ $court_id = $_SESSION['court_id'] ?? '';
 
 $date = $_GET['cause_date'] ?? '';
 
+$today = date('Y-m-d');
+
+if ($date < $today) {
+    echo "<script>alert('Past cause list cannot be edited'); window.location='history.php';</script>";
+    exit();
+}
+
 if (empty($date)) {
     header("Location: history.php");
     exit();
