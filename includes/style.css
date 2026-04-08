@@ -2,12 +2,14 @@ html,
 body {
     height: 100%;
     margin: 0;
+    padding: 0;
 }
 
 body {
     display: flex;
     flex-direction: column;
 }
+
 
 main {
     flex: 1;
@@ -19,29 +21,33 @@ main {
     margin-bottom: 8px !important;
 }
 
+/* screen */
+.container-fluid {
+    background: none;
+    padding: 15px;
+    border-radius: 6px;
+}
+
 @media print {
-    @page: first {
-        margin-top: 0;/* ⭐ remove browser/PDF default margin */
+    body {
+        display: block !important;
+    }
+
+    @page :first {
+        margin-top: 0;
+        /* ⭐ remove browser/PDF default margin */
     }
 
     @page {
-        margin-top: 80px;
+        margin-top: 40px;
         /* apply ONLY to 2nd, 3rd, etc */
-        margin-left: 20px;
-        margin-right: 20px;
-        margin-bottom: 20px;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 10px;
     }
 
-    html,body {
-        /* height: auto !important; */
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-
-    body {
-        margin: 0 !important;
-        /* ⭐ IMPORTANT: remove 20px */
-
+    .seal {
+        display: none;
     }
 
     .no-print {
@@ -73,81 +79,57 @@ main {
         border-collapse: collapse;
         table-layout: fixed;
     }
+     th, td {
+        box-sizing: border-box;  /* ⭐ FIX */
+    }
 
     th,
     td {
         border: 1px solid black !important;
-        padding: 4px;
-        font-size: 12px;
+        padding: 3px;
+        font-size: 11px;
         vertical-align: top;
     }
 
-    td {
-        text-align: left !important;
-        vertical-align: top;
-    }
 }
 
 td:nth-child(1),
 td:nth-child(6) {
     text-align: center;
-}
-
-.seal {
-    display: none;
 }
 
 th:nth-child(1),
 td:nth-child(1) {
-    width: 5%;
+    width: 4%;
 }
 
 th:nth-child(2),
 td:nth-child(2) {
-    width: 15%;
+    width: 14%;
 }
 
 th:nth-child(3),
 td:nth-child(3) {
-    width: 30%;
+    width: 28%;
 }
 
 th:nth-child(4),
 td:nth-child(4) {
-    width: 20%;
+    width: 18%;
 }
 
 th:nth-child(5),
 td:nth-child(5) {
-    width: 15%;
+    width: 14%;
 }
 
 th:nth-child(6),
 td:nth-child(6) {
-    width: 15%;
+    width: 14%;
 }
-
-/* Card feel (print out) */
-.container-fluid {
-    background: none;
-    padding: none;
-    border-radius: none;
-}
-
-
-td {
-    text-align: left !important;
-    vertical-align: top;
-}
-
-td:nth-child(1),
-td:nth-child(6) {
-    text-align: center;
-}
-
 
 .login-page {
-    background: url('../image/court.png')no-repeat center center;
+    background: url('../image/court.png') no-repeat center center;
     background-size: cover;
     flex: 1;
 
@@ -178,49 +160,10 @@ td:nth-child(6) {
     background-color: #e65c00;
 }
 
-/* Card feel (main content) */
-.container-fluid {
-    background: none;
-    padding: 15px;
-    border-radius: 6px;
-}
-
-/* Headings */
-h5 {
-    margin-bottom: 2px;
-}
-
-/* Table */
-.table {
-    background-color: #ffffff;
-}
-
-.table thead {
-    font-size: 14px;
-}
-
-/* Inputs */
-.form-control {
-    font-size: 14px;
-}
-
-/* Buttons (keep simple) */
-.btn {
-    border-radius: 4px;
-}
-
-/* Slight shadow (very light, not flashy) */
-.container-fluid {
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
 
 /* Mobile view */
 
 @media (max-width: 768px) {
-    .login-page {
-        background-position: center;
-        background-size: cover;
-    }
 
     #loginCard {
         margin: 20px auto;

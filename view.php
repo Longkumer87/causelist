@@ -234,7 +234,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
             </table>
         </div>
 
-        <div style="margin-top: 10px; text-align: right; font-size: 9px;">
+        <div style="margin-top: 10px; text-align: right; font-size: 13px;">
             <strong>Sd/-</strong><br>
             By Order
         </div>
