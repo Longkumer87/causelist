@@ -1,4 +1,4 @@
-<?php $title="edit";
+<?php $title = "edit";
 
 session_start();
 
@@ -49,7 +49,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     <!-- Middle Buttons -->
     <div class="d-flex gap-2">
-        
+
         <a href="welcome.php" class="btn btn-outline-light btn-sm">
             <i class="bi bi-house"></i> Home
         </a>
@@ -78,65 +78,65 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
         <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
         <input type="hidden" name="cause_date" value="<?= htmlspecialchars($date); ?>">
 
-            <div class="table-responsive">
-        <table class="table table-bordered" id="causeTable">
-            <thead class="table-dark">
-                <tr>
-                    <th>S.No</th>
-                    <th>Case No</th>
-                    <th>Parties</th>
-                    <th>Counsel</th>
-                    <th>Remark</th>
-                    <th>Next Date</th>
-                    <th class="text-center">Action</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <?php $i = 1; ?>
-                <?php foreach ($rows as $row): ?>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="causeTable">
+                <thead class="table-dark">
                     <tr>
-                        <input type="hidden" name="edit_mode" value="1">
-                        <input type="hidden" name="id[]" value="<?= htmlspecialchars($row['id']); ?>">
-                        <input type="hidden" name="delete[]" value="0">
-                        <td class="text-center fw-bold"><?= $i++; ?></td>
-                        <td>
-                             <textarea name="case_no[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['case_no']); ?></textarea>
-                        </td>
-                        <td>
-                            <textarea name="parties[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['parties']); ?></textarea>
-                        </td>
-                        <td>
-                            <textarea name="counsel[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['counsel']); ?></textarea>
-                        </td>
-                        <td>
-                            <textarea name="remark[]" class="form-control" style="min-width: 180px;"><?=htmlspecialchars($row['remark']); ?></textarea>
-                        </td>
-                        <td>
-                            <input type="date" name="next_date[]" class="form-control" value="<?= htmlspecialchars($row['next_date']); ?>">
-                        </td>
-                        <td class="text-center">
-                            <div class="d-flex gap-2 justify-content-center">
-                                <button type="button" class="btn btn-primary btn-sm" onclick="addRow()">
-                                    <i class="bi bi-file-plus"></i> Add
-                                </button>
-                                <button type="button" class="btn btn-danger btn-sm" onclick="markDelete(this)">
-                                    <i class="bi bi-trash3"></i> Delete
-                                </button>
-                            </div>
-                        </td>
+                        <th>S.No</th>
+                        <th>Case No</th>
+                        <th>Parties</th>
+                        <th>Counsel</th>
+                        <th>Remark</th>
+                        <th>Next Date</th>
+                        <th class="text-center">Action</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-</div>
+                </thead>
 
-<div class="text-end mt-3">
-    <button type="submit" class="btn btn-success px-4">
-        <i class="bi bi-bookmark-check"></i> Submit
-    </button>
-</div>
-</form>
+                <tbody>
+                    <?php $i = 1; ?>
+                    <?php foreach ($rows as $row): ?>
+                        <tr>
+                            <input type="hidden" name="edit_mode" value="1">
+                            <input type="hidden" name="id[]" value="<?= htmlspecialchars($row['id']); ?>">
+                            <input type="hidden" name="delete[]" value="0">
+                            <td class="text-center fw-bold"><?= $i++; ?></td>
+                            <td>
+                                <textarea name="case_no[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['case_no']); ?></textarea>
+                            </td>
+                            <td>
+                                <textarea name="parties[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['parties']); ?></textarea>
+                            </td>
+                            <td>
+                                <textarea name="counsel[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['counsel']); ?></textarea>
+                            </td>
+                            <td>
+                                <textarea name="remark[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['remark']); ?></textarea>
+                            </td>
+                            <td>
+                                <input type="date" name="next_date[]" class="form-control" value="<?= htmlspecialchars($row['next_date']); ?>">
+                            </td>
+                            <td class="text-center">
+                                <div class="d-flex gap-2 justify-content-center">
+                                    <button type="button" class="btn btn-primary btn-sm" onclick="addRow()">
+                                        <i class="bi bi-file-plus"></i> Add
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm" onclick="markDelete(this)">
+                                        <i class="bi bi-trash3"></i> Delete
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="text-end mt-3">
+            <button type="submit" class="btn btn-success px-4">
+                <i class="bi bi-bookmark-check"></i> Submit
+            </button>
+        </div>
+    </form>
 
 </div>
 

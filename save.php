@@ -126,6 +126,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         mysqli_stmt_execute($stmt);
     }
 
+    // ✅ Auto-generate PDF after saving
+    $calledFromSave = true;
+    $_GET['cause_date'] = $cause_date;
+    
+    ob_start();
+    include __DIR__ . '/generate_pdf.php';
+    ob_end_clean();
+
     header("Location: view.php?cause_date=" . urlencode($cause_date));
     exit();
 }

@@ -11,10 +11,10 @@
             let row = table.insertRow();
             row.innerHTML = `
         <td class="text-center fw-bold">${rowCount + 1}</td>
-        <td><textarea class="form-control form-control-sm" name="case_no[]" rows="2" required></textarea></td>
-        <td><textarea class="form-control form-control-sm" name="parties[]" rows="2"></textarea></td>
-        <td><textarea class="form-control form-control-sm" name="counsel[]" rows="2"></textarea></td>
-        <td><textarea class="form-control form-control-sm" name="remark[]" rows="2"></textarea></td>
+        <td><textarea class="form-control form-control" name="case_no[]" rows="2" required></textarea></td>
+        <td><textarea class="form-control form-control" name="parties[]" rows="2"></textarea></td>
+        <td><textarea class="form-control form-control" name="counsel[]" rows="2"></textarea></td>
+        <td><textarea class="form-control form-control" name="remark[]" rows="2"></textarea></td>
         <td><input type="date" class="form-control form-control-sm" name="next_date[]"></td>
        <td class="text-center">
     <div class="d-flex gap-2 justify-content-center">

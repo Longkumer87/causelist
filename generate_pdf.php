@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
@@ -30,68 +32,12 @@ $mpdf = new \Mpdf\Mpdf([
     'margin_left' => 5,
     'margin_right' => 5
 ]);
+$mpdf->SetDisplayMode('fullpage');
+$mpdf->SetDefaultFontSize(8); 
 
-// styling 
-$mpdf->WriteHTML('
-<style>
+$stylesheet = file_get_contents(__DIR__ . '/includes/pdf.css');
+$mpdf->WriteHTML($stylesheet, \Mpdf\HTMLParserMode::HEADER_CSS);
 
-html, body {
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-body > div:first-child {
-    margin-top: 0 !important;
-    padding-top: 0 !important;
-}
-
-@page {
-    margin: 0mm 5mm 5mm 5mm;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    font-size: 9px;
-    color: #000;
-    margin: 0;
-    padding: 0;
-}
-
-div.text-center {
-    margin: 2px 0;
-    line-height: 1.2;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: auto;
-    margin: 0;
-}
-
-th {
-    background-color: #000;
-    color: #fff;
-    font-size: 9px;
-    padding: 3px;
-    text-align: center;
-}
-
-td {
-    font-size: 8.5px;
-    padding: 2px;
-    vertical-align: top;
-    text-align: left;
-    line-height: 1.2;
-}
-
-td:nth-child(1),
-td:nth-child(6) {
-    text-align: center;
-}
-
-</style>
-', \Mpdf\HTMLParserMode::HEADER_CSS);
 
 // Write HTML
 $mpdf->WriteHTML($html);
@@ -109,5 +55,7 @@ if (!file_exists('pdf')) {
 $mpdf->Output($file, \Mpdf\Output\Destination::FILE);
 
 // Return path
-echo $file;
-exit;
+if (!isset($calledFromSave)) {
+    echo $file;
+    exit;
+}

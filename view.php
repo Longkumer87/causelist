@@ -102,10 +102,11 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     <?php if (isset($_GET['pdf'])): ?>
         <style>
-            body {
+              body {
+                font-family: Tahoma, Arial, sans-serif;
                 font-size: 10px;
-            }
-
+                text-align: center;
+            }          
             table {
                 width: 100%;
                 border-collapse: collapse;
@@ -115,12 +116,6 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
             td {
                 border: 1px solid #000;
                 padding: 5px;
-            }
-
-            body {
-                font-family: Arial, sans-serif;
-                font-size: 10px;
-                text-align: center;
             }
 
             img {
@@ -134,22 +129,14 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 margin-top: 10px;
             }
 
-            /* th,
-            td {
-                border: 1px solid #000;
-                padding: 6px;
-                text-align: center;
-            } */
-
             td:nth-child(3) {
                 text-align: left;
-                /* Parties column */
+               
             }
         </style>
     <?php endif; ?>
 
     <div class="container">
-
         <?php
         // Government Emblem (gov.png)
         $govPath = 'image/gov.png';
@@ -186,24 +173,25 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
             </div>
         </div>
+    </div>
 
-        <!-- Header -->
-        <div class="text-center" style="margin-top: 1px; line-height: 1.2; font-size:13px;">
-            <div class="fw-bold">IN THE COURT OF THE</div>
-            <span class="fw-bold"><?= strtoupper(htmlspecialchars($court_name)); ?></span><br>
-            <div class="fw-bold">KOHIMA : NAGALAND</div>
-        </div>
+    <!-- Header -->
+    <div class="text-center" style="margin-top: 1px; line-height: 1.2; font-size:13px; font-family: 'Segoe UI', Tahoma, sans-serif;">
+        <div class="fw-bold">IN THE COURT OF THE</div>
+        <span class="fw-bold"><?= strtoupper(htmlspecialchars($court_name)); ?></span><br>
+        <div class="fw-bold">KOHIMA : NAGALAND</div>
+    </div>
 
-        <!-- Date -->
-        <div class="text-center fw-bold mt-1">
-            CAUSE LIST FOR :
-            <?= date("d F Y", strtotime($date)); ?>
-        </div>
-
+    <!-- Date -->
+    <div class="text-center fw-bold mt-1">
+        CAUSE LIST FOR :
+        <?= date("d F Y", strtotime($date)); ?>
+    </div>
+    <div class="container-fluid ps-4 pe-4">
         <!-- Table -->
         <div class="table-responsive">
             <table class="table table-bordered table-sm">
-                <thead class="table-secondary">
+                <thead class="table-dark">
                     <tr>
                         <th class="text-center">S.No</th>
                         <th class="text-center">Case No</th>
@@ -217,7 +205,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 <tbody>
                     <?php $i = 1; ?>
                     <?php foreach ($rows as $row): ?>
-                        <tr>
+                        <tr class="fw-bold" style="font-size:13px; font-family: Tahoma, Geneva, Verdana, sans-serif;">
                             <td class="text-center"><?= $i++; ?></td>
                             <td><?= nl2br(htmlspecialchars($row['case_no'])); ?></td>
                             <td class="text-break"><?= nl2br(htmlspecialchars($row['parties'])); ?></td>
@@ -240,6 +228,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
         </div>
 
     </div>
+
 <?php endif; ?>
 
 <?php if (!isset($_GET['pdf'])): ?>
