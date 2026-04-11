@@ -178,7 +178,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <!-- Header -->
     <div class="text-center" style="margin-top: 1px; line-height: 1.2; font-size:13px; font-family: 'Segoe UI', Tahoma, sans-serif;">
         <div class="fw-bold">IN THE COURT OF THE</div>
-        <span class="fw-bold"><?= strtoupper(htmlspecialchars($court_name)); ?></span><br>
+        <span class="fw-bold"><?= htmlspecialchars(strtoupper($court_name)); ?></span><br>
         <div class="fw-bold">KOHIMA : NAGALAND</div>
     </div>
 
