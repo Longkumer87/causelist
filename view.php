@@ -139,18 +139,37 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
         </div>
     </div>
 
-    <!-- Header -->
-    <div class="text-center" style="margin-top: 1px; line-height: 1.2; font-size:13px; font-family: 'Segoe UI', Tahoma, sans-serif;">
-        <div class="fw-bold">IN THE COURT OF THE</div>
-        <span class="fw-bold"><?= htmlspecialchars(strtoupper($court_name)); ?></span><br>
-        <div class="fw-bold">KOHIMA : NAGALAND</div>
-    </div>
+    <?php if (isset($_GET['pdf'])): ?>
 
-    <!-- Date -->
-    <div class="text-center fw-bold mt-1">
-        CAUSE LIST FOR :
-        <?= date("d F Y", strtotime($date)); ?>
-    </div>
+        <!-- PDF version -->
+        <div class="text-center" style="margin-top:1px; line-height:1.2; font-family:Tahoma, sans-serif;">
+            <span style="font-size:11px; font-weight:normal;">
+                IN THE COURT OF THE <br>
+                <?= htmlspecialchars(strtoupper($court_name)); ?><br>
+                KOHIMA : NAGALAND
+            </span>
+        </div>
+
+        <div class="text-center mt-2 mb-2">
+            <span style="font-size:12px; font-weight:bold;">
+                CAUSE LIST FOR : <?= date("d F Y", strtotime($date)); ?>
+            </span>
+        </div>
+
+    <?php else: ?>
+
+        <!-- Normal view/print version -->
+        <div class="text-center" style="margin-top: 1px; line-height: 1.2; font-size:13px; font-family:Tahoma, sans-serif;">
+            <div class="fw-bold">IN THE COURT OF THE</div>
+            <span class="fw-bold"><?= htmlspecialchars(strtoupper($court_name)); ?></span><br>
+            <div class="fw-bold">KOHIMA : NAGALAND</div>
+        </div>
+
+        <div class="text-center fw-bold mt-1">
+            CAUSE LIST FOR : <?= date("d F Y", strtotime($date)); ?>
+        </div>
+    <?php endif; ?>
+
     <div class="container-fluid ps-4 pe-4">
         <!-- Table -->
         <div class="table-responsive">

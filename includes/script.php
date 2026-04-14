@@ -95,23 +95,26 @@
 
                     //For online hosting
                     // let baseUrl = "https://maonglkr.free.nf/causelist";
-                    //     let baseUrl = "https://maonglkr.free.nf";
-                    //  let pdfLink = baseUrl + "/" + filePath;
+                    let baseUrl = "https://maonglkr.free.nf";
+                    let pdfLink = baseUrl + "/" + filePath;
 
                     //For localhost using computer(ngrok) for generating links
-                    let baseUrl = "https://unexplorable-ashlee-ineffable.ngrok-free.dev";
-                    let pdfLink = baseUrl + "/causelist/" + filePath;
+                    //let baseUrl = "https://unexplorable-ashlee-ineffable.ngrok-free.dev";
+                    //let pdfLink = baseUrl + "/causelist/" + filePath;
 
                     let d = new Date(date);
                     let formattedDate = d.getDate().toString().padStart(2, '0') + '-' +
                         (d.getMonth() + 1).toString().padStart(2, '0') + '-' +
                         d.getFullYear();
 
+                    let meetLink = "https://meet.google.com/ovc-pzpi-njf";
+
                     let message = encodeURIComponent(
                         "🏛️ District Court Kohima\n\n" +
                         "⚖️ " + courtName + "\n" +
                         "📄 CAUSE LIST FOR : " + formattedDate + "\n\n" +
-                        pdfLink
+                         pdfLink + "\n\n" +
+                        "🎥 Google Meet:\n" + meetLink
                     );
 
                     // ✅ Detect device
