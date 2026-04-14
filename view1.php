@@ -100,6 +100,42 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 <?php else: ?>
 
+    <?php if (isset($_GET['pdf'])): ?>
+        <style>
+              body {
+                font-family: Tahoma, Arial, sans-serif;
+                font-size: 10px;
+                text-align: center;
+            }          
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            th,
+            td {
+                border: 1px solid #000;
+                padding: 5px;
+            }
+
+            img {
+                display: block;
+                margin: 0 auto;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 10px;
+            }
+
+            td:nth-child(3) {
+                text-align: left;
+               
+            }
+        </style>
+    <?php endif; ?>
+
     <div class="container">
         <?php
         // Government Emblem (gov.png)
@@ -123,7 +159,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 <div style="flex: 0 0 20%; text-align: left;">
                     <img class="no-print"
                         src="<?php echo $sealBase64; ?>"
-                        style="width: 100px; height: auto;">
+                        style="width: 60px; height: auto;">
                 </div>
 
                 <!-- Government Emblem in Center -->
@@ -159,7 +195,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     <tr>
                         <th class="text-center">S.No</th>
                         <th class="text-center">Case No</th>
-                        <th class="text-center">Parties</th>
+                        <th class="text-center col-4">Parties</th>
                         <th class="text-center">Counsel</th>
                         <th class="text-center">Remark</th>
                         <th class="text-center">Next Date</th>
@@ -169,7 +205,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 <tbody>
                     <?php $i = 1; ?>
                     <?php foreach ($rows as $row): ?>
-                        <tr>
+                        <tr class="fw-bold" style="font-size:13px; font-family: Tahoma, Geneva, Verdana, sans-serif;">
                             <td class="text-center"><?= $i++; ?></td>
                             <td><?= nl2br(htmlspecialchars($row['case_no'])); ?></td>
                             <td class="text-break"><?= nl2br(htmlspecialchars($row['parties'])); ?></td>

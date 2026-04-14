@@ -37,31 +37,13 @@ $mpdf->SetDefaultFontSize(8);
 
 // ✅ Embed CSS directly here
 $stylesheet = "
-              body {
-                font-family: Tahoma, Arial, sans-serif;
-                font-size: 13px;
-                text-align: center;
-            }                  
-            th,
-            td {
-                border: 1px solid #000;
-                padding: 5px;
-            }
-
-            img {
-                display: block;
-                margin: 0 auto;
-            }
-
-            td:nth-child(3) {
-                text-align: left;
-               
-            }
-        
 table {
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
+}
+@page :first {
+    margin-top: 0;
 }
 @page {
     margin-top: 40px;
@@ -70,12 +52,16 @@ table {
     margin-bottom: 10px;
 }
 th:nth-child(1) { width: 6%; }
-th:nth-child(2) { width: 18%; }
+th:nth-child(2) { width: 17%; }
 th:nth-child(3) { width: 23%; }
-th:nth-child(4) { width: 23%; }
-th:nth-child(5) { width: 15%; }
-th:nth-child(6) { width: 15%; }
-
+th:nth-child(4) { width: 27%; }
+th:nth-child(5) { width: 14%; }
+th:nth-child(6) { width: 14%; }
+th, td {
+    border: 1px solid #000;
+    padding: 4px;
+    word-wrap: break-word;
+}
 ";
 $mpdf->WriteHTML($stylesheet, \Mpdf\HTMLParserMode::HEADER_CSS);
 

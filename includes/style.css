@@ -26,74 +26,7 @@ main {
     border-radius: 6px;
 }
 
-@media print {
-    body {
-        display: block;
-    }
-
-    @page :first {
-        margin-top: 0;
-        /* ⭐ remove browser/PDF default margin */
-    }
-
-    @page {
-        margin-top: 40px;
-        /* apply ONLY to 2nd, 3rd, etc */
-        margin-left: 10px;
-        margin-right: 10px;
-        margin-bottom: 10px;
-    }
-
-    .seal {
-        display: none;
-    }
-
-    .no-print {
-        display: none !important;
-    }
-
-    button {
-        display: none;
-    }
-
-    h4,
-    h5 {
-        text-align: center;
-        margin: 0;
-        /* ⭐ remove top gap */
-    }
-
-    .container-fluid {
-        margin: 0;
-        padding: 0;
-        /* ⭐ remove card spacing */
-        box-shadow: none;
-        /* ⭐ remove shadow in print */
-        border-radius: 0;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        table-layout: fixed;
-    }
-
-    th,
-    td {
-        border: 1px solid black !important;
-        padding: 3px;
-        font-size: 11px;
-        vertical-align: top;
-    }
-
-}
-
-th:nth-child(1) { width: 6%; }
-th:nth-child(2) { width: 17%; }
-th:nth-child(3) { width: 23%; }
-th:nth-child(4) { width: 27%; }
-th:nth-child(5) { width: 14%; }
-th:nth-child(6) { width: 14%; }
+/* Login Page */
 
 .login-page {
     background: url('../image/court.png') no-repeat center center;
@@ -145,4 +78,88 @@ footer {
     text-align: center;
     padding: 6px;
     font-size: 13px;
+}
+
+/* For Printout */
+
+@media print {
+    body {
+        display: block;
+    }
+
+    @page :first {
+        margin-top: 30px;
+
+    }
+
+    @page {
+        margin-top: 40px; /* apply ONLY to 2nd, 3rd, etc */
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    .seal {
+        display: none;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    button {
+        display: none;
+    }
+
+    h4,
+    h5 {
+        text-align: center;
+    }
+
+    .container-fluid {
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+
+    th,
+    td {
+        border: 1px solid black !important;
+        padding: 3px;
+        font-size: 14px;
+        font-family:Tahoma, Geneva, Verdana, sans-serif;
+        vertical-align: top;
+    }
+
+    th:nth-child(1) {
+        width: 6%;
+    }
+
+    th:nth-child(2) {
+        width: 18%;
+    }
+
+    th:nth-child(3) {
+        width: 23%;
+    }
+
+    th:nth-child(4) {
+        width: 23%;
+    }
+
+    th:nth-child(5) {
+        width: 15%;
+    }
+
+    th:nth-child(6) {
+        width: 15%;
+    }
+
 }
