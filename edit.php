@@ -94,12 +94,16 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
                 <tbody>
                     <?php $i = 1; ?>
+                    <input type="hidden" name="edit_mode" value="1">
                     <?php foreach ($rows as $row): ?>
                         <tr>
-                            <input type="hidden" name="edit_mode" value="1">
-                            <input type="hidden" name="id[]" value="<?= htmlspecialchars($row['id']); ?>">
-                            <input type="hidden" name="delete[]" value="0">
-                            <td class="text-center fw-bold"><?= $i++; ?></td>
+
+                            <td class="text-center fw-bold">
+                                <input type="hidden" name="id[]" value="<?= htmlspecialchars($row['id']); ?>">
+                                <input type="hidden" name="delete[]" value="0">
+                                <?= $i++; ?>
+                            </td>
+
                             <td>
                                 <textarea name="case_no[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['case_no']); ?></textarea>
                             </td>

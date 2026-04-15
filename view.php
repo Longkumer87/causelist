@@ -1,5 +1,6 @@
 <?php $title = "causelist";
 require_once 'config/db.php';
+require_once 'functions.php';
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -10,13 +11,9 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-if (isset($_GET['pdf'])) {
-    $court_name = $_SESSION['court_name'] ?? '';
-    $court_id = $_SESSION['court_id'] ?? '';
-} else {
-    $court_name = $_SESSION['court_name'] ?? '';
-    $court_id = $_SESSION['court_id'] ?? '';
-}
+$court_name = $_SESSION['court_name'] ?? '';
+$court_id = $_SESSION['court_id'] ?? '';
+
 
 //title bar code 
 $title = "causelist - " . $court_name;
@@ -99,8 +96,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
     </div>
 
 <?php else: ?>
-
-    <div class="container">
+    
         <?php
         // Government Emblem (gov.png)
         $govPath = 'image/gov.png';
@@ -108,36 +104,31 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
         $govData = file_get_contents($govPath);
         $govBase64 = 'data:image/' . $govType . ';base64,' . base64_encode($govData);
 
-        // Seal (seal.png)
-        $sealPath = 'image/seal.png';
-        $sealType = pathinfo($sealPath, PATHINFO_EXTENSION);
-        $sealData = file_get_contents($sealPath);
-        $sealBase64 = 'data:image/' . $sealType . ';base64,' . base64_encode($sealData);
         ?>
 
         <div class="header-container">
-            <!-- Seal Left + Emblem Center - Very Compact -->
-            <div style="display: flex; align-items: center; justify-content: space-between; margin: 0; padding: 0;">
 
-                <!-- Seal on Left (hidden on print) -->
-                <div style="flex: 0 0 20%; text-align: left;">
-                    <img class="no-print"
-                        src="<?php echo $sealBase64; ?>"
-                        style="width: 100px; height: auto;">
+            <div style="display:flex; align-items:center; justify-content:space-between;">
+
+                <!-- LEFT (Seal only for PDF) -->
+                <div style="flex:1; text-align:left;">
+                    <?php if (isset($_GET['pdf'])): ?>
+                        <?= getSeal($court_id); ?>
+                    <?php endif; ?>
                 </div>
 
-                <!-- Government Emblem in Center -->
-                <div style="flex: 1; text-align: center;">
-                    <img src="<?php echo $govBase64; ?>"
-                        style="max-height: 40px; width: auto; display: block; margin: 0 auto;">
+                <!-- CENTER (Emblem always) -->
+                <div style="flex:1; text-align:center;">
+                    <img src="<?= $govBase64; ?>" style="max-height:40px;">
                 </div>
 
-                <!-- Right empty space for balance -->
-                <div style="flex: 0 0 20%;"></div>
+                <!-- RIGHT (empty for balance) -->
+                <div style="flex:1;"></div>
 
             </div>
+
         </div>
-    </div>
+    
 
     <?php if (isset($_GET['pdf'])): ?>
 
@@ -205,9 +196,8 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
             </table>
         </div>
 
-        <div style="margin-top: 10px; text-align: right; font-size: 13px;">
-            <strong>Sd/-</strong><br>
-            By Order
+        <div class="fw-bold" style="margin-top: 10px; text-align: right; font-size: 13px;">
+            <?= getSignature($court_id); ?>
         </div>
 
     </div>

@@ -15,10 +15,6 @@ main {
     flex: 1;
 }
 
-.header-container {
-    margin: 0 !important;
-}
-
 /* screen */
 .container-fluid {
     background: none;

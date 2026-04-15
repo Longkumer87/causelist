@@ -51,12 +51,6 @@ $stylesheet = "
                 padding:0;
             }
 
-            .header-container {
-                 margin:0;
-                 padding:0;
-                 line-height:1;
-            }
-
             td:nth-child(3) {
                 text-align: left;
                
