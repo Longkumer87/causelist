@@ -126,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         mysqli_stmt_execute($stmt);
     }
 
-    // ✅ Auto-generate PDF after saving
+    // Auto-generate PDF after saving
     $calledFromSave = true;
     $_GET['cause_date'] = $cause_date;
     

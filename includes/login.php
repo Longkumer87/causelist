@@ -77,9 +77,8 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
 <div class="login-page">
     <div class="card shadow text-center" id="loginCard">
         
-        <div class="card-header">
-            <h3 class="text-light">District Court Kohima</h3>
-            <p class="fw-bold text-light">Login</p>
+        <div class="card-header">  
+            <p class="fw-bold text-light text-center">Log in</p>
         </div>
 
         <div class="card-body p-5">

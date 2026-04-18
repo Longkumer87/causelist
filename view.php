@@ -1,10 +1,10 @@
-<?php $title = "causelist";
-require_once 'config/db.php';
-require_once 'functions.php';
-
+<?php
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+require 'config/db.php';
+require "includes/header.php";
+require 'functions.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
@@ -13,13 +13,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $court_name = $_SESSION['court_name'] ?? '';
 $court_id = $_SESSION['court_id'] ?? '';
-
-
-//title bar code 
 $title = "causelist - " . $court_name;
-?>
-
-<?php
 
 $date = $_GET['cause_date'] ?? '';
 if (empty($date)) {
@@ -40,131 +34,63 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 ?>
 
-<?php if (!isset($_GET['pdf'])): ?>
-    <?php require "includes/header.php"; ?>
-<?php endif; ?>
-
-<!-- Navbar - hidden when printing -->
-<?php if (!isset($_GET['pdf'])): ?>
-
-    <nav class="navbar flex-wrap d-flex justify-content-between px-3 shadow-sm no-print" style="background-color:#2f3e46;">
-
-        <!-- Court Name -->
-        <span class="navbar-brand fw-bold text-white mb-0">
-            <i class="bi bi-building me-1"></i>
-            <?= htmlspecialchars($court_name); ?>
-        </span>
-
-        <!-- Middle Buttons -->
-        <div class="d-flex gap-2">
-
-            <a href="welcome.php" class="btn btn-outline-light btn-sm">
-                <i class="bi bi-house"></i> Home
-            </a>
-
-            <a href="edit.php?cause_date=<?= htmlspecialchars($date); ?>"
-                class="btn btn-outline-warning btn-sm">
-                <i class="bi bi-pencil"></i> Edit
-            </a>
-
-            <!-- WhatsApp (Green) -->
-            <button onclick="shareWhatsApp('<?= $date ?>', '<?= htmlspecialchars($court_name) ?>')"
-                class="btn btn-outline-success btn-sm">
-                <i class="bi bi-whatsapp"></i> WhatsApp
-            </button>
-
-            <!-- Print (Dark) -->
-            <button onclick="window.print()"
-                class="btn btn-dark btn-sm">
-                <i class="bi bi-printer"></i> Print
-            </button>
-
-        </div>
-
-        <!-- Logout -->
-        <a href="logout.php" class="btn btn-danger btn-sm px-3">
-            <i class="bi bi-power"></i> Logout
+<nav class="navbar flex-wrap d-flex justify-content-between px-3 shadow-sm no-print" style="background-color:#2f3e46;">
+    <span class="navbar-brand fs-6 text-white mb-0">
+        <i class="bi bi-building me-1"></i>
+        <?= htmlspecialchars($court_name); ?>
+    </span>
+    <div class="d-flex gap-2">
+        <a href="welcome.php" class="btn btn-outline-light btn-sm">
+            <i class="bi bi-house"></i> Home
         </a>
-
-    </nav>
-<?php endif; ?>
+        <a href="edit.php?cause_date=<?= htmlspecialchars($date); ?>" class="btn btn-outline-warning btn-sm">
+            <i class="bi bi-pencil"></i> Edit
+        </a>
+        <button onclick="shareWhatsApp('<?= $date ?>', '<?= htmlspecialchars($court_name) ?>')" class="btn btn-outline-success btn-sm">
+            <i class="bi bi-whatsapp"></i> WhatsApp
+        </button>
+        <button onclick="window.print()" class="btn btn-dark btn-sm">
+            <i class="bi bi-printer"></i> Print
+        </button>
+    </div>
+    <a href="logout.php" class="btn btn-danger btn-sm px-3">
+        <i class="bi bi-power"></i> Logout
+    </a>
+</nav>
 
 <?php if (empty($rows)): ?>
-
     <div class="text-center mt-4">
         <h5>No cause list found for this date</h5>
     </div>
-
 <?php else: ?>
-    
-        <?php
-        // Government Emblem (gov.png)
-        $govPath = 'image/gov.png';
-        $govType = pathinfo($govPath, PATHINFO_EXTENSION);
-        $govData = file_get_contents($govPath);
-        $govBase64 = 'data:image/' . $govType . ';base64,' . base64_encode($govData);
 
-        ?>
+    <?php
+    $govPath = 'image/gov.png';
+    $govData = file_get_contents($govPath);
+    $govBase64 = 'data:image/png;base64,' . base64_encode($govData);
+    ?>
 
-        <div class="header-container">
-
-            <div style="display:flex; align-items:center; justify-content:space-between;">
-
-                <!-- LEFT (Seal only for PDF) -->
-                <div style="flex:1; text-align:left;">
-                    <?php if (isset($_GET['pdf'])): ?>
-                        <?= getSeal($court_id); ?>
-                    <?php endif; ?>
-                </div>
-
-                <!-- CENTER (Emblem always) -->
-                <div style="flex:1; text-align:center;">
-                    <img src="<?= $govBase64; ?>" style="max-height:40px;">
-                </div>
-
-                <!-- RIGHT (empty for balance) -->
-                <div style="flex:1;"></div>
-
-            </div>
-
+    <div class="header-container mt-2">
+        <div class="flex-fill text-start"></div>
+        <div class="flex-fill text-center">
+            <img src="<?= $govBase64; ?>" style="max-height:40px;">
         </div>
-    
+        <div class="flex-fill"></div>
+    </div>
 
-    <?php if (isset($_GET['pdf'])): ?>
+    <div class="text-center mt-1 lh-sm fs-6">
+        <div>IN THE COURT OF THE</div>
+        <span><?= htmlspecialchars(strtoupper($court_name)); ?></span><br>
+        <div>KOHIMA : NAGALAND</div>
+    </div>
 
-        <!-- PDF version -->
-        <div class="text-center" style="margin-top:1px; line-height:1.2; font-family:Tahoma, sans-serif;">
-            <span style="font-size:11px; font-weight:normal;">
-                IN THE COURT OF THE <br>
-                <?= htmlspecialchars(strtoupper($court_name)); ?><br>
-                KOHIMA : NAGALAND
-            </span>
-        </div>
-
-        <div class="text-center mt-2 mb-2">
-            <span style="font-size:12px; font-weight:bold;">
-                CAUSE LIST FOR : <?= date("d F Y", strtotime($date)); ?>
-            </span>
-        </div>
-
-    <?php else: ?>
-
-        <!-- Normal view/print version -->
-        <div class="text-center" style="margin-top: 1px; line-height: 1.2; font-size:13px; font-family:Tahoma, sans-serif;">
-            <div class="fw-bold">IN THE COURT OF THE</div>
-            <span class="fw-bold"><?= htmlspecialchars(strtoupper($court_name)); ?></span><br>
-            <div class="fw-bold">KOHIMA : NAGALAND</div>
-        </div>
-
-        <div class="text-center fw-bold mt-1">
-            CAUSE LIST FOR : <?= date("d F Y", strtotime($date)); ?>
-        </div>
-    <?php endif; ?>
+    <div class="text-center fw-bold mt-1">
+        CAUSE LIST FOR : <?= date("d F Y", strtotime($date)); ?>
+    </div>
 
     <div class="container-fluid ps-4 pe-4">
-        <!-- Table -->
         <div class="table-responsive">
-            <table class="table table-bordered table-sm">
+            <table class="table table-bordered border-dark table-sm">
                 <thead class="table-dark">
                     <tr>
                         <th class="text-center">S.No</th>
@@ -175,7 +101,6 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         <th class="text-center">Next Date</th>
                     </tr>
                 </thead>
-
                 <tbody>
                     <?php $i = 1; ?>
                     <?php foreach ($rows as $row): ?>
@@ -195,16 +120,13 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 </tbody>
             </table>
         </div>
+    </div>
 
-        <div class="fw-bold" style="margin-top: 10px; text-align: right; font-size: 13px;">
-            <?= getSignature($court_id); ?>
-        </div>
-
+    <div style="grid-template-columns: 4fr 1fr;" class="container-fluid d-grid">
+        <div class="p-2"></div>
+        <div class="p-2 text-center"><?= getSignature($court_id); ?></div>
     </div>
 
 <?php endif; ?>
 
-<?php if (!isset($_GET['pdf'])): ?>
-    <?php require "includes/script.php"; ?>
-    <?php require "includes/footer.php"; ?>
-<?php endif; ?>
+<?php require "includes/footer.php"; ?>

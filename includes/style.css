@@ -1,40 +1,3 @@
-html,
-body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    display: flex;
-    flex-direction: column;
-}
-
-
-main {
-    flex: 1;
-}
-
-/* screen */
-.container-fluid {
-    background: none;
-    padding: 15px;
-    border-radius: 6px;
-}
-
-/* Login Page */
-
-.login-page {
-    background: url('../image/court.png') no-repeat center center;
-    background-size: cover;
-    flex: 1;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
-}
-
 #loginCard {
     background: rgba(255, 255, 255, 0.1);
     /* transparent */
@@ -42,8 +5,7 @@ main {
     /* glass effect */
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     /* shadow */
-    max-width: 400px;
-    margin: 80px 50px 0 auto;
+    margin-right: 0;
     border-radius: 15px;
 }
 
@@ -79,24 +41,23 @@ footer {
 /* For Printout */
 
 @media print {
-    body {
-        display: block;
-    }
+    
+    .text-center.mt-1.lh-sm {
+    font-size: 11px !important;
+}
 
-    @page :first {
-        margin-top: 30px;
-
-    }
 
     @page {
-        margin-top: 40px; /* apply ONLY to 2nd, 3rd, etc */
+        margin-top: 10px;
         margin-left: 10px;
         margin-right: 10px;
         margin-bottom: 10px;
     }
 
-    .seal {
-        display: none;
+    body {
+        font-family: Tahoma, Verdana, Segoe, sans-serif;
+        font-size: 12.5px;
+         font-weight: 545;
     }
 
     .no-print {
@@ -107,16 +68,8 @@ footer {
         display: none;
     }
 
-    h4,
-    h5 {
-        text-align: center;
-    }
-
-    .container-fluid {
-        margin: 0;
-        padding: 0;
-        box-shadow: none;
-        border-radius: 0;
+    .seal {
+        display: none;
     }
 
     table {
@@ -125,37 +78,25 @@ footer {
         table-layout: fixed;
     }
 
-    th,
+    th {
+        background-color: #000 !important;
+        color: white !important;
+        border: 1px solid #000 !important;
+        padding: 5px !important;
+        text-align: center !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
     td {
-        border: 1px solid black !important;
-        padding: 3px;
-        font-size: 14px;
-        font-family:Tahoma, Geneva, Verdana, sans-serif;
-        vertical-align: top;
+        border: 1px solid #000 !important;
+        padding: 5px !important;
     }
 
-    th:nth-child(1) {
-        width: 6%;
-    }
-
-    th:nth-child(2) {
-        width: 18%;
-    }
-
-    th:nth-child(3) {
-        width: 23%;
-    }
-
-    th:nth-child(4) {
-        width: 23%;
-    }
-
-    th:nth-child(5) {
-        width: 15%;
-    }
-
-    th:nth-child(6) {
-        width: 15%;
-    }
-
+    th:nth-child(1) { width: 6%; }
+    th:nth-child(2) { width: 18%; }
+    th:nth-child(3) { width: 23%; }
+    th:nth-child(4) { width: 23%; }
+    th:nth-child(5) { width: 15%; }
+    th:nth-child(6) { width: 15%; }
 }

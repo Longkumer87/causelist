@@ -1,8 +1,9 @@
-<?php $title = "edit";
+<?php 
 
 session_start();
 
 require_once 'config/db.php';
+$title = "edit";
 require_once 'includes/header.php';
 
 
@@ -42,7 +43,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 <nav class="navbar d-flex justify-content-between px-3 shadow-sm" style="background-color:#2f3e46;">
 
     <!-- Court Name -->
-    <span class="navbar-brand fw-bold text-white mb-0">
+    <span class="navbar-brand text-white mb-0">
         <i class="bi bi-building me-1"></i>
         <?= htmlspecialchars($_SESSION['court_name'] ?? ''); ?>
     </span>
@@ -136,7 +137,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
         </div>
 
         <div class="text-end mt-3">
-            <button type="submit" class="btn btn-success px-4">
+            <button type="submit" name="submit" class="btn btn-success px-4">
                 <i class="bi bi-bookmark-check"></i> Submit
             </button>
         </div>
@@ -144,5 +145,5 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 </div>
 
-<?php require 'includes/script.php'; ?>
+
 <?php require "includes/footer.php"; ?>

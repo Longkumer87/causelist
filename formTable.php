@@ -1,6 +1,6 @@
 <nav class="navbar d-flex justify-content-between px-3 shadow-sm" style="background-color:#2f3e46;">
     <!-- Court Name -->
-    <span class="navbar-brand fw-bold text-white mb-0">
+    <span class="navbar-brand text-white mb-0">
         <i class="bi bi-building me-1"></i>
         <?= htmlspecialchars($court_name); ?>
     </span>
@@ -43,18 +43,18 @@
                         <th class="text-center">Counsel</th>
                         <th class="text-center">Remark</th>
                         <th class="text-center">Next Date</th>
-                        <th class="text-center" style="min-width:120px;">Action</th>
+                        <th class="text-center">Action</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr>
                         <td class="text-center fw-bold">1</td>
-                        <td><textarea class="form-control" name="case_no[]" style="min-width: 180px;" required></textarea>
+                        <td><textarea class="form-control" name="case_no[]" required></textarea>
                         </td>
-                        <td><textarea class="form-control" name="parties[]" style="min-width: 180px;"></textarea></td>
-                        <td><textarea class="form-control" name="counsel[]" style="min-width: 180px;"></textarea></td>
-                        <td><textarea class="form-control" name="remark[]" style="min-width: 180px;"></textarea></td>
+                        <td><textarea class="form-control" name="parties[]"></textarea></td>
+                        <td><textarea class="form-control" name="counsel[]"></textarea></td>
+                        <td><textarea class="form-control" name="remark[]"></textarea></td>
                         <td><input type="date" class="form-control" name="next_date[]"></td>
                         <td class="text-center">
                             <div class="d-flex gap-2 justify-content-center">
@@ -82,7 +82,7 @@
 
             <!-- Save Button -->
             <div class="col-12 col-md-6 text-md-end">
-                <button type="submit" class="btn btn-success">
+                <button type="submit" name="submit" class="btn btn-success">
                     <i class="bi bi-bookmark-check"></i> Save Cause List
                 </button>
             </div>

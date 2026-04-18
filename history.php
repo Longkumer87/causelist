@@ -55,13 +55,10 @@ require "includes/header.php"; ?>
                             <i class="bi bi-binoculars me-2"></i> View Cause List
                         </button>
                     </div>
-
                 </form>
             </div>
-
         </div>
     </div>
 </div>
 
-<?php require "includes/script.php"; ?>
 <?php require "includes/footer.php"; ?>

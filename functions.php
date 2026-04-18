@@ -34,7 +34,6 @@ function getSeal($court_id)
 }
 
 //Function for googleMeet
-
 function getMeetLink($court_id)
 {
 

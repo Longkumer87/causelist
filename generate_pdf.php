@@ -9,100 +9,112 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 require_once __DIR__ . '/vendor/autoload.php';
+require_once 'config/db.php';
+require_once 'functions.php';
 
 $date = preg_replace('/[^0-9\-]/', '', $_GET['cause_date'] ?? '');
 $court_id = $_SESSION['court_id'] ?? '';
+$court_name = $_SESSION['court_name'] ?? '';
 
 if (empty($date)) {
     header("Location: history.php");
     exit();
 }
 
-// Capture HTML
-ob_start();
-$_GET['pdf'] = 1;
-include 'view.php';
-$html = ob_get_clean();
+// Get data from database
+$sql = "SELECT * FROM `causelist_db` WHERE cause_date = ? AND court_id = ?";
+$stmt = mysqli_prepare($conn, $sql);
+mysqli_stmt_bind_param($stmt, "si", $date, $court_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+// Government emblem base64
+$govPath = 'image/gov.png';
+$govData = file_get_contents($govPath);
+$govBase64 = 'data:image/png;base64,' . base64_encode($govData);
+
+$formattedDate = date("d F Y", strtotime($date));
+
+// Build clean HTML for PDF
+$html = '
+<table style="width:100%; border:none; margin-bottom:5px;">
+    <tr>
+        <td style="width:20%; border:none; vertical-align:top;">' . getSeal($court_id) . '</td>
+        <td style="width:60%; border:none; text-align:center; vertical-align:middle;">
+            <img src="' . $govBase64 . '" style="max-height:50px;"><br><br>
+            IN THE COURT OF THE<br>
+            <strong>' . htmlspecialchars(strtoupper($court_name)) . '</strong><br>
+            KOHIMA : NAGALAND<br><br>
+            <strong>CAUSE LIST FOR : ' . $formattedDate . '</strong>
+        </td>
+        <td style="width:20%; border:none;"></td>
+    </tr>
+</table>
+
+<table style="width:100%; border-collapse:collapse; table-layout:fixed;">
+    <thead>
+        <tr>
+            <th style="width:6%; background:#000; color:#fff; border:1px solid #000; padding:5px; text-align:center;">S.No</th>
+            <th style="width:18%; background:#000; color:#fff; border:1px solid #000; padding:5px; text-align:center;">Case No</th>
+            <th style="width:23%; background:#000; color:#fff; border:1px solid #000; padding:5px; text-align:center;">Parties</th>
+            <th style="width:23%; background:#000; color:#fff; border:1px solid #000; padding:5px; text-align:center;">Counsel</th>
+            <th style="width:15%; background:#000; color:#fff; border:1px solid #000; padding:5px; text-align:center;">Remark</th>
+            <th style="width:15%; background:#000; color:#fff; border:1px solid #000; padding:5px; text-align:center;">Next Date</th>
+        </tr>
+    </thead>
+    <tbody>';
+
+$i = 1;
+foreach ($rows as $row) {
+    $nextDate = !empty($row['next_date']) && $row['next_date'] !== '0000-00-00'
+        ? date("d-m-Y", strtotime($row['next_date']))
+        : '';
+
+    $html .= '
+        <tr>
+            <td style="border:1px solid #000; padding:5px; text-align:center;">' . $i++ . '</td>
+            <td style="border:1px solid #000; padding:5px;">' . nl2br(htmlspecialchars($row['case_no'])) . '</td>
+            <td style="border:1px solid #000; padding:5px;">' . nl2br(htmlspecialchars($row['parties'])) . '</td>
+            <td style="border:1px solid #000; padding:5px;">' . nl2br(htmlspecialchars($row['counsel'])) . '</td>
+            <td style="border:1px solid #000; padding:5px;">' . nl2br(htmlspecialchars($row['remark'])) . '</td>
+            <td style="border:1px solid #000; padding:5px; text-align:center;">' . $nextDate . '</td>
+        </tr>';
+}
+
+$html .= '
+    </tbody>
+</table>
+
+<br>
+<table style="width:100%; border:none;">
+    <tr>
+        <td style="border:none; width:75%;"></td>
+        <td style="border:none; width:25%; text-align:center;">' . getSignature($court_id) . '</td>
+    </tr>
+</table>';
 
 // Create mPDF
 $mpdf = new \Mpdf\Mpdf([
     'format' => 'A4',
-    'margin_top' => 0,
-    'margin_bottom' => 5,
-    'margin_left' => 5,
-    'margin_right' => 5
+    'margin_top' => 10,
+    'margin_bottom' => 10,
+    'margin_left' => 10,
+    'margin_right' => 10
 ]);
-$mpdf->SetDisplayMode('fullpage');
-$mpdf->SetDefaultFontSize(8);
-
-// ✅ Embed CSS directly here
-$stylesheet = "
-              body {
-                margin:0;
-                padding:0;
-                font-family: Tahoma, Arial, sans-serif;
-                font-size: 13px;
-                text-align: center;
-            }                  
-
-            img {
-                display: block;
-                margin: 0 auto;
-                padding:0;
-            }
-
-            td:nth-child(3) {
-                text-align: left;
-               
-            }
-        
-table {
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed;
-}
-    th,
-    td {
-        border: 1px solid #000;
-        padding: 5px;
-        }
-
-    th {
-    background-color: #000;
-    color:white;
-    }
-@page {
-    margin-top: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-}
-th:nth-child(1) { width: 6%; }
-th:nth-child(2) { width: 18%; }
-th:nth-child(3) { width: 23%; }
-th:nth-child(4) { width: 23%; }
-th:nth-child(5) { width: 15%; }
-th:nth-child(6) { width: 15%; }
-
-";
-$mpdf->WriteHTML($stylesheet, \Mpdf\HTMLParserMode::HEADER_CSS);
-
-// ✅ Then write the captured HTML
+$mpdf->SetDefaultFontSize(9);
 $mpdf->WriteHTML($html);
 
 // Save file
-$court_id = $_SESSION['court_id'] ?? '';
 $filename = "causelist_" . $court_id . "_" . $date . ".pdf";
 $file = "pdf/" . $filename;
 
-// Make sure folder exists
 if (!file_exists('pdf')) {
     mkdir('pdf', 0777, true);
 }
 
 $mpdf->Output($file, \Mpdf\Output\Destination::FILE);
 
-// Return path
 if (!isset($calledFromSave)) {
     echo $file;
     exit;
