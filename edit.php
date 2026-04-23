@@ -48,7 +48,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 <nav class="navbar d-flex justify-content-between px-3 shadow-sm" style="background-color:#2f3e46;">
 
     <!-- Court Name -->
-    <span class="navbar-brand text-white mb-0">
+    <span class="navbar-brand text-white fs-6 mb-0">
         <i class="bi bi-building me-1"></i>
         <?= htmlspecialchars($_SESSION['court_name'] ?? ''); ?>
     </span>
@@ -123,7 +123,7 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                 <textarea name="remark[]" class="form-control" style="min-width: 180px;"><?= htmlspecialchars($row['remark']); ?></textarea>
                             </td>
                             <td>
-                                <input type="date" name="next_date[]" class="form-control" value="<?= htmlspecialchars($row['next_date']); ?>">
+                                <input type="date" name="next_date[]" class="form-control" value="<?= ($row['next_date'] && $row['next_date'] !== '0000-00-00') ? htmlspecialchars($row['next_date']) : '' ?>">
                             </td>
                             <td class="text-nowrap">
                                 <div class="d-flex gap-1 justify-content-center">
@@ -144,8 +144,8 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
             </table>
         </div>
 
-        <div class="text-end mt-3">
-            <button type="submit" name="submit" class="btn btn-success px-4">
+        <div class="text-end mt-3 mb-3">
+            <button type="submit" name="submit" class="btn btn-outline-success px-4">
                 <i class="bi bi-bookmark-check"></i> Submit
             </button>
         </div>

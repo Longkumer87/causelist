@@ -10,9 +10,15 @@ if (!isset($_SESSION['user_id'])) {
 
 require_once 'config/db.php';
 require_once 'functions.php';
+require_once 'vendor/autoload.php';
 
-$date = preg_replace('/[^0-9\-]/', '', $_GET['cause_date'] ?? '');
-$court_id = $_SESSION['court_id'] ?? '';
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpWord\SimpleType\TblWidth;
+use PhpOffice\PhpWord\SimpleType\Jc;
+
+$date       = preg_replace('/[^0-9\-]/', '', $_GET['cause_date'] ?? '');
+$court_id   = $_SESSION['court_id'] ?? '';
 $court_name = $_SESSION['court_name'] ?? '';
 
 if (empty($date)) {
@@ -21,151 +27,148 @@ if (empty($date)) {
 }
 
 // Get data from database
-$sql = "SELECT * FROM `causelist_db` WHERE cause_date = ? AND court_id = ? ORDER BY edited_no ASC";
+$sql  = "SELECT * FROM `causelist_db` WHERE cause_date = ? AND court_id = ? ORDER BY edited_no ASC";
 $stmt = mysqli_prepare($conn, $sql);
 mysqli_stmt_bind_param($stmt, "si", $date, $court_id);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
-$rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+$rows   = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 $formattedDate = date("d F Y", strtotime($date));
-$filename = "causelist_" . $court_id . "_" . $date . ".doc";
+$filename      = "causelist_" . $court_id . "_" . $date . ".docx";
+$imagePath     = __DIR__ . '/image/gov.png';
 
+// ── Build Word Document ──────────────────────────────────────────
+$phpWord = new PhpWord();
+$phpWord->setDefaultFontName('Tahoma');
+$phpWord->setDefaultFontSize(9);
 
-// Government emblem base64
+$section = $phpWord->addSection([
+    'marginTop'    => 567,
+    'marginBottom' => 567,
+    'marginLeft'   => 850,
+    'marginRight'  => 850,
+    'orientation'  => 'portrait',
+    'paperSize'    => 'A4',
+]);
 
-//for localhost
-$govUrl = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/causelist/image/gov.png';
-//for online
-// $govUrl = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/image/gov.png';
+// ── Emblem Image ─────────────────────────────────────────────────
+if (file_exists($imagePath)) {
+    $section->addImage($imagePath, [
+        'height'        => 40,
+        'alignment'     => Jc::CENTER,
+        'wrappingStyle' => 'inline',
+    ]);
+}
 
+// ── Court Header ─────────────────────────────────────────────────
+$centerPara = ['alignment' => Jc::CENTER, 'spaceAfter' => 0, 'spaceBefore' => 0];
 
-// Force download as .doc
-header("Content-Type: application/msword");
-header("Content-Disposition: attachment; filename=$filename");
-header("Pragma: no-cache");
-header("Expires: 0");
-?>
-<html xmlns:o="urn:schemas-microsoft-com:office:office"
-    xmlns:w="urn:schemas-microsoft-com:office:word"
-    xmlns="http://www.w3.org/TR/REC-html40">
+$section->addTextBreak(1);
+$section->addText('IN THE COURT OF THE', ['size' => 9], $centerPara);
+$section->addText(strtoupper($court_name), ['bold' => true, 'size' => 10], $centerPara);
+$section->addText('KOHIMA : NAGALAND', ['size' => 9], $centerPara);
+$section->addTextBreak(1);
+$section->addText('CAUSE LIST FOR : ' . $formattedDate, ['bold' => true, 'size' => 10], $centerPara);
+$section->addTextBreak(1);
 
-<head>
-    <meta charset="utf-8">
-    <style>
-        @page {
-            margin: 1cm 1.5cm 1cm 1.5cm;
-            mso-page-orientation: portrait;
-        }
+// ── Table Setup ──────────────────────────────────────────────────
+$totalWidth = 17100;
+$colWidths  = [
+    (int)($totalWidth * 0.06),  // S.No
+    (int)($totalWidth * 0.18),  // Case No
+    (int)($totalWidth * 0.23),  // Parties
+    (int)($totalWidth * 0.23),  // Counsel
+    (int)($totalWidth * 0.15),  // Remark
+    (int)($totalWidth * 0.15),  // Next Date
+];
 
-        body {
-            font-family: Tahoma, Arial, sans-serif;
-            font-size: 11pt;
-            text-align: center;
-        }
+$table = $section->addTable([
+    'borderSize'  => 6,
+    'borderColor' => '000000',
+    'cellMargin'  => 60,
+    'width'       => $totalWidth,
+    'unit'        => TblWidth::TWIP,
+]);
 
-        img {
-            display: block;
-            margin: 0 auto;
-        }
+// ── Header Row ───────────────────────────────────────────────────
+$headerFont = ['bold' => true, 'color' => 'FFFFFF', 'size' => 9];
+$headerCell = ['bgColor' => '000000'];
+$centerParagraph = ['alignment' => Jc::CENTER, 'spaceAfter' => 0];
+$headers = ['S.No', 'Case No', 'Parties', 'Counsel', 'Remark', 'Next Date'];
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            table-layout: fixed;
-        }
+$table->addRow();
+foreach ($headers as $i => $h) {
+    $table->addCell($colWidths[$i], $headerCell)
+          ->addText($h, $headerFont, $centerParagraph);
+}
 
-        th {
-            background-color: #000;
-            color: #fff;
-            border: 1px solid #000;
-            padding: 5px;
-            text-align: center;
-            font-size: 9px;
-        }
+// ── Data Rows ────────────────────────────────────────────────────
+$serial    = 1;
+$dataFont  = ['size' => 9];
+$leftPara  = ['alignment' => Jc::LEFT,   'spaceAfter' => 0];
+$rightPara = ['alignment' => Jc::CENTER, 'spaceAfter' => 0];
+$cellStyle = ['valign' => 'top'];
 
-        td {
-            border: 1px solid #000;
-            padding: 5px;
-            text-align: left;
-            vertical-align: top;
-            font-size: 9px;
-        }
+foreach ($rows as $row) {
+    $table->addRow();
 
-        td:first-child {
-            text-align: center;
-        }
+    // S.No
+    $table->addCell($colWidths[0], $cellStyle)
+          ->addText($serial++, $dataFont, $rightPara);
 
-        .header-text {
-            text-align: center;
-            font-size: 9pt;
-            line-height: 1.5;
-        }
+    // Case No
+    $c = $table->addCell($colWidths[1], $cellStyle);
+    foreach (explode("\n", trim($row['case_no'])) as $line)
+        $c->addText(htmlspecialchars(trim($line)), $dataFont, $leftPara);
 
-        .signature {
-            text-align: center;
-            margin-top: 20px;
-        }
-    </style>
-</head>
+    // Parties
+    $c = $table->addCell($colWidths[2], $cellStyle);
+    foreach (explode("\n", trim($row['parties'])) as $line)
+        $c->addText(htmlspecialchars(trim($line)), $dataFont, $leftPara);
 
-<body>
+    // Counsel
+    $c = $table->addCell($colWidths[3], $cellStyle);
+    foreach (explode("\n", trim($row['counsel'])) as $line)
+        $c->addText(htmlspecialchars(trim($line)), $dataFont, $leftPara);
 
-    <!-- Emblem -->
-    <img src="<?= $govUrl; ?>" style="max-height:30px; width:auto;">
+    // Remark
+    $c = $table->addCell($colWidths[4], $cellStyle);
+    foreach (explode("\n", trim($row['remark'])) as $line)
+        $c->addText(htmlspecialchars(trim($line)), $dataFont, $leftPara);
 
-    <!-- Court Header -->
-    <div class="header-text">
-        <br>
-        IN THE COURT OF THE<br>
-        <strong><?= htmlspecialchars(strtoupper($court_name)); ?></strong><br>
-        KOHIMA : NAGALAND<br><br>
-        <strong>CAUSE LIST FOR : <?= $formattedDate; ?></strong>
-    </div>
+    // Next Date
+    $nextDate = (!empty($row['next_date']) && $row['next_date'] !== '0000-00-00')
+        ? date("d-m-Y", strtotime($row['next_date'])) : '';
+    $table->addCell($colWidths[5], $cellStyle)
+          ->addText($nextDate, $dataFont, $rightPara);
+}
 
-    <br>
+// ── Signature ────────────────────────────────────────────────────
+$section->addTextBreak(2);
+$sigTable = $section->addTable([
+    'borderSize'  => 0,
+    'borderColor' => 'FFFFFF',
+    'width'       => $totalWidth,
+    'unit'        => TblWidth::TWIP,
+]);
+$sigTable->addRow();
+$sigTable->addCell((int)($totalWidth * 0.75))->addText('');
+$sigTable->addCell((int)($totalWidth * 0.25))
+         ->addText(
+             getSignature($court_id),
+             ['size' => 9],
+             ['alignment' => Jc::CENTER, 'spaceAfter' => 0]
+         );
 
-    <!-- Table -->
-    <table>
-        <thead>
-            <tr>
-                <th style="width:6%;">S.No</th>
-                <th style="width:18%;">Case No</th>
-                <th style="width:23%;">Parties</th>
-                <th style="width:23%;">Counsel</th>
-                <th style="width:15%;">Remark</th>
-                <th style="width:15%;">Next Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php $i = 1; ?>
-            <?php foreach ($rows as $row): ?>
-                <tr>
-                    <td><?= $i++; ?></td>
-                    <td><?= nl2br(htmlspecialchars($row['case_no'])); ?></td>
-                    <td><?= nl2br(htmlspecialchars($row['parties'])); ?></td>
-                    <td><?= nl2br(htmlspecialchars($row['counsel'])); ?></td>
-                    <td><?= nl2br(htmlspecialchars($row['remark'])); ?></td>
-                    <td>
-                        <?= !empty($row['next_date']) && $row['next_date'] !== '0000-00-00'
-                            ? date("d-m-Y", strtotime($row['next_date']))
-                            : ''; ?>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+// ── Download ─────────────────────────────────────────────────────
+ob_clean();
+header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+header('Content-Disposition: attachment; filename="' . $filename . '"');
+header('Cache-Control: max-age=0');
+header('Pragma: no-cache');
+header('Expires: 0');
 
-    <!-- Signature -->
-    <table style="margin-top:20px; border:none;">
-        <tr>
-            <td style="border:none; width:75%;"></td>
-            <td style="border:none; width:25%; text-align:center;">
-                <?= getSignature($court_id); ?>
-            </td>
-        </tr>
-    </table>
-
-</body>
-
-</html>
+$writer = IOFactory::createWriter($phpWord, 'Word2007');
+$writer->save('php://output');
+exit;

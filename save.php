@@ -65,6 +65,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     for ($i = 0; $i < $count; $i++) {
 
+        $id = $_POST['id'][$i] ?? '';
+        $delete = $_POST['delete'][$i] ?? 0;
+        $edited_no = $i + 1;
+
+        // DELETE first
+    if ($delete == 1 && !empty($id)) {
+        $sql = "DELETE FROM causelist_db WHERE id=? AND court_id=?";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "ii", $id, $court_id);
+        mysqli_stmt_execute($stmt);
+        continue;
+    }
+
         if (empty($case_no[$i])) {
             continue;
         }
@@ -74,19 +87,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $coun  = $counsel[$i];
         $rem   = $remark[$i];
         $next  = !empty($next_date[$i]) ? $next_date[$i] : null;
-
-        $id     = $_POST['id'][$i] ?? '';
-        $delete = $_POST['delete'][$i] ?? 0;
-        $edited_no = $i + 1;
-
-        //  DELETE
-        if ($delete == 1 && !empty($id)) {
-            $sql = "DELETE FROM causelist_db WHERE id=? AND court_id=?";
-            $stmt = mysqli_prepare($conn, $sql);
-            mysqli_stmt_bind_param($stmt, "ii", $id, $court_id);
-            mysqli_stmt_execute($stmt);
-            continue;
-        }
 
         //  UPDATE
         if (!empty($id)) {

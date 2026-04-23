@@ -1,6 +1,6 @@
 <nav class="navbar d-flex justify-content-between px-3 shadow-sm" style="background-color:#2f3e46;">
     <!-- Court Name -->
-    <span class="navbar-brand text-white mb-0">
+    <span class="navbar-brand text-white fs-6 mb-0">
         <i class="bi bi-building me-1"></i>
         <?= htmlspecialchars($court_name); ?>
     </span>
@@ -87,7 +87,7 @@
 
             <!-- Save Button -->
             <div class="col-12 col-md-6 text-md-end">
-                <button type="submit" name="submit" class="btn btn-success">
+                <button type="submit" name="submit" class="btn btn-outline-success">
                     <i class="bi bi-bookmark-check"></i> Save Cause List
                 </button>
             </div>

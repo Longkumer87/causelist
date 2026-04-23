@@ -65,16 +65,17 @@
 
 function updateSerialNumbers() {
     let rows = document.querySelectorAll("#causeTable tbody tr");
-    rows.forEach((row, index) => {
+    let counter = 1;
+    rows.forEach((row) => {
+        if (row.style.display === "none") return; // skip hidden/deleted rows
         let cell = row.cells[0];
-        // Remove all text nodes first
         Array.from(cell.childNodes).forEach(node => {
             if (node.nodeType === Node.TEXT_NODE) {
                 node.remove();
             }
         });
-        // Add fresh text node at the end
-        cell.appendChild(document.createTextNode(index + 1));
+        cell.appendChild(document.createTextNode(counter));
+        counter++;
     });
 }
 
@@ -99,11 +100,13 @@ function updateSerialNumbers() {
         }
     });
 
-    function markDelete(btn) {
-        let row = btn.closest("tr");
-        row.querySelector('input[name="delete[]"]').value = "1";
-        row.style.display = "none";
-    }
+  function markDelete(btn) {
+    let row = btn.closest("tr");
+    row.querySelector('input[name="delete[]"]').value = "1";
+    row.style.display = "none";
+    row.querySelectorAll('[required]').forEach(el => el.removeAttribute('required'));
+     updateSerialNumbers();
+}
 
 
     function shareWhatsApp(date, courtName) {

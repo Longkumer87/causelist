@@ -114,16 +114,14 @@ $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <div class="container-fluid ps-4 pe-4">
         <div class="table-responsive">
             <table class="table table-bordered border-dark table-sm">
-                <thead class="table-dark">
-                    <tr>
+                    <tr class="table-dark">
                         <th class="text-center">S.No</th>
                         <th class="text-center">Case No</th>
                         <th class="text-center">Parties</th>
                         <th class="text-center">Counsel</th>
                         <th class="text-center">Remark</th>
                         <th class="text-center">Next Date</th>
-                    </tr>
-                </thead>
+                    </tr>       
                 <tbody>
                     <?php $i = 1; ?>
                     <?php foreach ($rows as $row): ?>
