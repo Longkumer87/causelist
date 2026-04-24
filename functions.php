@@ -50,3 +50,11 @@ function getMeetLink($court_id)
         return "";
     }
 }
+
+function getDistrictLink(){
+    return "https://kohima.dcourts.gov.in";
+}
+
+function getNJDG(){
+    return "https://tinyurl.com/5xaexkun";
+}

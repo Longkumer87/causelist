@@ -96,6 +96,7 @@ $html .= '
 
 // Create mPDF
 $mpdf = new \Mpdf\Mpdf([
+    'tempDir' => '/var/www/html/causelist/tmp',
     'format' => 'A4',
     'margin_top' => 10,
     'margin_bottom' => 10,

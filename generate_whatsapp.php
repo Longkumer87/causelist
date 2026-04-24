@@ -12,6 +12,8 @@ $court_id = $_SESSION['court_id'] ?? 0;
 
 $formattedDate = date('d-m-Y', strtotime($date));
 $meetLink = getMeetLink($court_id);
+$njdg = getNJDG();
+$khmDis = getDistrictLink();
 
 //kohima District court link here
 //$baseUrl = "https://kohimadiscourt.free.nf";
@@ -32,7 +34,12 @@ $message = urlencode(
     "⚖️ " . $court_name . "\n" .
     "📄 CAUSE LIST FOR : " . $formattedDate . "\n\n" .
     $pdfLink . "\n\n" .
-    "🎥 Google Meet:\n" . $meetLink
+    "🎥 Google Meet:\n" . $meetLink . "\n\n" .
+    "Other Important Links : \n" .
+    "✅ Kohima District Court Website :" . $khmDis . "\n\n" .
+    "✅ National Judicial Data Grid : " . $njdg . "\n"
+
+    
 );
 
 echo $message;
