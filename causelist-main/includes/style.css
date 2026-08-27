@@ -1,0 +1,114 @@
+#loginCard {
+    background: rgba(255, 255, 255, 0.1);
+    /* transparent */
+    backdrop-filter: blur(10px);
+    /* glass effect */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    /* shadow */
+    margin-right: 0;
+    border-radius: 15px;
+}
+
+.btn-box {
+    background-color: #ff6a00;
+    color: white;
+}
+
+.btn-box:hover {
+    background-color: #e65c00;
+}
+
+
+/* Mobile view */
+
+@media (max-width: 768px) {
+
+    #loginCard {
+        margin: 20px auto;
+        width: 100%;
+        max-width: 320px;
+    }
+}
+
+footer {
+    background: #2f3e46;
+    color: #fff;
+    text-align: center;
+    padding: 6px;
+    font-size: 13px;
+}
+
+/* For Printout */
+
+@media print {
+
+    thead {
+        display: table-row-group;
+    }
+    
+    .text-center.mt-1.lh-sm {
+    font-size: 11px !important;
+}
+    @page :first{
+        margin-top: 20px;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+
+    }
+
+    @page {
+        margin-top: 45px;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    body {
+        font-family: Tahoma, Verdana, Segoe, sans-serif;
+        font-size: 11.5px;
+         
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    button {
+        display: none;
+    }
+
+    .seal {
+        display: none;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        
+    }
+
+    th {
+        background-color: #000 !important;
+        color: white !important;
+        border: 1px solid #000 !important;
+        padding: 5px !important;
+        text-align: center !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        
+    }
+
+    td {
+        border: 1px solid #000 !important;
+        padding: 5px !important;
+    }
+
+    th:nth-child(1) { width: 6%; }
+    th:nth-child(2) { width: 18%; }
+    th:nth-child(3) { width: 23%; }
+    th:nth-child(4) { width: 23%; }
+    th:nth-child(5) { width: 15%; }
+    th:nth-child(6) { width: 15%; }
+}
